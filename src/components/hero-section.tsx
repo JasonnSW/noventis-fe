@@ -36,13 +36,13 @@ export default function HeroSection() {
           </span>
         </Button>
         <div
-          className="absolute -right-[120px] -bottom-[10px] w-[240px] h-[240px] aspect-square
-             rounded-full opacity-80 bg-[#ff6849] blur-[150px] z-0"
+          className="absolute -right-[150px] -bottom-[10px] w-[240px] h-[240px] aspect-square
+             rounded-full opacity-50 bg-[#0F2CAB] blur-[150px] z-0"
         />
       </div>
 
       <motion.div
-        className="absolute -bottom-0 right-[-40px] w-[480px] h-full max-w-none hidden md:block"
+        className="absolute bottom right-[-50px] md:w-[340px] lg:w-[480px] h-full max-w-none hidden md:block"
         initial="off"
         animate="off"
         whileHover="on"
@@ -51,27 +51,49 @@ export default function HeroSection() {
           src="/hero-laptop.svg"
           alt=""
           fill
-          className="object-contain hidden md:block"
+          className=" hidden md:block"
         />
         <motion.img
           src="/hero-laptop-beam.svg"
           alt=""
-          className="absolute inset-0 w-full h-full object-contain hidden md:block"
+          className="absolute inset-0 w-full h-full  hidden md:block"
           variants={{ off: { opacity: 0 }, on: { opacity: 1 } }}
           transition={{ duration: 0.4, ease: [0.5, 1, 0.36, 1] }}
+        />
+      </motion.div>
+
+      <motion.div
+        className="absolute bottom-15 left-[-10px] w-[400px] lg:w-[480px] h-full max-w-none hidden md:block"
+        initial="off"
+        animate="off"
+        whileHover="on"
+      >
+        <Image
+          src="/hero-shape-hover.svg"
+          alt=""
+          fill
+          className="object-contain hidden md:block"
+        />
+        <div
+          className="
+      absolute -bottom-96 left-[100px] lg:w-[400px] rotate-90
+      w-[100%] h-[100%] rounded-full
+      bg-[#FF6849] opacity-20
+      blur-[70px] sm:blur-[110px] lg:blur-[250px]
+    "
         />
       </motion.div>
 
       <Marquee
         speed={20}
         direction="right"
-        className="absolute bottom-8 opacity-30 z-[1] -rotate-[2deg] pointer-events-none"
+        className="absolute bottom-5 opacity-30 z-[1] -rotate-[2deg] pointer-events-none"
       />
 
       <Marquee
         speed={20}
         direction="left"
-        className="absolute bottom-5 z-[1] pointer-events-none"
+        className="absolute bottom-3 z-[1] rotate-[1.5deg] pointer-events-none"
       />
     </section>
   );

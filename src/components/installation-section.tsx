@@ -16,14 +16,16 @@ const steps: Step[] = [
   {
     number: "01",
     title: "Quick Installation Guide",
-    description: "Ensure users have Python 3.x installed. (Dummy Text)",
+    description:
+      "Ensure you have Python 3.8 or newer installed. Noventis is published on PyPI, allowing for a simple and straightforward installation using pip.",
     code: "pip install noventis",
     language: "BASH",
   },
   {
     number: "02",
     title: "Verify Installation",
-    description: "Ensure users have Python 3.x installed. (Dummy Text)",
+    description:
+      "Once the installation is complete, you can verify that Noventis was installed correctly by importing it in Python and checking its version.",
     code: `import noventis\nprint(noventis.__version__)`,
     language: "PYTHON",
   },
@@ -31,7 +33,7 @@ const steps: Step[] = [
     number: "03",
     title: "Virtual Environment Guide",
     description:
-      "(Dummy Text) Brief instructions on creating and activating a venv or using Poetry for dependency isolation.",
+      "We highly recommend installing Noventis inside a virtual environment to keep your project dependencies isolated and clean. Here is a quick guide to create one using venv.",
     code: `python -m venv noventis_env\nsource noventis_env/bin/activate  # Linux/macOS\n# noventis_env\\Scripts\\activate   # Windows\nsource noventis_env/bin/activate  # Linux/macOS\npip install noventis`,
     language: "BASH",
   },
@@ -131,7 +133,7 @@ function StepCard({
         <h4 className="font-orbitron text-lg md:text-2xl leading-tight text-white">
           {title}
         </h4>
-        <p className="mt-2 font-openSans text-[#807f8c] leading-normal max-w-sm text-sm md:text-lg">
+        <p className="mt-2 font-openSans text-[#807f8c] leading-normal max-w-sm text-sm md:text-base text-justify">
           {description}
         </p>
       </div>

@@ -60,9 +60,9 @@ export default function Footer() {
               <h3 className="mb-4 text-lg font-semibold text-white">
                 Support Us
               </h3>
-              <p className="text-sm text-white/70 max-w-sm text-center sm:text-left">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                sed augue ex. Aenean at arcu erat.
+              <p className="text-sm text-white/70 max-w-xs text-center sm:text-left">
+                If you find Noventis useful, please consider giving us a star on
+                GitHub!
               </p>
 
               <div className="mt-4">
@@ -91,7 +91,7 @@ export default function Footer() {
             </span>
             <CiHeart className="text-[#CF4BC0] w-4 h-4" />
             <span className="font-openSans text-white text-xs sm:text-sm md:text-base font-bold">
-              by the Laplace Team, Universitas Brawijaya
+              by the Laplace Team, BCC Filkom, University of Brawijaya
             </span>
           </div>
         </div>

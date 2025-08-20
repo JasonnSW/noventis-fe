@@ -24,7 +24,7 @@ const features: FeatureCardProps[] = [
     title: "Natural Language Query",
     subtitle: "Interact with Your Data Using Everyday Language",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed augue ex. Aenean at arcu erat.",
+      "Ask questions in plain English, get instant answers. Our upcoming NLQ module, powered by advanced generative AI, will allow you to query your DataFrame and generate visualizations just by having a conversation.",
   },
   {
     icon: <MdAssignment className="h-8 w-8 text-white" />,
@@ -32,13 +32,13 @@ const features: FeatureCardProps[] = [
     title: "Report Generator",
     subtitle: "Automated Comprehensive Project Reporting",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed augue ex. Aenean at arcu erat.",
+      "Go from a clean DataFrame to a professional, presentation-ready PDF report automatically. This module will summarize the entire data cleaning and analysis workflow, including key statistics and visualizations, into a shareable document.",
   },
 ];
 
 export default function ComingSoonSection() {
   return (
-    <section className="relative w-full bg-[#04021F] overflow-hidden py-8 md:py-14 min-h-screen">
+    <section className="relative w-full bg-[#04021F] overflow-hidden py-4 sm:py-8 md:py-14 min-h-screen">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16">
         <div className="max-w-xl mx-auto text-center">
           <div className="inline-flex flex-col items-center">
@@ -120,7 +120,7 @@ function FeatureCard({
 
       <CardContent className="max-w-lg">
         <p className="text-lg font-openSans text-white/90">{subtitle}</p>
-        <CardDescription className="mt-3 font-normal font-openSans text-lg leading-normal text-[#A9ACBF]">
+        <CardDescription className="mt-3 font-normal font-openSans text-base leading-normal text-[#A9ACBF] text-justify">
           {description}
         </CardDescription>
       </CardContent>

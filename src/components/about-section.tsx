@@ -16,21 +16,21 @@ const modules: Module[] = [
     title: "Data_cleaner",
     headline: "Automated Data Cleaning & Preprocessing",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed augue ex. Aenean at arcu erat.",
+      "Handle missing values, detect outliers, and preprocess features automatically. Every step is complete with quality reports and before-and-after comparison visualizations, so you always maintain full control over your data.",
     icon: GiVacuumCleaner,
   },
   {
     title: "Eda_auto",
     headline: "Automated Data Exploration & Smart Visualizations",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed augue ex. Aenean at arcu erat.",
+      "Generate of statistical visualizations—from distributions to correlations—with a single line of code. Gain a deep understanding of your dataset in seconds, not hours, without needing to write plotting code one by one.",
     icon: FiGitBranch,
   },
   {
     title: "Predictor",
     headline: "Rapid ML Model Building & Evaluation",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed augue ex. Aenean at arcu erat.",
+      "Train and evaluate multiple machine learning models at once with an AutoML approach, or select your specific algorithms. Get a baseline model for your project instantly, allowing you to move on to the tuning phase faster.",
     icon: MdOnlinePrediction,
   },
 ];
@@ -99,12 +99,12 @@ export default function AboutSection() {
             </defs>
           </svg>
           <p className="max-w-4xl mx-auto w-full text-white leading-normal font-openSans mt-6 text-lg font-normal">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed
-            augue ex. Aenean at arcu erat. Vestibulum vel elit eu nunc placerat
-            mattis. Fusce commodo nisl a gravida placerat. Praesent vitae ante
-            sit amet augue vestibulum tincidunt. Sed sodales mauris nec neque
-            tincidunt, sit amet mollis ex tincidunt. Integer porttitor consequat
-            finibus. In aliquam augue nisl, eu porta lacus pretium in.
+            Noventis was born from a single belief: a data practitioner's time
+            is too valuable to be spent on repetitive tasks. That's why we
+            created this intelligent Python toolkit to take over tedious jobs
+            like initial data cleaning and exploratory analysis. The goal is
+            simple—to free you up to focus directly on high-value work like deep
+            analysis, complex modeling, and strategic decision-making.
           </p>
           <div className="mt-11">
             <h4 className="text-white font-orbitron leading-normal text-center text-[28px]">
@@ -142,7 +142,7 @@ export function ModuleCard() {
             </h4>
           </div>
 
-          <p className="mt-auto text-[#A9ACBF] font-openSans text-sm text-start leading-7 max-w-md">
+          <p className="mt-auto text-[#807F8C] font-openSans text-sm text-justify leading-7 max-w-md">
             {mod.description}
           </p>
         </Card>
