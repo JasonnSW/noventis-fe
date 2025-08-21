@@ -8,17 +8,17 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section className="relative flex w-full h-screen items-center justify-center bg-[#07043E] overflow-hidden">
+    <section className="relative flex w-full min-h-screen items-center justify-center bg-[#07043E] overflow-hidden">
       <div
         className="absolute left-[180px] top-[-104px] w-[360px] h-[360px] aspect-square
              rounded-[360px] opacity-20 bg-[#ff6849] blur-[150px]"
       />
-      <div className="relative flex-col items-center justify-center text-center z-10 px-12 text-white max-w-3xl -translate-y-1/6">
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold leading-tight font-orbitron text-shadow-noventis">
+      <div className="relative flex-col items-center justify-center text-center z-10 px-12 text-white max-w-3xl -translate-y-1/10 sm:-translate-y-1/6">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight font-orbitron text-shadow-noventis">
           <span className="text-[#FF6849]">Noventis: </span>
           Intelligent Automation for Your Data Analysis.
         </h1>
-        <h5 className="mt-4 font-orbitron text-xl text-[#807f8c] max-w-md text-center mx-auto">
+        <h5 className="mt-4 font-orbitron text-lg sm:text-xl text-[#807f8c] max-w-md text-center mx-auto">
           Free Data Scientists from Repetitive Tasks, Focus on Valuable
           Insights.
         </h5>

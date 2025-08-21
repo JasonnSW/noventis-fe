@@ -42,7 +42,7 @@ const steps: Step[] = [
 export default function InstallationSection() {
   return (
     <section className="relative overflow-hidden w-full bg-[#04021F] py-14">
-      <div className="flex-col items-center justify-center self-stretch gap-12 py-14">
+      <div className="flex-col items-center justify-center self-stretch gap-12">
         <div className="mx-auto text-center">
           <svg
             viewBox="0 0 464 10"

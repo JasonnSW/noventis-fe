@@ -38,7 +38,7 @@ const features: FeatureCardProps[] = [
 
 export default function ComingSoonSection() {
   return (
-    <section className="relative w-full bg-[#04021F] overflow-hidden py-4 sm:py-8 md:py-14 min-h-screen">
+    <section className="relative w-full bg-[#04021F] overflow-hidden py-4 sm:py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16">
         <div className="max-w-xl mx-auto text-center">
           <div className="inline-flex flex-col items-center">

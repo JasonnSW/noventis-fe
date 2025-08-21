@@ -16,7 +16,7 @@ pip install noventis`;
 export default function CtaSection() {
   return (
     <section className="relative w-full bg-[#04021F] overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-4">
         <div className="max-w-xl mx-auto text-center">
           <div className="inline-flex flex-col items-center">
             <svg
