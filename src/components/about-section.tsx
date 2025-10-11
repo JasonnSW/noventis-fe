@@ -107,10 +107,10 @@ export default function AboutSection() {
             analysis, complex modeling, and strategic decision-making.
           </p>
           <div className="mt-11">
-            <h4 className="text-white font-orbitron leading-normal text-center text-[28px]">
+            <h4 className="text-white font-orbitron leading-normal text-center text-[28px] mb-7">
               Key Modules
             </h4>
-            <ModuleCard />
+            <HeroModuleCard />
           </div>
         </div>
       </div>
@@ -118,9 +118,9 @@ export default function AboutSection() {
   );
 }
 
-export function ModuleCard() {
+export function HeroModuleCard() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-7 gap-6 max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
       {modules.map((mod, idx) => (
         <Card
           key={idx}

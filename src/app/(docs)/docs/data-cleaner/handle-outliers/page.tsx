@@ -1,0 +1,440 @@
+import React from "react";
+
+import { CodeBlock } from "@/components/code-block";
+import {
+  DocsTable,
+  DocsTableCell,
+  DocsTableHead,
+  DocsTableHeader,
+  DocsTableRow,
+} from "@/components/docs-table";
+import { cn } from "@/lib/utils";
+import { Divider } from "@/components/divider";
+import { Section } from "@/components/section";
+import { dedent } from "@/lib/dedent";
+import { StepOptionCard } from "@/components/step-card";
+
+export default function Page() {
+  return (
+    <main className="max-w-6xl mx-auto my-4">
+      <div className="flex flex-col space-y-1">
+        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+          DATA_CLEANER
+        </div>
+        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
+          NoventisOutlierHandler
+        </h3>
+        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
+          Outliers, or extreme values, can significantly skew statistical
+          analyses and degrade the performance of machine learning models.
+          Handling them correctly is a crucial step in data preprocessing. The
+          <span className="text-[#FF6849] font-firaCode">
+            {" "}
+            NoventisOutlierHandler
+          </span>{" "}
+          provides a systematic and flexible framework for identifying and
+          managing outliers in your dataset.
+        </p>
+        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-norma text-justify my-2">
+          This tool allows you to choose between two primary strategies:
+          removing outlier rows entirely (trimming) or capping their values to a
+          reasonable range (winsorizing). It features an intelligent{" "}
+          <span className="text-[#FF6849]">'auto' </span>
+          mode to select an appropriate strategy based on your data's
+          characteristics, but also offers fine-grained control to apply
+          specific methods to different columns.
+        </p>
+
+        <Section title="Import">
+          <div className="py-3 self-stretch">
+            <CodeBlock
+              title="BASH"
+              code="from noventis.data_cleaner import NoventisOutlierHandler"
+            />
+          </div>
+        </Section>
+
+        <Divider />
+
+        <Section title="Parameters">
+          <DocsParameter />
+        </Section>
+
+        <Divider />
+
+        <Section title="Methods">
+          <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
+            <li>
+              <p className="font-bold text-[#FF6849]">fit(X)</p>
+              <p>
+                Analyzes the data and learns the imputation strategy from the
+                input DataFrame X.
+              </p>
+            </li>
+            <li>
+              <p className="font-bold text-[#FF6849]">transform(X)</p>
+              <p>
+                pd.DataFrame Applies the learned imputation to the DataFrame X
+                and returns the transformed data.
+              </p>
+            </li>
+            <li>
+              <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
+              <p>
+                pd.DataFrame A convenient method that performs the fit and
+                transform operations in a single step.
+              </p>
+            </li>
+          </ul>
+        </Section>
+
+        <Divider />
+
+        <Section
+          title="Model Usage Examples"
+          description={
+            <div className="text-[#807F8C] font-openSans text-lg leading-normal">
+              First, let's create sample data with some obvious outliers.
+            </div>
+          }
+        >
+          <div className="my-4">
+            <CodeBlock title="BASH" code={py} />
+          </div>
+          <div className="mt-12 space-y-12">
+            {modelExamples.map((s, idx) => (
+              <div
+                key={idx}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
+              >
+                <StepOptionCard
+                  letter={s.letter}
+                  title={s.title}
+                  subtitle={s.subtitle}
+                />
+                <div className="self-start">
+                  <CodeBlock
+                    title={s.language}
+                    code={s.code}
+                    language={s.language}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+      </div>
+    </main>
+  );
+}
+
+const py = dedent(`
+import pandas as pd
+import numpy as np
+
+# Create a base normal distribution
+base_data = np.random.normal(loc=100, scale=20, size=500)
+
+# Add some extreme outliers
+outliers = np.array([5, 10, 250, 300, 320])
+
+df = pd.DataFrame({
+    'Feature_A': np.concatenate([base_data, outliers]),
+    'Feature_B': np.concatenate([np.random.normal(50, 10, 500), np.array([-50, 150, 160])])
+})
+`);
+
+const modelExamples = [
+  {
+    letter: "01",
+    title: <>Example 1: Automatic Handling</>,
+    subtitle: (
+      <>
+        This is the simplest approach. The handler will automatically decide the
+        best method for each feature based on its statistical properties.
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+# Initialize the handler with default 'auto' mode
+handler = NoventisOutlierHandler(verbose=True)
+
+# Fit and transform the data
+df_cleaned = handler.fit_transform(df)
+
+print(f"Original shape: {df.shape}")
+print(f"Cleaned shape: {df_cleaned.shape}")
+`),
+  },
+  {
+    letter: "02",
+    title: <>Example 2: Global Method (Winsorizing)</>,
+    subtitle: (
+      <>
+        This example applies a single strategy to all columns. We will use{" "}
+        <b className="text-[#FF6849]">'winsorize'</b> to cap extreme values at
+        the boundaries defined by the 1st and 99th percentiles instead of
+        removing them.
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+# Initialize with a global method and a specific quantile range
+handler_winsorize = NoventisOutlierHandler(
+    default_method='winsorize',
+    quantile_range=(0.01, 0.99),
+    verbose=True
+)
+
+# Fit and transform
+df_winsorized = handler_winsorize.fit_transform(df)
+
+print(f"Original shape: {df.shape}")
+print(f"Winsorized shape: {df_winsorized.shape}")
+
+print("\\nMin/Max values before:\\n", df.agg(['min', 'max']))
+print("\\nMin/Max values after:\\n", df_winsorized.agg(['min', 'max']))
+`),
+  },
+  {
+    letter: "03",
+    title: <>Example 3: Per-Column Custom Strategy</>,
+    subtitle: (
+      <>
+        This example demonstrates how to apply different outlier handling rules
+        for each feature, providing fine-grained control.
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+# Define a dictionary with a specific method for each feature
+method_map = {
+    'Feature_A': 'iqr_trim',   # Use robust IQR trimming for Feature_A
+    'Feature_B': 'winsorize'   # Cap extreme values for Feature_B
+}
+
+# Initialize the handler with the custom map
+handler_custom = NoventisOutlierHandler(feature_method_map=method_map, verbose=True)
+
+# Fit and transform
+df_custom = handler_custom.fit_transform(df)
+
+print(f"Original shape: {df.shape}")
+print(f"Custom handled shape: {df_custom.shape}")
+`),
+  },
+];
+
+function DocsParameter() {
+  const params = [
+    {
+      name: "feature_method_map",
+      type: "Optional[Dict[str, str]]",
+      default: <code className="text-[#807F8C]">None</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2 leading-relaxed">
+          A dictionary to specify a unique outlier handling method for each
+          column. Any column not in this map will use the default_method.
+          <div className="mt-4 font-openSans text-sm">
+            {`Example: { "Salary": "winsorize", "Age": "iqr_trim" }`}
+          </div>
+        </div>
+      ),
+      accent: true,
+    },
+    {
+      name: "default_method",
+      type: "str",
+      default: <code className="text-[#807F8C]">'auto'</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-1 leading-relaxed">
+          <div className="font-openSans">
+            The default method applied to all numeric columns not specified in{" "}
+            <code>feature_method_map</code>.
+          </div>
+
+          <ol className="list-decimal font-openSans list-outside pl-5 space-y-1 marker:text-[#FF6849]">
+            <li>
+              <b className="text-[#FF6849]">auto</b>: Intelligently selects a
+              method based on data properties.
+            </li>
+            <li>
+              <b className="text-[#FF6849]">quantile_trim</b>: Removes rows
+              where values fall outside the defined <code>quantile_range</code>.
+            </li>
+            <li>
+              <b className="text-[#FF6849]">iqr_trim</b>: Removes rows where
+              values fall outside the IQR range defined by{" "}
+              <code>iqr_multiplier</code>.
+            </li>
+            <li>
+              <b className="text-[#FF6849]">winsorize</b>: Caps values at
+              boundaries defined by <code>quantile_range</code> instead of
+              removing rows.
+            </li>
+            <li>
+              <b className="text-[#FF6849]">none</b>: Skips outlier handling for
+              the column.
+            </li>
+          </ol>
+
+          <div className="pt-1">
+            <b className="text-[#FF6849]">
+              How does default_method='auto' work?
+            </b>
+            <p>
+              When 'auto' is selected, the handler chooses a method for each
+              column based on the following logic:
+            </p>
+          </div>
+          <ol className="list-decimal list-outside pl-5 space-y-1 marker:text-[#FF6849]">
+            <li>
+              <b className="text-[#FF6849]">Small Dataset?</b>: If a column has
+              fewer data points than <code>min_data_threshold</code>, it uses{" "}
+              <code>iqr_trim</code> (robust for small samples).
+            </li>
+            <li>
+              <b className="text-[#FF6849]">Skewed Data?</b>: If absolute
+              skewness &gt; <code>skew_threshold</code>, it uses{" "}
+              <code>winsorize</code> (cap outliers without losing data).
+            </li>
+            <li>
+              <b className="text-[#FF6849]">Otherwise</b>: For larger,
+              non-skewed datasets, it uses <code>quantile_trim</code>.
+            </li>
+          </ol>
+        </div>
+      ),
+    },
+    {
+      name: "iqr_multiplier",
+      type: "float",
+      default: <code className="text-[#807F8C]">1.5</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          The multiplier for the Interquartile Range (IQR) to determine the
+          outlier boundaries when using{" "}
+          <b className="text-[#FF6849]">'iqr_trim'</b> method. The Boundaries{" "}
+          are calculated as{" "}
+          <b className="text-[#FF6849]">Q1 - multiplier·IQR</b> and{" "}
+          <b className="text-[#FF6849]">Q3 + multiplier·IQR</b>.
+        </div>
+      ),
+    },
+    {
+      name: "quantile_range",
+      type: "Tuple[float, float]",
+      default: <code className="text-[#807F8C]">(0.05, 0.95)</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          A tuple specifying the lower and upper quantile boundaries. This is
+          used by the
+          <b className="text-[#FF6849]"> quantile_trim </b> method for trimming
+          and <b className="text-[#FF6849]">winsorize</b> method for capping.
+        </div>
+      ),
+    },
+    {
+      name: "min_data_threshold",
+      type: "int",
+      default: <code className="text-[#807F8C]">100</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          Minimum number of data points below which the{" "}
+          <b className="text-[#FF6849]">'auto'</b> mode will prefer{" "}
+          <b className="text-[#FF6849]">'iqr_trim'</b>.
+        </div>
+      ),
+    },
+    {
+      name: "skew_threshold",
+      type: "float",
+      default: <code className="text-[#807F8C]">0.5</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          Absolute skewness threshold above which the{" "}
+          <b className="text-[#FF6849]">'auto'</b> mode will prefer{" "}
+          <b className="text-[#FF6849]">'winsorize'</b>.
+        </div>
+      ),
+    },
+    {
+      name: "verbose",
+      type: "bool",
+      default: <code className="text-[#807F8C]">false</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          If <b className="text-[#FF6849]">True</b>, a summary of the outlier
+          handling process will be printed after fitting.
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <div className="hidden md:block mt-4">
+        <DocsTable>
+          <colgroup>
+            <col className="w-56" />
+            <col className="w-56" />
+            <col className="w-40" />
+            <col className="w-auto" />
+          </colgroup>
+
+          <DocsTableHead>
+            <DocsTableRow>
+              <DocsTableHeader>Parameter</DocsTableHeader>
+              <DocsTableHeader>Type</DocsTableHeader>
+              <DocsTableHeader>Default</DocsTableHeader>
+              <DocsTableHeader>Description</DocsTableHeader>
+            </DocsTableRow>
+          </DocsTableHead>
+
+          <tbody>
+            {params.map((p) => (
+              <DocsTableRow key={p.name}>
+                <DocsTableCell className="font-semibold text-[#FF6849]">
+                  {p.name}
+                </DocsTableCell>
+                <DocsTableCell className="whitespace-pre-wrap break-words">
+                  {p.type}
+                </DocsTableCell>
+                <DocsTableCell className="align-middle">
+                  {p.default}
+                </DocsTableCell>
+                <DocsTableCell className="align-top">{p.desc}</DocsTableCell>
+              </DocsTableRow>
+            ))}
+          </tbody>
+        </DocsTable>
+      </div>
+
+      <div className="md:hidden space-y-3">
+        {params.map((p) => (
+          <div
+            key={p.name}
+            className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
+          >
+            <div
+              className={`text-sm font-semibold ${
+                p.accent ? "text-[#FF6849]" : "text-white"
+              }`}
+            >
+              {p.name}
+            </div>
+
+            <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
+              <div className="opacity-70">Type</div>
+              <div className="text-right break-words">{p.type}</div>
+              <div className="opacity-70">Default</div>
+              <div className="text-right">{p.default}</div>
+            </div>
+
+            <div className="mt-3 text-sm text-gray-300">{p.desc}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}

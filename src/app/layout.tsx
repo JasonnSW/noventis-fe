@@ -7,7 +7,6 @@ import {
   Fira_Code,
 } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
 import { Toaster } from "sonner";
 
 const geistSans = Geist({
@@ -50,7 +49,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${openSans.variable} antialiased`}
       >
-        <Navbar />
         {children}
         <Toaster richColors />
       </body>

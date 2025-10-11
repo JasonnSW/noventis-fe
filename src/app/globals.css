@@ -279,4 +279,28 @@
     position: relative;
     z-index: 2;
   }
+
+  .gradient-border-b-nav {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, #07043e, #0f2cab) 1;
+  }
+
+  .blue-scrollbar {
+    scrollbar-color: #1d4ed8 transparent !important;
+    scrollbar-width: auto;
+  }
+
+  .blue-scrollbar::-webkit-scrollbar {
+    width: 10px;
+  }
+  .blue-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #1d4ed8;
+    border-radius: 9999px;
+  }
+  .blue-scrollbar::-webkit-scrollbar-thumb:active {
+    background-color: #1d4ed8;
+  }
+  .blue-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }

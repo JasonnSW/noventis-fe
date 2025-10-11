@@ -1,8 +1,10 @@
+"use client";
+
 import { useState } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
-import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { nightOwl } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 type Step = {
   number: string;
@@ -174,7 +176,7 @@ function CodeBlock({
       <div className="mt-3 rounded-lg overflow-hidden border border-[#0f2cab] bg-[#120D6A]">
         <SyntaxHighlighter
           language={language?.toLowerCase()}
-          style={atomOneDark}
+          style={nightOwl}
           PreTag="div"
           customStyle={{
             background: "transparent",

@@ -5,8 +5,12 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import logo from "../../public/Logo.svg";
 import { FaGithub } from "react-icons/fa";
+import Link from "next/link";
 
-const navItems = ["Home", "Docs"];
+export const navItems = [
+  { label: "Home", href: "/" },
+  { label: "Docs", href: "/docs/tutorials/installation" },
+];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -49,18 +53,18 @@ export default function Navbar() {
               </span>
             </div>
             <div className="hidden lg:flex items-center justify-between gap-x-18 mr-4">
-              {navItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={`#${item.toLowerCase()}`}
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
                   className={`nav-hover-btn ${
                     isScrolled
                       ? "nav-hover-btn-scrolled"
                       : "nav-hover-btn-light"
                   }`}
                 >
-                  {item}
-                </a>
+                  {item.label}
+                </Link>
               ))}
 
               <FaGithub
@@ -94,18 +98,19 @@ export default function Navbar() {
             }`}
           >
             <div className="flex flex-col px-6 py-4 space-y-4 mx-auto">
-              {navItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={`#${item.toLowerCase()}`}
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
                   className={`nav-hover-btn ${
                     isScrolled
                       ? "nav-hover-btn-scrolled"
                       : "nav-hover-btn-light"
                   }`}
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item}
-                </a>
+                  {item.label}
+                </Link>
               ))}
 
               <div className="flex flex-col gap-3 mt-4"></div>
