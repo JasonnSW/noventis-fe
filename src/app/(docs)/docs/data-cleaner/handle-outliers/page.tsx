@@ -8,7 +8,6 @@ import {
   DocsTableHeader,
   DocsTableRow,
 } from "@/components/docs-table";
-import { cn } from "@/lib/utils";
 import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
 import { dedent } from "@/lib/dedent";

@@ -27,15 +27,15 @@ export default function Page() {
           description="Before installing, make sure your environment is ready:"
         >
           <ul className={cls.ul}>
-            <li>
+            <li className="text-[#807F8C] marker:text-[#807F8C]">
               <span className="font-bold">Python:</span>{" "}
               <span className="text-[#FF6849]">3.8+</span>
             </li>
-            <li>
+            <li className="text-[#807F8C] marker:text-[#807F8C]">
               <span className="font-bold">Package Manager:</span>{" "}
               <span className="text-[#FF6849]">pip</span>
             </li>
-            <li>
+            <li className="text-[#807F8C] marker:text-[#807F8C]">
               <span className="font-bold">
                 (Highly Recommended) Virtual Environment:
               </span>{" "}

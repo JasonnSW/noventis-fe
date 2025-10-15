@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@/components/breadcrumb";
 
 export default function Page() {
-  return <Breadcrumb section="NoventisDataCleaner" title="DataCleaner Class" />;
+  return <Breadcrumb section="NoventisImputer" title="imputer" />;
 }

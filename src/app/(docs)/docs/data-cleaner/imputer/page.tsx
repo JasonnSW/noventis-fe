@@ -22,22 +22,28 @@ export default function Page() {
           DATA_CLEANER
         </div>
         <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisDataCleaner (The Pipeline Orchestrator)
+          NoventisImputer
         </h3>
         <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
-          The NoventisDataCleaner class acts as the central conductor for the
-          entire Noventis preprocessing suite. It allows you to design,
-          configure, and execute a sequential data cleaning pipeline, chaining
-          together the modules for imputation, outlier handling, encoding, and
-          scaling. Its primary purpose is to provide a unified interface to
-          manage the complete workflow, from initial data to a model-ready
-          dataset, and to generate comprehensive reports on the entire process.
+          Handling missing data (NaNs) is a critical preprocessing step that can
+          significantly impact model performance. Manually filling these values
+          for each column can be tedious and error-prone. The NoventisImputer
+          provides an intelligent and flexible solution to automate this
+          process.
         </p>
+        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-norma text-justify my-2">
+          It automatically detects column types (numeric, categorical) and
+          applies appropriate imputation strategies. Whether you need a simple
+          automatic fix, a powerful global method like KNN, or a specific
+          strategy for each column, NoventisImputer streamlines the entire
+          workflow in a scikit-learn compatible interface.
+        </p>
+
         <Section title="Import">
           <div className="py-3 self-stretch">
             <CodeBlock
               title="BASH"
-              code="from noventis.data_cleaner import NoventisDataCleaner"
+              code="from noventis.data_cleaner import NoventisImputer"
             />
           </div>
         </Section>
@@ -198,33 +204,68 @@ print(df_custom_imputed)`,
 function DocsParameter() {
   const params = [
     {
-      name: "pipeline_steps",
-      type: "list",
-      default: (
-        <code className="text-[#807F8C]">
-          ['impute', 'outlier', 'encode', 'scale']
-        </code>
-      ),
+      name: "method",
+      type: "str, dict, or None",
+      default: <code className="text-[#807F8C]">None</code>,
       desc: (
-        <div className="text-[#807F8C] space-y-2">
-          <p>
-            A list of strings that defines the sequence of cleaning operations.
-            You can customize the order or omit steps as needed.
-          </p>
-          <div>
-            <div className="opacity-80">Available steps:</div>
-            <ul className="list-disc list-outside pl-5 space-y-1 marker:text-[#FF6849]">
+        <div className="space-y-3">
+          <div className="text-[#807F8C]">
+            <b className="text-[#FF6849]">None (Auto Mode):</b> This is the
+            default behavior. It intelligently selects the best simple strategy
+            for each column:
+            <ul className="list-disc list-outside pl-5 space-y-1 mt-2 text-[#807F8C]">
               <li>
-                <code>impute</code>
+                <b>'mean' </b>for numeric (float) columns.
               </li>
               <li>
-                <code>outlier</code>
+                <b>'mode' </b>for categorical (object) columns.
               </li>
+            </ul>
+          </div>
+
+          <div className="text-[#807F8C]">
+            <b className="text-[#FF6849]">str (Global Method):</b> Applies a
+            single method to all columns with missing values. The available
+            options are:
+          </div>
+
+          <ul className="list-disc list-outside pl-5 space-y-1 text-[#807F8C]">
+            <li>
+              <b>mean</b>: Fills with the column mean (for numeric columns).
+            </li>
+            <li>
+              <b>median</b>: Fills with the column median (for numeric columns).
+            </li>
+            <li>
+              <b>mode</b>: Fills with the most frequent value (mode).
+            </li>
+            <li>
+              <b>knn</b>: Uses K-Nearest Neighbors to impute values based on the
+              nearest data points.
+            </li>
+            <li>
+              <b>constant</b>: Fills with a fixed value defined by{" "}
+              <code>fill_value</code>.
+            </li>
+            <li>
+              <b>ffill</b>: Forward-fills the last valid observation.
+            </li>
+            <li>
+              <b>fill</b>: Backward-fills with the next valid observation.
+            </li>
+            <li>
+              <b>drop</b>: Drops rows containing missing values in the processed
+              columns.
+            </li>
+          </ul>
+
+          <div className="text-[#807F8C]">
+            <b className="text-[#FF6849]">dict (Per-Column Method):</b> Provides
+            fine-grained control by specifying a method for each column.
+            <ul className="list-disc list-outside pl-5 space-y-1 mt-2 text-[#807F8C]">
               <li>
-                <code>encode</code>
-              </li>
-              <li>
-                <code>scale</code>
+                <b>Example: </b>{" "}
+                {`{ "Age": "median", "Salary": "knn", "Embarked": "mode" }`}
               </li>
             </ul>
           </div>
@@ -233,86 +274,36 @@ function DocsParameter() {
       accent: true,
     },
     {
-      name: "imputer_params",
-      type: "dict",
+      name: "columns",
+      type: "Optional[List[str]]",
       default: <code className="text-[#807F8C]">None</code>,
       desc: (
-        <div className="text-[#807F8C] space-y-2">
-          <p>
-            A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
-              NoventisImputer
-            </h1>{" "}
-            class. Refer to the NoventisImputer documentation for all available
-            options.
-          </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'method': 'knn', 'n_neighbors': 5}`}
-          </pre>
+        <div className="text-[#807F8C]">
+          A list of column names to apply the imputation to. If{" "}
+          <code>None</code>, the imputer will automatically find and process all
+          columns in the DataFrame that have missing values.
         </div>
       ),
     },
     {
-      name: "outlier_params",
-      type: "dict",
+      name: "fill_value",
+      type: "Any",
       default: <code className="text-[#807F8C]">None</code>,
       desc: (
-        <div className="text-[#807F8C] space-y-2">
-          <p>
-            A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
-              NoventisOutlierHandler
-            </h1>{" "}
-            class. Refer to the NoventisOutlierHandler documentation for
-            available options.
-          </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'default_method': 'winsorize', 'quantile_range': (0.01, 0.99)}`}
-          </pre>
+        <div className="text-[#807F8C]">
+          The constant value to use for imputation when{" "}
+          <code>method="constant"</code>.
         </div>
       ),
     },
     {
-      name: "encoder_params",
-      type: "dict",
-      default: <code className="text-[#807F8C]">None</code>,
+      name: "n_neighbors",
+      type: "int",
+      default: <code className="text-[#807F8C]">5</code>,
       desc: (
-        <div className="text-[#807F8C] space-y-2">
-          <p>
-            A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
-              NoventisEncoder
-            </h1>{" "}
-            class. Refer to the NoventisEncoder documentation for available
-            options.
-          </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'method': 'auto', 'target_column': 'yourTarget'}`}
-          </pre>
-        </div>
-      ),
-    },
-    {
-      name: "scaler_params",
-      type: "dict",
-      default: <code className="text-[#807F8C]">None</code>,
-      desc: (
-        <div className="text-[#807F8C] space-y-2">
-          <p>
-            A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
-              NoventisScaler
-            </h1>{" "}
-            class. Refer to the NoventisScaler documentation for available
-            options.
-          </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'method': 'robust'}`}
-          </pre>
+        <div className="text-[#807F8C]">
+          The number of neighboring samples to use for imputation when{" "}
+          <code>method="knn"</code>.
         </div>
       ),
     },
@@ -322,8 +313,8 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">False</code>,
       desc: (
         <div className="text-[#807F8C]">
-          If <code>True</code>, prints real-time progress updates to the console
-          as the pipeline executes each step.
+          If <code>True</code>, a summary of the imputation process will be
+          printed after fitting.
         </div>
       ),
     },
@@ -334,8 +325,8 @@ function DocsParameter() {
       <div className="hidden md:block mt-4">
         <DocsTable>
           <colgroup>
-            <col className="w-56" />
-            <col className="w-56" />
+            <col className="w-48" />
+            <col className="w-48" />
             <col className="w-40" />
             <col className="w-auto" />
           </colgroup>
@@ -350,8 +341,8 @@ function DocsParameter() {
           </DocsTableHead>
 
           <tbody>
-            {params.map((p, i) => (
-              <DocsTableRow key={`${p.name}-${i}`}>
+            {params.map((p) => (
+              <DocsTableRow key={p.name}>
                 <DocsTableCell className="font-semibold text-[#FF6849]">
                   {p.name}
                 </DocsTableCell>
@@ -369,12 +360,19 @@ function DocsParameter() {
       </div>
 
       <div className="md:hidden space-y-3">
-        {params.map((p, i) => (
+        {params.map((p) => (
           <div
-            key={`${p.name}-${i}`}
+            key={p.name}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div className="text-sm font-semibold text-white">{p.name}</div>
+            <div
+              className={cn(
+                "text-sm font-semibold",
+                p.accent ? "text-[#FF6849]" : "text-white"
+              )}
+            >
+              {p.name}
+            </div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>

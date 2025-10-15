@@ -1,14 +1,10 @@
 export default {
   DATA_CLEANER: [
-    ["NoventisImputer", "/docs/data-cleaner"],
+    ["NoventisImputer", "/docs/data-cleaner/imputer"],
     ["NoventisOutlierHandler", "/docs/data-cleaner/handle-outliers"],
     ["NoventisEncoder", "/docs/data-cleaner/encode"],
-    ["scale()", "/docs/data-cleaner/scale"],
-    ["get_data_quality_score()", "/docs/data-cleaner/get-data-quality-score"],
-    [
-      "show_changes_visualization()",
-      "/docs/data-cleaner/show-changes-visualization",
-    ],
+    ["NoventisScaler", "/docs/data-cleaner/scale"],
+    ["NoventisDataCleaner", "/docs/data-cleaner"],
   ] as const,
 
   EDA_AUTO: [
