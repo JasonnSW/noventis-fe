@@ -1,73 +1,36 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { FaGithub } from "react-icons/fa";
-import { Menu } from "lucide-react";
-import Logo from "../../../public/Logo.svg";
-import { DocsSidebarAutoscroll } from "@/components/docs-sidebar-autoscroll";
+import type { Metadata } from "next";
+import DocsNavbar from "@/components/docs-navbar";
 import { DocsSidebar } from "@/components/docs-sidebar";
-import { MobileDocsSidebar } from "@/components/mobile-docs-sidebar";
-import { useLock } from "@/hooks/use-lock";
+import { DocsSidebarAutoscroll } from "@/components/docs-sidebar-autoscroll";
+import "../globals.css";
 
-export const navItems = [
-  { label: "Home", href: "/" },
-  { label: "Docs", href: "/docs/tutorials/installation" },
-];
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Noventis Docs",
+    default: "Noventis Documentation",
+  },
+  description:
+    "Learn how to install, configure, and use Noventis. Step-by-step tutorials, guides, and best practices for data cleaning, EDA, and visualization.",
+  openGraph: {
+    title: "Noventis Docs",
+    description:
+      "Official documentation for Noventis — installation, quick start, tutorials, and best practices.",
+    url: "https://noventis-fe.vercel.app/docs",
+    images: [{ url: "/og-noventis.png", width: 1200, height: 630 }],
+  },
+};
 
-export default function DocsLayout({ children }: React.PropsWithChildren) {
-  const [open, setOpen] = useState<boolean>(false);
-  const pathname = usePathname();
+export const dynamic = "force-static";
+export const revalidate = false;
 
-  useEffect(() => setOpen(false), [pathname]);
-
-  useLock(open);
-
+export default function DocsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main className="min-h-screen w-full bg-[#050329] [--header-h:72px]">
-      <header className="sticky top-0 z-50 bg-[#050329] backdrop-blur gradient-border-b-nav">
-        <nav className="mx-auto w-full max-w-8xl h-[var(--header-h)]">
-          <div className="flex h-full items-center justify-between p-10">
-            <div className="flex items-center gap-2">
-              <Image src={Logo} alt="Noventis Logo" width={60} height={60} />
-              <h1 className="font-orbitron text-xl font-semibold leading-normal tracking-tight text-white">
-                Noventis
-              </h1>
-            </div>
-
-            <div className="hidden lg:flex items-center justify-between gap-x-16 mr-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[14px] font-openSans text-white hover:text-[#FF6849]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                href="https://github.com"
-                aria-label="GitHub"
-                className="text-[#FF6849] transition-colors hover:text-[#0F2CAB]"
-              >
-                <FaGithub size={28} />
-              </Link>
-            </div>
-
-            <button
-              aria-label="Open menu"
-              onClick={() => setOpen(true)}
-              className="lg:hidden rounded-md p-2 text-white/90 hover:text-[#FF6849]"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
-        </nav>
-      </header>
-
-      <MobileDocsSidebar open={open} onClose={() => setOpen(false)} />
+      <DocsNavbar />
 
       <div className="flex flex-1 lg:gap-2">
         <aside className="hidden lg:block sticky top-[var(--header-h)] max-h-[calc(100dvh-var(--header-h))] w-2xs overflow-y-auto blue-scrollbar p-4 min-w-0">

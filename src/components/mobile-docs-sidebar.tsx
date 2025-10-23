@@ -30,7 +30,7 @@ export function MobileDocsSidebar({
       <div
         aria-hidden="true"
         className={clsx(
-          "fixed inset-0 z-40 bg-black/50 transition-opacity lg:hidden",
+          "fixed inset-0 z-40 transition-opacity lg:hidden",
           open ? "opacity-100" : "pointer-events-none opacity-0"
         )}
         onClick={onClose}

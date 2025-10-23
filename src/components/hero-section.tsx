@@ -49,7 +49,7 @@ export default function HeroSection() {
       >
         <Image
           src="/hero-laptop.svg"
-          alt=""
+          alt="hero-laptop"
           fill
           className=" hidden md:block"
         />
@@ -70,7 +70,7 @@ export default function HeroSection() {
       >
         <Image
           src="/hero-shape-hover.svg"
-          alt=""
+          alt="hero-shape"
           fill
           className="object-contain hidden md:block"
         />

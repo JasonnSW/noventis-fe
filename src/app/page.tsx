@@ -7,6 +7,9 @@ import HeroSection from "@/components/hero-section";
 import InstallationSection from "@/components/installation-section";
 import Navbar from "@/components/navbar";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export default function LandingPage() {
   return (
     <main>

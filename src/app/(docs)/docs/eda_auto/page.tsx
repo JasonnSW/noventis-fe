@@ -416,7 +416,7 @@ function EdaAutoReportingAnalysis() {
             </code>
             )
           </p>
-          <ul className="list-disc list-outside pl-6 mt-2 space-y-1 text-[#A1A1AA]">
+          <ul className="list-disc list-outside pl-6 mt-2 space-y-1 text-[#807F8C] [&>li]:marker:text-[#807F8C]">
             <li>
               <b>Data Quality ROI:</b> A KPI dashboard showing the impact of
               missing data, outliers, and duplicates on overall data quality.
@@ -442,7 +442,7 @@ function EdaAutoReportingAnalysis() {
             </code>
             )
           </p>
-          <ul className="list-disc list-outside pl-6 mt-2 space-y-1 text-[#A1A1AA]">
+          <ul className="list-disc list-outside pl-6 mt-2 space-y-1 text-[#807F8C] [&>li]:marker:text-[#807F8C]">
             <li>
               <b>Distribution Test:</b> Applies the Shapiro–Wilk test to key
               numeric variables to formally test for normality.

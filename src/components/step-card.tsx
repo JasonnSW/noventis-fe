@@ -15,7 +15,7 @@ export function StepOptionCard({
     <div className="flex items-start gap-4 lg:gap-6">
       <LetterBadge letter={letter} />
       <div className="text-left pt-0.5">
-        <h5 className="font-orbitron text-white text-base md:text-lg lg:text-xl leading-normal">
+        <h5 className="font-orbitron text-white text-base sm:text-lg md:text-xl lg:text-2xl leading-normal">
           {title}
         </h5>
         <p className="mt-2 font-openSans text-justify text-[#807F8C] text-md md:text-lg lg:text-xl leading-normal">
