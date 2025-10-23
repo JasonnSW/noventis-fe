@@ -55,22 +55,21 @@ export default function Page() {
 
         <Divider />
 
-        <Section title="Parameters">
+        <Section title="Parameters" titleClass="my-2">
           <DocsParameter />
         </Section>
 
         <Divider />
 
-        <Section title="Methods">
+        <Section titleClass="my-2" title="Methods">
           <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
             <li>
               <p className="font-bold text-[#FF6849]">fit(X, y)</p>
               <p>
                 Analyzes the dataset and fits the appropriate encoder for each
                 categorical column. The target series <code>y</code> is required
-                for <span className="text-[#FF6849] font-firaCode">'auto'</span>{" "}
-                and{" "}
-                <span className="text-[#FF6849] font-firaCode">'target'</span>{" "}
+                for <b className="text-[#FF6849] font-firaCode">'auto'</b> and{" "}
+                <b className="text-[#FF6849] font-firaCode">'target'</b>{" "}
                 methods.
               </p>
             </li>
@@ -103,6 +102,7 @@ export default function Page() {
 
         <Section
           title="Model Usage Examples"
+          titleClass="my-3"
           description={
             <div className="text-[#807F8C] font-openSans text-lg leading-normal">
               First, let's create sample data with some obvious outliers.
@@ -175,7 +175,7 @@ encoder_auto = NoventisEncoder(method='auto', target_column='Target', verbose=Tr
 # Fit and transform the data
 df_encoded_auto = encoder_auto.fit_transform(X, y)
 
-print("\nTransformed DataFrame Head:")
+print("\\nTransformed DataFrame Head:")
 print(df_encoded_auto.head())
 `),
   },
@@ -236,9 +236,9 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">'auto'</code>,
       desc: (
         <div className="text-[#807F8C] space-y-2 leading-relaxed">
-          <ul className="list-disc list-outside pl-5 space-y-1 marker:text-[#FF6849]">
+          <ul className="list-disc list-outside pl-5 space-y-4 marker:text-[#FF6849]">
             <li>
-              <b className="text-[#FF6849] font-openSans">'auto'</b>:{" "}
+              <code className="text-[#FF6849] font-openSans">'auto'</code>:{" "}
               <span className="text-[#FF6849] font-openSans">
                 (Recommended)
               </span>{" "}
@@ -247,40 +247,42 @@ function DocsParameter() {
               <code>target_column</code> to be set.
             </li>
             <li>
-              <b className="text-[#FF6849]">label</b>: Converts categories into
-              integers (0, 1, 2, …). Best for binary features or ordinal
-              features where the default integer assignment is acceptable.
+              <code className="text-[#FF6849] font-openSans">'label'</code>:
+              Converts categories into integers (0, 1, 2, …). Best for binary
+              features or ordinal features where the default integer assignment
+              is acceptable.
             </li>
             <li>
-              <b className="text-[#FF6849]">ohe</b>{" "}
+              <code className="text-[#FF6849] font-openSans">'ohe'</code>{" "}
               <span>(One-Hot Encoding)</span>: Creates a new binary (0/1) column
               for each category. Best for low-cardinality nominal features
               (e.g., ≤ 15 categories).
             </li>
             <li>
-              <b className="text-[#FF6849]">target</b>: Replaces each category
-              with the mean of the target variable for that category. Powerful
-              for features with a strong relationship to the target; prone to
-              overfitting but mitigated by cross-validation and smoothing.
+              <code className="text-[#FF6849] font-openSans">'target'</code>:
+              Replaces each category with the mean of the target variable for
+              that category. Powerful for features with a strong relationship to
+              the target; prone to overfitting but mitigated by cross-validation
+              .
             </li>
             <li>
-              <b className="text-[#FF6849]">ordinal</b>: Converts categories to
-              integers based on a user-defined order. Requires{" "}
-              <code>category_mapping</code>. Best for features with a clear
-              inherent order (e.g., “Low”, “Medium”, “High”).
+              <code className="text-[#FF6849] font-openSans">'ordinal'</code>:
+              Converts categories to integers based on a user-defined order.
+              Requires <code>category_mapping</code>. Best for features with a
+              clear inherent order (e.g., “Low”, “Medium”, “High”).
             </li>
             <li>
-              <b className="text-[#FF6849]">binary</b>: Converts categories into
-              binary code and creates a column for each bit. A memory-efficient
-              alternative to OHE for medium-cardinality features (e.g., 15–50
-              categories).
+              <code className="text-[#FF6849] font-openSans">'binary'</code>:
+              Converts categories into binary code and creates a column for each
+              bit. A memory-efficient alternative to OHE for medium-cardinality
+              features (e.g., 15–50 categories).
             </li>
             <li>
-              <b className="text-[#FF6849]">hashing</b>: Uses a hashing function
-              to convert categories into a fixed number of features.
-              Memory-efficient for very high-cardinality features, but can
-              result in collisions (different categories mapped to the same
-              hash).
+              <code className="text-[#FF6849] font-openSans">'hashing'</code>:
+              Uses a hashing function to convert categories into a fixed number
+              of features. Memory-efficient for very high-cardinality features,
+              but can result in collisions (different categories mapped to the
+              same hash).
             </li>
           </ul>
 
@@ -292,27 +294,35 @@ function DocsParameter() {
             </p>
           </div>
 
-          <ol className="list-decimal list-outside pl-5 space-y-1 marker:text-[#FF6849]">
+          <ol className="list-decimal list-outside pl-5 space-y-4 marker:text-[#FF6849]">
             <li>
-              <b className="text-[#FF6849]">Binary features</b> (only 2 unique
-              values): use <code>label</code> encoding.
+              <span className="text-[#FF6849] font-openSans">
+                Binary features
+              </span>{" "}
+              : Columns with only 2 unique values will use 'label' encoding.
             </li>
             <li>
-              <b className="text-[#FF6849]">High cardinality (&gt;50)</b>: use{" "}
-              <code>target</code> if the feature is strongly correlated with the
-              target; otherwise fall back to memory-efficient{" "}
-              <code>hashing</code>.
+              <span className="text-[#FF6849] font-openSans">
+                High cardinality (&gt;50)
+              </span>{" "}
+              : Uses 'target' encoding if the feature is strongly correlated
+              with the target; otherwise, falls back to memory-efficient
+              'hashing'.
             </li>
             <li>
-              <b className="text-[#FF6849]">Medium cardinality (16–50)</b>:
-              prefer <code>target</code> if correlated; otherwise use{" "}
-              <code>binary</code> to balance performance and memory.
+              <span className="text-[#FF6849] font-openSans">
+                Medium cardinality (16–50)
+              </span>{" "}
+              : Prefers 'target' if correlated, otherwise uses 'binary' encoding
+              to balance performance and memory.
             </li>
             <li>
-              <b className="text-[#FF6849]">Low cardinality (3–15)</b>: if
-              correlation is very high and order is meaningful, use{" "}
-              <code>ordinal</code>
-              (requires mapping). Otherwise default to <code>ohe</code>.
+              <span className="text-[#FF6849] font-openSans">
+                Low cardinality (3–15)
+              </span>{" "}
+              : Recommends 'ordinal' if correlation is very high (requiring
+              manual mapping from the user), uses 'target' for moderate
+              correlation, and defaults to 'ohe' for low correlation.
             </li>
           </ol>
         </div>
@@ -326,8 +336,8 @@ function DocsParameter() {
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
           The name of the target variable (label) column. This is
-          <b className="text-[#FF6849]"> required</b> when <code>method</code>{" "}
-          is set to
+          <b className="font-bold"> required</b> when <code>method</code> is set
+          to
           <code> 'auto'</code> or <code>'target'</code>.
         </div>
       ),
@@ -338,7 +348,8 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">None</code>,
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
-          A list of specific column names to encode. If <code>None</code>, all
+          A list of specific column names to encode. If{" "}
+          <code className="text-[#FF6849] font-firaCode">None</code>, all
           categorical columns in the DataFrame will be processed.
         </div>
       ),
@@ -349,9 +360,9 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">None</code>,
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
-          A dictionary defining the explicit order for ordinal features (e.g.,{" "}
-          <code>{`{ "Size": { "order": ["Small", "Medium", "Large"] } }`}</code>
-          ). This is required when <code>method</code> = <code>'ordinal'</code>.
+          A dictionary defining the explicit order for ordinal features. This is
+          required when{" "}
+          <code className="font-firaCode text-[#FF6849]">method='ordinal</code>.
         </div>
       ),
     },
@@ -362,8 +373,8 @@ function DocsParameter() {
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
           The smoothing parameter for{" "}
-          <b className="text-[#FF6849]">TargetEncoder</b>, which helps
-          regularize the encoding for categories with few samples.
+          <code className="text-[#FF6849] font-firaCode">TargetEncoder</code>,
+          which helps regularize the encoding for categories with few samples.
         </div>
       ),
     },
@@ -375,9 +386,10 @@ function DocsParameter() {
         <div className="text-[#807F8C] leading-relaxed">
           The type of target variable (<code>'binary'</code> or{" "}
           <code>'continuous'</code>). Used by{" "}
-          <b className="text-[#FF6849]">TargetEncoder</b>. If
-          <code> 'auto'</code>, the type is inferred from{" "}
-          <code>target_column</code>.
+          <code className="text-[#FF6849] font-firaCode">TargetEncoder</code>.
+          If
+          <code className="text-[#FF6849] font-firaCode"> 'auto'</code>, the
+          type is inferred from <code>target_column</code>.
         </div>
       ),
     },
@@ -387,8 +399,8 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">false</code>,
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
-          If <b className="text-[#FF6849]">True</b>, prints a detailed analysis
-          and summary of the encoding process.
+          If <code className="text-[#FF6849] font-firaCode">True</code>, prints
+          a detailed analysis and summary of the encoding process.
         </div>
       ),
     },
@@ -417,11 +429,7 @@ function DocsParameter() {
           <tbody>
             {params.map((p) => (
               <DocsTableRow key={p.name}>
-                <DocsTableCell
-                  className={`font-semibold ${
-                    p.accent ? "text-[#FF6849]" : ""
-                  }`}
-                >
+                <DocsTableCell className={`font-semibold text-[#FF6849]`}>
                   {p.name}
                 </DocsTableCell>
                 <DocsTableCell className="whitespace-pre-wrap break-words">

@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 export const cls = {
-  h3: "text-white text-4xl font-orbitron font-medium leading-normal my-2",
-  h5: "text-xl font-orbitron leading-normal my-2 text-white",
+  h3: "text-white text-4xl font-orbitron font-medium leading-normal",
+  h5: "text-xl font-orbitron leading-normal text-white",
   p: "text-[#807F8C] font-openSans text-lg leading-normal py-1",
   ul: "list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base md:text-lg leading-relaxed",
 };

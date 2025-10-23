@@ -4,6 +4,7 @@ import { CodeBlock } from "@/components/code-block";
 import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
 import { StepOptionCard } from "@/components/step-card";
+import { dedent } from "@/lib/dedent";
 
 export default function Page() {
   return (
@@ -27,6 +28,7 @@ export default function Page() {
 
         <Section
           title="Code of Conduct"
+          titleClass="mb-4"
           description={
             <p className="text-[#807F8C] font-openSans text-lg leading-normal">
               To maintain a friendly and inclusive community, this project and
@@ -40,11 +42,7 @@ export default function Page() {
           }
         >
           <div className="mt-4">
-            <CodeBlock
-              title="BASH"
-              code={`# By contributing, you agree to follow our Code of Conduct
-# See: CODE_OF_CONDUCT.md in the repo`}
-            />
+            <CodeBlock title="BASH" code={codeOfConduct} />
           </div>
         </Section>
 
@@ -52,6 +50,7 @@ export default function Page() {
 
         <Section
           title="How Can I Contribute?"
+          titleClass="mb-2"
           description="There are many ways to contribute, and not all of them involve writing code."
         >
           <ul className="list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base md:text-lg leading-normal mt-2 marker:text-[#FF6849]">
@@ -89,9 +88,10 @@ export default function Page() {
 
         <Section
           title="Your Contribution Workflow"
+          titleClass="mb-4"
           description="Ready to start contributing? Follow these steps to set up your development environment and submit your first change."
         >
-          <div className="mt-6 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-14">
+          <div className="mt-10 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-14">
             {contributionSteps.map((s) => {
               const hasCode = Boolean(s.code);
               return (
@@ -127,6 +127,7 @@ export default function Page() {
 
         <Section
           title="Coding Standards"
+          titleClass="my-2"
           description={
             <>
               <p className="text-[#807F8C] font-openSans text-lg leading-normal mb-3">
@@ -166,6 +167,7 @@ export default function Page() {
 
         <Section
           title="Pull Request Review Process"
+          titleClass="my-2"
           description={
             <>
               <div className="text-[#807F8C] font-openSans text-lg leading-normal mb-1">
@@ -201,7 +203,7 @@ export default function Page() {
                 Congratulations! Your contribution is now a part of Noventis
               </div>
 
-              <div className="font-openSans text-lg font-bold mt-2 text-[#807F8C]">
+              <div className="font-openSans text-lg font-bold mt-4 text-[#807F8C]">
                 Once again, thank you for being a part of the Noventis
                 community!
               </div>
@@ -361,3 +363,22 @@ git commit -m "feat: Add support for SVM model in ManualPredictor"`,
     ),
   },
 ];
+
+const codeOfConduct = dedent(`import pandas as pd
+import numpy as np
+from noventis_eda import NoventisAutoEDA
+from noventis_datacleaner import data_cleaner
+from noventis_automl import NoventisAutoML
+
+# Create a "dirty" sample DataFrame
+data = {
+    'Age': [22, 38, 26, 35, np.nan, 28, 50, 45],
+    'City': ['London', 'Paris', 'New York', 'Tokyo', 'London', 'Paris', np.nan, 'New York'],
+    'Experience': [1, 10, 3, 8, 5, 4, 20, 15],
+    'Salary': [72000, 48000, 54000, 250000, 75000, np.nan, 83000, 45000], # 250000 is an outlier
+    'Purchased': [0, 1, 0, 1, 1, 0, 1, 0] # Our target
+}
+df = pd.DataFrame(data)
+
+print("Initial Data:")
+display(df)`);

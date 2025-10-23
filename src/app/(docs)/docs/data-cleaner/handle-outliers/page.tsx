@@ -55,14 +55,14 @@ export default function Page() {
 
         <Divider />
 
-        <Section title="Parameters">
+        <Section titleClass="my-4" title="Parameters">
           <DocsParameter />
         </Section>
 
         <Divider />
 
         <Section title="Methods">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
+          <ul className="list-disc text-lg mt-4 list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
             <li>
               <p className="font-bold text-[#FF6849]">fit(X)</p>
               <p>
@@ -173,7 +173,8 @@ print(f"Cleaned shape: {df_cleaned.shape}")
         This example applies a single strategy to all columns. We will use{" "}
         <b className="text-[#FF6849]">'winsorize'</b> to cap extreme values at
         the boundaries defined by the 1st and 99th percentiles instead of
-        removing them.
+        removing them, which is useful when you want to preserve all your data
+        rows.
       </>
     ),
     language: "BASH",
@@ -200,8 +201,8 @@ print("\\nMin/Max values after:\\n", df_winsorized.agg(['min', 'max']))
     title: <>Example 3: Per-Column Custom Strategy</>,
     subtitle: (
       <>
-        This example demonstrates how to apply different outlier handling rules
-        for each feature, providing fine-grained control.
+        This shows how to apply different rules to different columns, providing
+        maximum control over the process.
       </>
     ),
     language: "BASH",
@@ -235,7 +236,12 @@ function DocsParameter() {
           A dictionary to specify a unique outlier handling method for each
           column. Any column not in this map will use the default_method.
           <div className="mt-4 font-openSans text-sm">
-            {`Example: { "Salary": "winsorize", "Age": "iqr_trim" }`}
+            <span className="text-[#807F8C] font-normal block mb-1">
+              Example:
+            </span>{" "}
+            <code className="text-[#FF6849] font-firaCode font-openSans block">
+              {"{ 'Salary': 'winsorize', 'Age': 'iqr_trim' }"}
+            </code>
           </div>
         </div>
       ),
@@ -254,26 +260,29 @@ function DocsParameter() {
 
           <ol className="list-decimal font-openSans list-outside pl-5 space-y-1 marker:text-[#FF6849]">
             <li>
-              <b className="text-[#FF6849]">auto</b>: Intelligently selects a
-              method based on data properties.
+              <span className="text-[#FF6849] font-firaCode">'auto'</span>:
+              Intelligently selects a method based on data properties.
             </li>
             <li>
-              <b className="text-[#FF6849]">quantile_trim</b>: Removes rows
-              where values fall outside the defined <code>quantile_range</code>.
+              <span className="text-[#FF6849] font-firaCode">
+                'quantile_trim'
+              </span>
+              : Removes rows where values fall outside the defined{" "}
+              <code>quantile_range</code>.
             </li>
             <li>
-              <b className="text-[#FF6849]">iqr_trim</b>: Removes rows where
-              values fall outside the IQR range defined by{" "}
+              <span className="text-[#FF6849] font-firaCode">'iqr_trim'</span>:
+              Removes rows where values fall outside the IQR range defined by{" "}
               <code>iqr_multiplier</code>.
             </li>
             <li>
-              <b className="text-[#FF6849]">winsorize</b>: Caps values at
-              boundaries defined by <code>quantile_range</code> instead of
-              removing rows.
+              <span className="text-[#FF6849] font-firaCode">'winsorize'</span>:
+              Caps values at boundaries defined by <code>quantile_range</code>{" "}
+              instead of removing rows.
             </li>
             <li>
-              <b className="text-[#FF6849]">none</b>: Skips outlier handling for
-              the column.
+              <span className="text-[#FF6849] font-firaCode">'none'</span>:
+              Skips outlier handling for the column.
             </li>
           </ol>
 
@@ -288,17 +297,17 @@ function DocsParameter() {
           </div>
           <ol className="list-decimal list-outside pl-5 space-y-1 marker:text-[#FF6849]">
             <li>
-              <b className="text-[#FF6849]">Small Dataset?</b>: If a column has
-              fewer data points than <code>min_data_threshold</code>, it uses{" "}
-              <code>iqr_trim</code> (robust for small samples).
+              <span className="text-[#FF6849]">Small Dataset?</span>: If a
+              column has fewer data points than <code>min_data_threshold</code>,
+              it uses <code>iqr_trim</code> (robust for small samples).
             </li>
             <li>
-              <b className="text-[#FF6849]">Skewed Data?</b>: If absolute
+              <span className="text-[#FF6849]">Skewed Data?</span>: If absolute
               skewness &gt; <code>skew_threshold</code>, it uses{" "}
               <code>winsorize</code> (cap outliers without losing data).
             </li>
             <li>
-              <b className="text-[#FF6849]">Otherwise</b>: For larger,
+              <span className="text-[#FF6849]">Otherwise</span>: For larger,
               non-skewed datasets, it uses <code>quantile_trim</code>.
             </li>
           </ol>
@@ -313,10 +322,10 @@ function DocsParameter() {
         <div className="text-[#807F8C] leading-relaxed">
           The multiplier for the Interquartile Range (IQR) to determine the
           outlier boundaries when using{" "}
-          <b className="text-[#FF6849]">'iqr_trim'</b> method. The Boundaries{" "}
-          are calculated as{" "}
-          <b className="text-[#FF6849]">Q1 - multiplier·IQR</b> and{" "}
-          <b className="text-[#FF6849]">Q3 + multiplier·IQR</b>.
+          <span className="text-[#FF6849]">'iqr_trim'</span> method. The
+          Boundaries are calculated as{" "}
+          <span className="text-[#FF6849]">Q1 - multiplier·IQR</span> and{" "}
+          <span className="text-[#FF6849]">Q3 + multiplier·IQR</span>.
         </div>
       ),
     },
@@ -328,8 +337,9 @@ function DocsParameter() {
         <div className="text-[#807F8C] leading-relaxed">
           A tuple specifying the lower and upper quantile boundaries. This is
           used by the
-          <b className="text-[#FF6849]"> quantile_trim </b> method for trimming
-          and <b className="text-[#FF6849]">winsorize</b> method for capping.
+          <span className="text-[#FF6849]"> quantile_trim </span> method for
+          trimming and <span className="text-[#FF6849]">winsorize</span> method
+          for capping.
         </div>
       ),
     },
@@ -340,8 +350,8 @@ function DocsParameter() {
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
           Minimum number of data points below which the{" "}
-          <b className="text-[#FF6849]">'auto'</b> mode will prefer{" "}
-          <b className="text-[#FF6849]">'iqr_trim'</b>.
+          <span className="text-[#FF6849]">'auto'</span> mode will prefer{" "}
+          <span className="text-[#FF6849]">'iqr_trim'</span>.
         </div>
       ),
     },
@@ -352,8 +362,8 @@ function DocsParameter() {
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
           Absolute skewness threshold above which the{" "}
-          <b className="text-[#FF6849]">'auto'</b> mode will prefer{" "}
-          <b className="text-[#FF6849]">'winsorize'</b>.
+          <span className="text-[#FF6849]">'auto'</span> mode will prefer{" "}
+          <span className="text-[#FF6849]">'winsorize'</span>.
         </div>
       ),
     },
@@ -363,8 +373,8 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">false</code>,
       desc: (
         <div className="text-[#807F8C] leading-relaxed">
-          If <b className="text-[#FF6849]">True</b>, a summary of the outlier
-          handling process will be printed after fitting.
+          If <span className="text-[#FF6849]">True</span>, a summary of the
+          outlier handling process will be printed after fitting.
         </div>
       ),
     },

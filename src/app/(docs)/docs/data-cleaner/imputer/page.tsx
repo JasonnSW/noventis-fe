@@ -50,13 +50,13 @@ export default function Page() {
 
         <Divider />
 
-        <Section title="Parameters">
+        <Section titleClass="my-4" title="Parameters">
           <DocsParameter />
         </Section>
 
         <Divider />
 
-        <Section title="Methods">
+        <Section title="Methods" titleClass="my-3">
           <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
             <li>
               <p className="font-bold text-[#FF6849]">fit(X)</p>
@@ -86,6 +86,7 @@ export default function Page() {
 
         <Section
           title="Model Usage Examples"
+          titleClass="my-4"
           description={
             <div className="text-[#807F8C] font-openSans text-lg leading-normal">
               First, let's create some sample data with missing values.
@@ -140,11 +141,10 @@ const modelExamples = [
     title: <>Example 1: Automatic Imputation (Default)</>,
     subtitle: (
       <>
-        This is the simplest use case. The imputer will automatically use the{" "}
-        <b className="text-[#FF6849]">mean</b> for numeric columns (
-        <code>Age</code>, <code>Salary</code>, <code>Experience</code>) and the{" "}
-        <b className="text-[#FF6849]">mode</b> for the categorical column (
-        <code>City</code>).
+        This is the simplest use case. The imputer will automatically use the
+        mean for numeric columns (
+        <code className="text-[#FF6849] text-lg">Age, Salary, Experience</code>)
+        and the mode for the categorical column (City).
       </>
     ),
     language: "BASH",
@@ -229,33 +229,39 @@ function DocsParameter() {
             options are:
           </div>
 
-          <ul className="list-disc list-outside pl-5 space-y-1 text-[#807F8C]">
+          <ul className="list-disc list-outside pl-5 space-y-1 text-[#807F8C] marker:text-[#FF6849]">
             <li>
-              <b>mean</b>: Fills with the column mean (for numeric columns).
+              <code className="text-[#FF6849] font-firaCode">'mean'</code>:
+              Fills with the column mean (for numeric columns).
             </li>
             <li>
-              <b>median</b>: Fills with the column median (for numeric columns).
+              <code className="text-[#FF6849] font-firaCode">'median'</code>:
+              Fills with the column median (for numeric columns).
             </li>
             <li>
-              <b>mode</b>: Fills with the most frequent value (mode).
+              <code className="text-[#FF6849] font-firaCode">'mode'</code>:
+              Fills with the most frequent value (mode).
             </li>
             <li>
-              <b>knn</b>: Uses K-Nearest Neighbors to impute values based on the
-              nearest data points.
+              <code className="text-[#FF6849] font-firaCode">'knn'</code>: Uses
+              K-Nearest Neighbors to impute values based on the nearest data
+              points. This is only applied to numeric columns.
             </li>
             <li>
-              <b>constant</b>: Fills with a fixed value defined by{" "}
-              <code>fill_value</code>.
+              <code className="text-[#FF6849] font-firaCode">'constant'</code>:
+              Fills with a fixed value defined by <code>fill_value</code>.
             </li>
             <li>
-              <b>ffill</b>: Forward-fills the last valid observation.
+              <code className="text-[#FF6849] font-firaCode">'ffill'</code>:
+              Forward-fills the last valid observation.
             </li>
             <li>
-              <b>fill</b>: Backward-fills with the next valid observation.
+              <code className="text-[#FF6849] font-firaCode">'bfill'</code>:
+              Backward-fills with the next valid observation.
             </li>
             <li>
-              <b>drop</b>: Drops rows containing missing values in the processed
-              columns.
+              <code className="text-[#FF6849] font-firaCode">'drop'</code>:
+              Drops rows containing missing values in the processed columns.
             </li>
           </ul>
 
@@ -264,7 +270,7 @@ function DocsParameter() {
             fine-grained control by specifying a method for each column.
             <ul className="list-disc list-outside pl-5 space-y-1 mt-2 text-[#807F8C]">
               <li>
-                <b>Example: </b>{" "}
+                <span>Example: </span>{" "}
                 {`{ "Age": "median", "Salary": "knn", "Embarked": "mode" }`}
               </li>
             </ul>
@@ -313,8 +319,8 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">False</code>,
       desc: (
         <div className="text-[#807F8C]">
-          If <code>True</code>, a summary of the imputation process will be
-          printed after fitting.
+          If <code className="text-[#FF6849]">True</code>, a summary of the
+          imputation process will be printed after fitting.
         </div>
       ),
     },
@@ -381,7 +387,9 @@ function DocsParameter() {
               <div className="text-right">{p.default}</div>
             </div>
 
-            <div className="mt-3 text-sm text-gray-300">{p.desc}</div>
+            <div className="mt-3 text-sm text-gray-300 font-normal">
+              {p.desc}
+            </div>
           </div>
         ))}
       </div>

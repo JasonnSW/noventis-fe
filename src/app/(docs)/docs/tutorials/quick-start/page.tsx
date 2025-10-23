@@ -26,8 +26,13 @@ export default function Page() {
           title="Step 1: Setup & Load Sample Data"
           description={`First, let's import all the tools we'll need from the Noventis library. We'll also create a sample DataFrame that has several common issues: missing data (NaN), categorical features, a potential outlier, and a binary target to predict.`}
         >
-          <div className="mt-4">
+          <div className="mt-4 space-y-6">
             <CodeBlock title="PYTHON" code={QS_SETUP_CODE} />
+            <CodeBlock
+              title="RESULT"
+              imageSrc="/quickstart-01.svg"
+              imageAlt="Quickstart 01"
+            />
           </div>
         </Section>
 
@@ -45,7 +50,14 @@ export default function Page() {
             </>
           }
         >
-          <CodeBlock title="PYTHON" code={AUTOEDA_CODE} />
+          <div className="space-y-4">
+            <CodeBlock title="PYTHON" code={AUTOEDA_CODE} />
+            <CodeBlock
+              title="RESULT"
+              imageSrc="/quickstart-02.svg"
+              imageAlt="Quickstart 02"
+            />
+          </div>
           <p className={cls.p}>
             This single command will generate a complete HTML dashboard showing
             data distributions, missing values, correlations, and more. From
@@ -71,7 +83,14 @@ export default function Page() {
             </>
           }
         >
-          <CodeBlock title="PYTHON" code={DATACLEANER_CODE} />
+          <div className="space-y-4">
+            <CodeBlock title="PYTHON" code={DATACLEANER_CODE} />
+            <CodeBlock
+              title="RESULT"
+              imageSrc="/quickstart-03.svg"
+              imageAlt="Quickstart 03"
+            />
+          </div>
           <p className={cls.p}>
             Notice how the <span className="text-[#FF6849]">City </span> column
             has been transformed into several numeric columns (via encoding),
@@ -133,6 +152,13 @@ export default function Page() {
               Visualizations like a Confusion Matrix and Feature Importance.
             </li>
           </ul>
+          <div className="mt-6">
+            <CodeBlock
+              title="RESULT"
+              imageSrc="/quickstart-04.svg"
+              imageAlt="Quickstart 04"
+            />
+          </div>
         </Section>
 
         <Divider />
@@ -223,7 +249,7 @@ const CONCLUSION_POINTS = [
 ];
 
 const CONCLUSION_LINKS = [
-  { href: "#", label: "Learn more about AutoEDA" },
-  { href: "#", label: "Learn more about Data Cleaner" },
-  { href: "#", label: "Learn more about AutoML" },
+  { href: "/docs/eda_auto", label: "Learn more about AutoEDA" },
+  { href: "/docs/data-cleaner", label: "Learn more about Data Cleaner" },
+  { href: "/docs/predictor/auto_ml", label: "Learn more about AutoML" },
 ];

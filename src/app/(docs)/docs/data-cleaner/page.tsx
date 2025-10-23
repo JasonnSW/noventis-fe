@@ -50,27 +50,43 @@ export default function Page() {
 
         <Divider />
 
-        <Section title="Methods">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
-            <li>
-              <p className="font-bold text-[#FF6849]">fit(X)</p>
+        <Section titleClass="my-2" title="Methods">
+          <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                fit_transform(X, y=None) → pd.DataFrame
+              </p>
               <p>
-                Analyzes the data and learns the imputation strategy from the
-                input DataFrame X.
+                The main method that executes the entire cleaning pipeline. It
+                takes a DataFrame X (and an optional target Series y for
+                target-dependent steps) and runs it through the sequence of
+                operations defined in pipeline_steps. It returns the fully
+                cleaned and processed DataFrame.
               </p>
             </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">transform(X)</p>
+
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                display_summary_report()
+              </p>
+
               <p>
-                pd.DataFrame Applies the learned imputation to the DataFrame X
-                and returns the transformed data.
+                Prints a concise, text-based summary of the entire pipeline run
+                to the console, including a final data quality score and key
+                metrics from each step.
               </p>
             </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
+
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                generate_html_report() → HTML
+              </p>
               <p>
-                pd.DataFrame A convenient method that performs the fit and
-                transform operations in a single step.
+                Generates a rich, interactive, and visually appealing HTML
+                report of the entire cleaning process. The report includes an
+                overview with a final quality score, as well as dedicated tabs
+                for each step with detailed summaries and before-and-after
+                visualizations
               </p>
             </li>
           </ul>
@@ -79,17 +95,41 @@ export default function Page() {
         <Divider />
 
         <Section
-          title="Model Usage Examples"
-          description={
-            <div className="text-[#807F8C] font-openSans text-lg leading-normal">
-              First, let's create some sample data with missing values.
-            </div>
-          }
+          titleClass="font-medium font-orbitron text-4xl mt-4"
+          title="data_cleaner (The Simplified Helper Function)"
         >
-          <div className="my-4">
-            <CodeBlock title="BASH" code={py} />
-          </div>
-          <div className="mt-12 space-y-12">
+          <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify mt-4">
+            For rapid and straightforward data cleaning tasks, the{" "}
+            <code className="font-firaCode text-[#FF6849]">data_cleaner</code>{" "}
+            function provides a high-level, simplified interface to the{" "}
+            <code className="font-firaCode text-[#FF6849]">
+              NoventisDataCleaner
+            </code>{" "}
+            pipeline. With a single function call, you can execute a standard
+            cleaning sequence using the most common settings, making it ideal
+            for initial data exploration and preparing baseline models.
+          </p>
+
+          <Section title="Import">
+            <div className="py-1 self-stretch">
+              <CodeBlock
+                title="BASH"
+                code="from noventis.data_cleaner import data_cleaner"
+              />
+            </div>
+          </Section>
+        </Section>
+
+        <Divider />
+
+        <Section title="Parameters" titleClass="my-4">
+          <DocsParameterDataCleaner />
+        </Section>
+
+        <Divider />
+
+        <Section title="Model Usage Examples" titleClass="my-4">
+          <div className="mt-10 space-y-12">
             {modelExamples.map((s, idx) => (
               <div
                 key={idx}
@@ -100,12 +140,25 @@ export default function Page() {
                   title={s.title}
                   subtitle={s.subtitle}
                 />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
+                <div className="self-start space-y-8">
+                  {s.sections.map((section, sIdx) => (
+                    <div key={sIdx} className="space-y-3">
+                      <p className="font-openSans text-[#807F8C]">
+                        {section.label}
+                      </p>
+
+                      {section.items.map((item, iIdx) => (
+                        <CodeBlock
+                          key={iIdx}
+                          title={item.title}
+                          code={item.code}
+                          language={item.language}
+                          imageSrc={item.imageSrc}
+                          imageAlt={item.imageAlt}
+                        />
+                      ))}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
@@ -116,82 +169,101 @@ export default function Page() {
   );
 }
 
-const py = dedent(`
-  import pandas as pd
-  import numpy as np
-
-  df = pd.DataFrame({
-      'Age': [22, 38, 26, 35, np.nan, 28, 50, np.nan],
-      'Salary': [72000, 48000, 54000, 61000, 75000, np.nan, 83000, 45000],
-      'City': ['London', 'Paris', 'New York', np.nan, 'Tokyo', 'London', 'Paris', 'New York'],
-      'Experience': [1, 10, 3, 8, 5, 4, 20, np.nan]  # An integer column
-  })
-`);
-
 const modelExamples = [
   {
     letter: "01",
-    title: <>Example 1: Automatic Imputation (Default)</>,
+    title: <>Example 1: Using the NoventisDataCleaner Class for Full Control</>,
     subtitle: (
       <>
-        This is the simplest use case. The imputer will automatically use the{" "}
-        <b className="text-[#FF6849]">mean</b> for numeric columns (
-        <code>Age</code>, <code>Salary</code>, <code>Experience</code>) and the{" "}
-        <b className="text-[#FF6849]">mode</b> for the categorical column (
-        <code>City</code>).
+        This example shows how to build a custom pipeline with specific
+        parameters for each step.
       </>
     ),
-    language: "BASH",
-    code: `# Initialize the imputer with no parameters for auto mode
-imputer = NoventisImputer(verbose=True)
+    sections: [
+      {
+        label: "",
+        items: [
+          {
+            title: "BASH",
+            language: "BASH",
+            code: dedent(`import pandas as pd
+from noventis.datacleaner import NoventisDataCleaner
 
-# Fit and transform the data
-df_imputed = imputer.fit_transform(df)
-print(df_imputed)`,
+# Assume X and y are pre-loaded DataFrames/Series
+# X, y = load_your_data()
+
+# 1. Define custom configurations for each step
+imputer_config = {'method': 'median'}
+outlier_config = {'default_method': 'winsorize', 'quantile_range': (0.01, 0.99)}
+encoder_config = {'method': 'auto', 'target_column': 'YourTargetColumnName'}
+scaler_config = {'method': 'robust'}
+
+# 2. Initialize the cleaner with the custom configurations
+cleaner = NoventisDataCleaner(
+    pipeline_steps=['impute', 'outlier', 'encode', 'scale'],
+    imputer_params=imputer_config,
+    outlier_params=outlier_config,
+    encoder_params=encoder_config,
+    scaler_params=scaler_config,
+    verbose=True
+)
+
+# 3. Run the entire pipeline
+cleaned_df = cleaner.fit_transform(X, y)
+
+# 4. Generate the interactive HTML report
+cleaner.generate_html_report()
+`),
+          },
+          {
+            title: "RESULT",
+            imageSrc: "/noventis-data-cleaner-01.svg",
+            imageAlt: "noventisd-data-cleaner-01",
+          },
+        ],
+      },
+    ],
   },
   {
     letter: "02",
-    title: <>Example 2: Using a Global Method (KNN)</>,
+    title: <>Example 2: Using the Function and Getting the Report</>,
     subtitle: (
       <>
-        Here, we apply the <b className="text-[#FF6849]">K-Nearest Neighbors</b>{" "}
-        algorithm to all numeric columns. The imputer is smart enough to use a
-        fallback method (<b className="text-[#FF6849]">mode</b>) for categorical
-        columns where KNN is not applicable.
+        This shows how to use the simple function but still get the full{" "}
+        <code className="font-firaCode text-[#FF6849]">
+          NoventisDataCleaner
+        </code>{" "}
+        instance back to generate the detailed HTML report.
       </>
     ),
-    language: "BASH",
-    code: `# Initialize with method='knn'
-imputer_knn = NoventisImputer(method='knn', n_neighbors=3, verbose=True)
-
-# Fit and transform
-df_knn_imputed = imputer_knn.fit_transform(df)
-print(df_knn_imputed)`,
-  },
-  {
-    letter: "03",
-    title: <>Example 3: Per-Column Custom Strategy</>,
-    subtitle: (
-      <>
-        This example demonstrates the highest level of control, where we define
-        a specific imputation method for each column.
-      </>
-    ),
-    language: "BASH",
-    code: `# Define a dictionary with specific methods for each column
-custom_methods = {
-    'Age': 'median',
-    'Salary': 'mean',
-    'City': 'mode',
-    'Experience': 'constant'
-}
-
-# Initialize the imputer with the custom dictionary and a fill_value for 'constant'
-imputer_custom = NoventisImputer(method=custom_methods, fill_value=0, verbose=True)
-
-# Fit and transform
-df_custom_imputed = imputer_custom.fit_transform(df)
-print(df_custom_imputed)`,
+    sections: [
+      {
+        label: "",
+        items: [
+          {
+            title: "BASH",
+            language: "BASH",
+            code: dedent(`from noventis_datacleaner import data_cleaner
+# Run the cleaner and ask for the instance to be returned
+cleaned_df, cleaner_instance = data_cleaner(
+    data='path/to/your/data.csv',
+    target_column='YourTargetColumnName',
+    null_handling='median',
+    outlier_handling='iqr_trim',
+    return_instance=True,
+    verbose=False
+)
+cleaner_instance.generate_html_report()
+`),
+          },
+          {
+            title: "RESULT",
+            imageSrc: "/noventis-data-cleaner-02.svg",
+            imageAlt: "noventisd-data-cleaner-02",
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -211,20 +283,20 @@ function DocsParameter() {
             A list of strings that defines the sequence of cleaning operations.
             You can customize the order or omit steps as needed.
           </p>
-          <div>
-            <div className="opacity-80">Available steps:</div>
+          <div className="mt-4">
+            <div className="font-bold">Available steps:</div>
             <ul className="list-disc list-outside pl-5 space-y-1 marker:text-[#FF6849]">
               <li>
-                <code>impute</code>
+                <code className="text-[#FF6849] font-firaCode">'impute'</code>
               </li>
               <li>
-                <code>outlier</code>
+                <code className="text-[#FF6849] font-firaCode">'outlier'</code>
               </li>
               <li>
-                <code>encode</code>
+                <code className="text-[#FF6849] font-firaCode">'encode'</code>
               </li>
               <li>
-                <code>scale</code>
+                <code className="text-[#FF6849] font-firaCode">'scale'</code>
               </li>
             </ul>
           </div>
@@ -240,16 +312,19 @@ function DocsParameter() {
         <div className="text-[#807F8C] space-y-2">
           <p>
             A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
+            <code className="font-firaCode text-[#FF6849]">
               NoventisImputer
-            </h1>{" "}
-            class. Refer to the NoventisImputer documentation for all available
-            options.
+            </code>{" "}
+            class. Refer to the{" "}
+            <code className="font-firaCode text-[#FF6849]">
+              NoventisImputer
+            </code>{" "}
+            documentation for all available options.
           </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'method': 'knn', 'n_neighbors': 5}`}
-          </pre>
+          <div className="font-bold mt-4">Example:</div>
+          <code className="text-[#FF6849] font-firaCode block">
+            {"{'method': 'knn', 'n_neighbors': '5'}"}
+          </code>
         </div>
       ),
     },
@@ -261,16 +336,21 @@ function DocsParameter() {
         <div className="text-[#807F8C] space-y-2">
           <p>
             A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
+            <code className="text-[#FF6849] font-firaCode">
               NoventisOutlierHandler
-            </h1>{" "}
-            class. Refer to the NoventisOutlierHandler documentation for
-            available options.
+            </code>{" "}
+            class. Refer to the{" "}
+            <code className="text-[#FF6849] font-firaCode">
+              NoventisOutlierHandler
+            </code>{" "}
+            documentation for available options.
           </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'default_method': 'winsorize', 'quantile_range': (0.01, 0.99)}`}
-          </pre>
+          <div className="font-bold mt-4">Example:</div>
+          <code className="text-[#FF6849] font-firaCode block">
+            {
+              "{'default_method': 'winsorize', 'quantile_range': '(0.01, 0.99)'}."
+            }
+          </code>
         </div>
       ),
     },
@@ -282,16 +362,19 @@ function DocsParameter() {
         <div className="text-[#807F8C] space-y-2">
           <p>
             A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
+            <code className="text-[#FF6849] font-firaCode">
               NoventisEncoder
-            </h1>{" "}
-            class. Refer to the NoventisEncoder documentation for available
-            options.
+            </code>{" "}
+            class. Refer to the{" "}
+            <code className="text-[#FF6849] font-firaCode">
+              NoventisEncoder
+            </code>{" "}
+            documentation for available options.
           </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
-            {`{'method': 'auto', 'target_column': 'yourTarget'}`}
-          </pre>
+          <div className="font-bold mt-4">Example:</div>
+          <code className="text-[#FF6849] font-firaCode block">
+            {`{'method': 'auto', 'target_column': 'YourTarget'}`}
+          </code>
         </div>
       ),
     },
@@ -302,17 +385,14 @@ function DocsParameter() {
       desc: (
         <div className="text-[#807F8C] space-y-2">
           <p>
-            A dictionary of parameters passed directly to the{" "}
-            <h1 className="text-[#FF6849] underline underline-offset-2">
-              NoventisScaler
-            </h1>{" "}
+            A dictionary of parameters passed directly to the NoventisScaler
             class. Refer to the NoventisScaler documentation for available
             options.
           </p>
-          <div className="opacity-80">Example:</div>
-          <pre className="text-xs bg-[#0A0A1A] rounded-md p-3 overflow-x-auto">
+          <div className="font-bold mt-4">Example:</div>
+          <code className="text-[#FF6849] font-firaCode block">
             {`{'method': 'robust'}`}
-          </pre>
+          </code>
         </div>
       ),
     },
@@ -322,8 +402,9 @@ function DocsParameter() {
       default: <code className="text-[#807F8C]">False</code>,
       desc: (
         <div className="text-[#807F8C]">
-          If <code>True</code>, prints real-time progress updates to the console
-          as the pipeline executes each step.
+          If <code className="text-[#FF6849] font-firaCode">True</code>, prints
+          real-time progress updates to the console as the pipeline executes
+          each step.
         </div>
       ),
     },
@@ -334,9 +415,9 @@ function DocsParameter() {
       <div className="hidden md:block mt-4">
         <DocsTable>
           <colgroup>
-            <col className="w-56" />
-            <col className="w-56" />
-            <col className="w-40" />
+            <col className="w-52" />
+            <col className="w-44" />
+            <col className="w-52" />
             <col className="w-auto" />
           </colgroup>
 
@@ -359,6 +440,194 @@ function DocsParameter() {
                   {p.type}
                 </DocsTableCell>
                 <DocsTableCell className="align-middle">
+                  {p.default}
+                </DocsTableCell>
+                <DocsTableCell className="align-top">{p.desc}</DocsTableCell>
+              </DocsTableRow>
+            ))}
+          </tbody>
+        </DocsTable>
+      </div>
+
+      <div className="md:hidden space-y-3">
+        {params.map((p, i) => (
+          <div
+            key={`${p.name}-${i}`}
+            className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
+          >
+            <div className="text-sm font-semibold text-white">{p.name}</div>
+
+            <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
+              <div className="opacity-70">Type</div>
+              <div className="text-right break-words">{p.type}</div>
+              <div className="opacity-70">Default</div>
+              <div className="text-right">{p.default}</div>
+            </div>
+
+            <div className="mt-3 text-sm text-gray-300">{p.desc}</div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function DocsParameterDataCleaner() {
+  const params = [
+    {
+      name: "data",
+      type: "Union[str, pd.DataFrame]",
+      default: "",
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          The input data. This can be either a pandas DataFrame or a string
+          containing the file path to a CSV file.
+        </div>
+      ),
+      accent: true,
+    },
+    {
+      name: "target_column",
+      type: "Optional[str]",
+      default: <code className="text-[#807F8C]">None</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          <p>
+            A dictionary of parameters passed directly to the{" "}
+            <code className="font-firaCode text-[#FF6849]">
+              NoventisImputer
+            </code>{" "}
+            class. Refer to the{" "}
+            <code className="font-firaCode text-[#FF6849]">
+              NoventisImputer
+            </code>{" "}
+            documentation for all available options.
+          </p>
+          <div className="font-bold mt-4">Example:</div>
+          <code className="text-[#FF6849] font-firaCode block">
+            {"{'method': 'knn', 'n_neighbors': 5}"}
+          </code>
+        </div>
+      ),
+    },
+    {
+      name: "null_handling",
+      type: "str",
+      default: <code className="text-[#807F8C]">'auto'</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          A simplified way to specify the imputation method (e.g.,{" "}
+          <code className="text-[#FF6849] font-firaCode">'auto'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'median'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'knn'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'drop'</code>).
+        </div>
+      ),
+    },
+    {
+      name: "outlier_handling",
+      type: "dict",
+      default: <code className="text-[#807F8C]">None</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          A simplified way to specify the outlier handling method (e.g.,{" "}
+          <code className="text-[#FF6849] font-firaCode">'auto'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'iqr_trim'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'winsorize'</code>).
+        </div>
+      ),
+    },
+    {
+      name: "encoding",
+      type: "str",
+      default: <code className="text-[#807F8C]">'auto'</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          A simplified way to specify the encoding method (e.g.,{" "}
+          <code className="text-[#FF6849] font-firaCode">'auto'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'ohe'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'target'</code>).
+        </div>
+      ),
+    },
+    {
+      name: "scaling",
+      type: "str",
+      default: <code className="text-[#807F8C]">'auto'</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          A simplified way to specify the scaling method (e.g.,{" "}
+          <code className="text-[#FF6849] font-firaCode">'auto'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'minmax'</code>,{" "}
+          <code className="text-[#FF6849] font-firaCode">'standard'</code>).
+        </div>
+      ),
+    },
+    {
+      name: "verbose",
+      type: "bool",
+      default: <code className="text-[#807F8C]">True</code>,
+      desc: (
+        <div className="text-[#807F8C]">
+          If <code className="text-[#FF6849] font-firaCode">True</code>,
+          displays detailed reports and progress during the process.
+        </div>
+      ),
+    },
+    {
+      name: "return_instance",
+      type: "bool",
+      default: <code className="text-[#807F8C]">False</code>,
+      desc: (
+        <div className="text-[#807F8C] space-y-2">
+          Determines the function's output.
+          <ul className="list-disc pl-5 mt-1">
+            <li className="mt-1">
+              If <code className="text-[#FF6849] font-firaCode">False</code>{" "}
+              (default), only the cleaned pandas DataFrame is returned.
+            </li>
+            <li className="mt-1">
+              If <code className="text-[#FF6849] font-firaCode">True</code>, the
+              function returns a tuple: (cleaned_DataFrame, cleaner_instance) .
+              The instance can be used to generate reports or for further
+              analysis.
+            </li>
+          </ul>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <div className="hidden md:block mt-4">
+        <DocsTable>
+          <colgroup>
+            <col className="w-52" />
+            <col className="w-52" />
+            <col className="w-44" />
+            <col className="w-auto" />
+          </colgroup>
+
+          <DocsTableHead>
+            <DocsTableRow>
+              <DocsTableHeader>Parameter</DocsTableHeader>
+              <DocsTableHeader>Type</DocsTableHeader>
+              <DocsTableHeader className="text-center">Default</DocsTableHeader>
+              <DocsTableHeader>Description</DocsTableHeader>
+            </DocsTableRow>
+          </DocsTableHead>
+
+          <tbody>
+            {params.map((p, i) => (
+              <DocsTableRow key={`${p.name}-${i}`}>
+                <DocsTableCell className="font-semibold text-[#FF6849]">
+                  {p.name}
+                </DocsTableCell>
+                <DocsTableCell className="whitespace-pre-wrap break-words">
+                  {p.type}
+                </DocsTableCell>
+                <DocsTableCell className="align-middle text-center">
                   {p.default}
                 </DocsTableCell>
                 <DocsTableCell className="align-top">{p.desc}</DocsTableCell>

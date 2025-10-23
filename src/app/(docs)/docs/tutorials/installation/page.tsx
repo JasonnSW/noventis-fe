@@ -54,7 +54,7 @@ export default function Page() {
           description="Choose one of the methods below that best suits your needs."
           className="mt-2"
         >
-          <div className="mt-6 space-y-8">
+          <div className="mt-8 space-y-14">
             {installSteps.map((s, idx) => (
               <div
                 key={idx}
@@ -189,14 +189,26 @@ except ImportError:
     print("Noventis installation failed or package not found.")`;
 
 const NEXT_LINKS = [
-  { href: "#", label: "Quickstart Guide", desc: "Run your first pipeline." },
-  { href: "#", label: "AutoEDA", desc: "Generate automated EDA reports." },
   {
-    href: "#",
+    href: "/docs/tutorials/quick-start",
+    label: "Quickstart Guide",
+    desc: "Run your first pipeline.",
+  },
+  {
+    href: "/docs/eda_auto",
+    label: "AutoEDA",
+    desc: "Generate automated EDA reports.",
+  },
+  {
+    href: "/docs/data-cleaner",
     label: "Data Cleaner",
     desc: "Configure the cleaning pipeline.",
   },
-  { href: "#", label: "AutoML", desc: "Train & compare models automatically." },
+  {
+    href: "/docs/predictor/auto_ml",
+    label: "AutoML",
+    desc: "Train & compare models automatically.",
+  },
 ] as const;
 
 type StepOption = {

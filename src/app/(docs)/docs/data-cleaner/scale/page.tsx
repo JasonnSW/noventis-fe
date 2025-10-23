@@ -9,60 +9,10 @@ import {
   DocsTableRow,
 } from "@/components/docs-table";
 import { cn } from "@/lib/utils";
-
-type Step = {
-  number: string;
-  title?: string;
-  description: string;
-  code: string;
-  language?: string;
-};
-
-const steps: Step[] = [
-  {
-    number: "01",
-    title: "Automatic Scaling",
-    description:
-      "Let NoventisScaler auto-pick the best scaler per column based on skewness and outliers. Great when your dataset mixes distributions.",
-    code: `import pandas as pd
-from noventis_scaler import NoventisScaler
-
-# Sample data with different distributions
-df = pd.DataFrame({
-  'normal_data':  np.random.normal(100, 15, 1000),
-  'skewed_data':  np.random.exponential(2, 1000),
-  'with_outliers': np.concatenate([np.random.normal(50, 10, 950),
-                                   np.random.normal(200, 10, 50)])
-})
-
-# initialize & fit/transform
-scaler = NoventisScaler(method='auto')
-df_scaled = scaler.fit_transform(df)
-
-# see chosen methods per column
-print(scaler.fitted_methods_)`,
-    language: "PYTHON",
-  },
-  {
-    number: "02",
-    title: "Force Specific Method",
-    description:
-      "Force all columns to use a specific scaler (e.g., RobustScaler) when your dataset contains strong outliers across the board.",
-    code: `import pandas as pd
-from noventis_scaler import NoventisScaler
-
-df = pd.DataFrame({
-  'normal_data':  np.random.normal(100, 15, 1000),
-  'skewed_data':  np.random.exponential(2, 1000),
-  'with_outliers': np.concatenate([np.random.normal(50, 10, 950),
-                                   np.random.normal(200, 10, 50)])
-})
-
-scaler = NoventisScaler(method='robust')
-df_scaled = scaler.fit_transform(df)`,
-    language: "PYTHON",
-  },
-];
+import { Section } from "@/components/section";
+import { Divider } from "@/components/divider";
+import { dedent } from "@/lib/dedent";
+import { StepOptionCard } from "@/components/step-card";
 
 export default function Page() {
   return (
@@ -72,13 +22,23 @@ export default function Page() {
           DATA_CLEANER
         </div>
         <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          Scaling
+          NoventisScaler
         </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg leading-normal">
-          This Scaling module scales numerical features in your dataset. It's a
-          powerful tool for handling common data issues like skewness and
-          outliers, which can significantly improve the performance of many
-          machine learning models.
+        <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
+          Feature scaling is a crucial preprocessing step that ensures all
+          numerical features have a comparable scale. This can dramatically
+          improve the performance of many machine learning models. However,
+          choosing the right scaler—
+          <code className="text-[#FF6849] font-firaCode">
+            StandardScaler{" "}
+          </code>{" "}
+          for normal data, RobustScaler for data with outliers, or
+          PowerTransformer for skewed data—is often a tedious manual process.
+        </p>
+        <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
+          NoventisScaler is here to automate this process. It intelligently
+          analyzes each numerical column in your dataset and applies the most
+          suitable scaling strategy, ensuring each feature is treated optimally.
         </p>
         <div className="py-3 self-stretch">
           <CodeBlock
@@ -86,92 +46,307 @@ export default function Page() {
             code="from noventis.data_cleaner import NoventisScaler"
           />
         </div>
-        <div className="border-b border-[1px] border-[#0F2CAB] mt-4" />
-        <h5 className="text-xl font-orbitron leading-normal mt-4 text-white">
-          Parameters
-        </h5>
-        <DocsParameter />
-        <div className="border-b border-[1px] border-[#0F2CAB] mt-4" />
-        <h5 className="text-xl font-orbitron leading-normal mt-4 text-white">
-          Model Usage Examples
-        </h5>
-        <div className="space-y-10">
-          {steps.map((step, idx) => (
-            <div
-              key={idx}
-              className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-center"
-            >
-              <div className="lg:col-span-1">
-                <StepCard
-                  number={step.number}
-                  title={step.title}
-                  description={step.description}
-                />
+
+        <Divider />
+
+        <Section titleClass="my-2" title="Parameters">
+          <DocsParameter />
+        </Section>
+
+        <Divider />
+
+        <Section titleClass="my-2" title="Methods">
+          <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                fit(X, is_for_knn=False) → returns self
+              </p>
+              <p>Analyze data and fit scalers for each column.</p>
+
+              <div className="mt-1">
+                <p className="font-bold">Parameters:</p>
+
+                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+                  <li>
+                    <code>X</code> (<code>pd.DataFrame</code>): Input dataframe.
+                  </li>
+                  <li>
+                    <code>is_for_knn</code> (<code>bool</code>): Force MinMax
+                    scaling for KNN algorithms.
+                  </li>
+                </ul>
               </div>
-              <div className="lg:col-span-2 self-stretch">
-                <CodeBlock
-                  title={step.language}
-                  code={step.code}
-                  language={step.language}
-                />
+            </li>
+
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                transform(X) → Returns: pd.DataFrame (scaled data)
+              </p>
+              <p>Apply fitted scalers to transform data.</p>
+              <div className="mt-1">
+                <p className="font-bold">Parameters:</p>
+                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+                  <li>
+                    <code className="">X</code> (<code>pd.DataFrame</code>):
+                    Input dataframe.
+                  </li>
+                </ul>
               </div>
-            </div>
-          ))}
-        </div>
+            </li>
+
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                fit_transform(X, is_for_knn=False) → Returns: pd.DataFrame
+              </p>
+              <p>Fit and transform in one step.</p>
+              <div className="mt-1">
+                <p className="font-bold">Parameters:</p>
+                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+                  <li>
+                    <code className="">X</code> (<code>pd.DataFrame</code>):
+                    Input dataframe.
+                  </li>
+                  <li>
+                    <code className="">is_for_knn</code> (<code>bool</code>):
+                    Force MinMax scaling for KNN algorithms.
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li className="marker:text-[#FF6849]">
+              <p className="font-bold text-[#FF6849]">
+                inverse_transform(X) → Returns: pd.DataFrame
+              </p>
+              <p>Reverse transformation to the original scale.</p>
+              <div className="mt-1">
+                <p className="font-bold">Parameters:</p>
+                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+                  <li>
+                    <code className="">X</code> (<code>pd.DataFrame</code>):
+                    Scaled dataframe.
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </Section>
+
+        <Divider />
+
+        <Section title="Model Usage Examples">
+          <div className="mt-12 space-y-10">
+            {modelExamples.map((s, idx) => (
+              <div
+                key={idx}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
+              >
+                <StepOptionCard
+                  letter={s.letter}
+                  title={s.title}
+                  subtitle={s.subtitle}
+                />
+                <div className="self-start">
+                  <CodeBlock
+                    title={s.language}
+                    code={s.code}
+                    language={s.language}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
       </div>
     </section>
   );
 }
 
+const modelExamples = [
+  {
+    letter: "01",
+    title: <>Example 1: Automatic Scaling</>,
+    subtitle: (
+      <>
+        This is the most powerful feature of{" "}
+        <code className="font-firaCode text-[#FF6849]">NoventisScaler</code>.
+        We'll let it analyze each column of our diverse dataset and apply the
+        most appropriate scaling strategy. Using{" "}
+        <code className="font-firaCode text-[#FF6849]">verbose=True </code>will
+        show us the decisions it made.
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+import pandas as pd
+import numpy as np
+from noventis_scaler import NoventisScaler
+
+# Create a diverse sample dataset
+df = pd.DataFrame({
+    'normal_data': np.random.normal(loc=100, scale=15, size=500),
+    'skewed_data': np.random.gamma(shape=1, scale=50, size=500)**2,
+    'data_with_outliers': np.concatenate([np.random.normal(loc=0, scale=5, size=496), 
+                                          np.array([-50, 50, -60, 60])]),
+    'bimodal_data': np.concatenate([np.random.normal(loc=20, scale=5, size=250), 
+                                    np.random.normal(loc=80, scale=7, size=250)])
+})
+
+# Initialize in 'auto' mode to let the scaler decide
+scaler = NoventisScaler(method='auto', verbose=True)
+
+# Fit and transform the data
+df_scaled = scaler.fit_transform(df)
+
+# Check which method was chosen for each column
+print("\\nScaler chosen for each column:")
+print(scaler.fitted_methods_)
+`),
+  },
+  {
+    letter: "02",
+    title: <>Example 2: Force Specific Method</>,
+    subtitle: (
+      <>
+        Sometimes, you might want to apply a single scaling strategy to all
+        columns, overriding the automatic selection. Here, we'll force every
+        column to use{" "}
+        <code className="font-firaCode text-[#FF6849]">RobustScaler</code>.
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+# Initialize with the 'robust' method
+scaler_robust = NoventisScaler(method='robust')
+
+# Fit and transform the data
+df_robust_scaled = scaler_robust.fit_transform(df)
+
+print("\\nDescription of data after forcing RobustScaler on all columns:")
+print(df_robust_scaled.describe())
+`),
+  },
+  {
+    letter: "03",
+    title: <>Example 3: Advanced Usage with custom_params</>,
+    subtitle: (
+      <>
+        You can get even more granular control by passing custom parameters to
+        the underlying scalers. Here, we will use{" "}
+        <code className="font-firaCode text-[#FF6849]"> PowerTransformer </code>{" "}
+        on all columns but disable its default behavior of standardizing the
+        output (setting mean=0, std=1).
+      </>
+    ),
+    language: "BASH",
+    code: dedent(`
+# Define a custom parameter to override the default
+# We want the PowerTransformer to transform the data but not standardize it
+custom_config = {'power': {'standardize': False}}
+
+# Initialize with the 'power' method and our custom parameters
+scaler_custom = NoventisScaler(method='power', custom_params=custom_config)
+
+# Fit and transform
+df_custom_scaled = scaler_custom.fit_transform(df)
+
+print("\\nDescription of data after custom PowerTransformer:")
+print(df_custom_scaled.describe())
+`),
+  },
+];
+
 function DocsParameter() {
   const params = [
     {
-      name: "Method",
+      name: "method",
       type: "{'auto', 'standard', 'minmax', 'robust', 'power'}",
-      default: <code>"auto"</code>,
+      default: (
+        <code className="text-[#807F8C] inline">
+          'auto' The scaling algorithm to be used.
+        </code>
+      ),
       desc: (
-        <div className="space-y-2">
-          <p className="text-[#807F8C]">The scaling algorithm to be used.</p>
-
-          <ul className="list-disc ml-5 space-y-2 leading-normal">
+        <div className="text-[#807F8C] space-y-2 leading-relaxed">
+          <ul className="list-disc list-outside pl-5 space-y-4 marker:text-[#FF6849]">
             <li>
-              <b className="text-[#FF6849]">auto</b>{" "}
-              <span className="text-[#807F8C]">
-                (default): Automatically selects the best scaling strategy for
-                each column based on its statistical properties (e.g., skewness,
-                outliers).
-              </span>
+              <code className="text-[#FF6849] font-firaCode">'auto'</code>{" "}
+              <span className="text-[#FF6849] font-firaCode">(default): </span>{" "}
+              Automatically selects the best scaling strategy for each column
+              based on its statistical properties (skewness, outliers, etc.).
             </li>
             <li>
-              <b className="text-[#FF6849]">standard</b>{" "}
-              <span className="text-[#807F8C]">
-                Uses <i>StandardScaler</i>. Best when data is already close to
-                normal. Scales to mean 0 and std 1.
-              </span>
+              <code className="text-[#FF6849] font-firaCode">'standard'</code>:
+              Uses StandardScaler. Best for data that is already normally
+              distributed (or close to it). Scales data to have a mean of 0 and
+              a standard deviation of 1.
             </li>
             <li>
-              <b className="text-[#FF6849]">minmax</b>{" "}
-              <span className="text-[#807F8C]">
-                Uses <i>MinMaxScaler</i>. Scales to a fixed range (typically [0,
-                1]). Good for models that expect bounded features (e.g., many
-                neural nets).
-              </span>
+              <code className="text-[#FF6849] font-firaCode">'minmax'</code>:
+              Uses MinMaxScaler. Scales data to a fixed range, typically [0, 1].
+              Useful for algorithms that require feature values in a specific
+              range, like neural networks.
             </li>
             <li>
-              <b className="text-[#FF6849]">robust</b>{" "}
-              <span className="text-[#807F8C]">
-                Uses <i>RobustScaler</i>. Resistant to outliers by using median
-                and IQR. Suitable when outliers are present.
-              </span>
+              <code className="text-[#FF6849] font-openSans">'robust'</code>:
+              Uses RobustScaler. This method is great for datasets with
+              significant outliers, as it scales data based on the median and
+              interquartile range (IQR).
             </li>
             <li>
-              <b className="text-[#FF6849]">power</b>{" "}
-              <span className="text-[#807F8C]">
-                Uses <i>PowerTransformer</i>. Transforms skewed data to be
-                closer to Gaussian, helping models that assume normality.
-              </span>
+              <code className="text-[#FF6849] font-openSans">'power'</code>:
+              Uses PowerTransformer. This is a powerful technique to transform
+              skewed data to be more Gaussian (normal-like).
             </li>
           </ul>
+
+          <div className="pt-1">
+            <b className="text-[#FF6849]">How does method='auto' work?</b>
+            <p>
+              When method is set to 'auto', NoventisScaler evaluates each column
+              using a prioritized decision hierarchy to select the most
+              appropriate scaler:
+            </p>
+          </div>
+
+          <ol className="list-decimal list-outside pl-5 space-y-4 marker:text-[#FF6849]">
+            <li>
+              <span className="text-[#FF6849] font-openSans">
+                Forced for KNN?
+              </span>{" "}
+              : If is_for_knn=True is passed to the .fit() method, MinMaxScaler
+              is used.
+            </li>
+            <li>
+              <span className="text-[#FF6849] font-openSans">
+                High cardinality (&gt;50)
+              </span>{" "}
+              : If the column's absolute skewness is greater than skew_threshold
+              (default: 2.0), PowerTransformer is used to make the data more
+              Gaussian-like.
+            </li>
+            <li>
+              <span className="text-[#FF6849] font-openSans">
+                Significant Outliers?
+              </span>{" "}
+              : If the ratio of outliers exceeds outlier_threshold (default:
+              0.01) , the outlier-resistant RobustScaler is chosen.
+            </li>
+            <li>
+              <span className="text-[#FF6849] font-openSans">
+                Normally Distributed?
+              </span>{" "}
+              : If the data passes a normality test (using normality_alpha as
+              the significance level), the standard StandardScaler is applied.
+            </li>
+            <li>
+              <span className="text-[#FF6849] font-openSans">
+                Default Fallback
+              </span>{" "}
+              : If the data passes a normality test (using normality_alpha as
+              the significance level), the standard StandardScaler is applied
+            </li>
+          </ol>
         </div>
       ),
       accent: true,
@@ -179,49 +354,79 @@ function DocsParameter() {
     {
       name: "optimize",
       type: "bool",
-      default: "True",
-      desc: "If True, the scaler's internal parameters will be fine-tuned.",
+      default: <code className="text-[#807F8C]">True</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          If <code className="text-[#FF6849] font-firaCode">True</code>, the
+          scaler's internal parameters will be fine-tuned.
+        </div>
+      ),
     },
     {
       name: "custom_params",
       type: "Optional[dict]",
-      default: "None",
-      desc: "Allows you to override the default or optimized parameters for specific scaling methods.",
+      default: <code className="text-[#807F8C]">None</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          Allows you to override the default or optimized parameters for
+          specific scaling methods.
+        </div>
+      ),
     },
     {
       name: "skew_threshold",
       type: "float",
-      default: "2.0",
-      desc: 'Threshold of absolute skewness to consider a column as "highly skewed".',
+      default: <code className="text-[#807F8C]">2.0</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          Threshold of absolute skewness to consider a column as "highly
+          skewed".
+        </div>
+      ),
     },
     {
       name: "outlier_threshold",
       type: "float",
-      default: "0.01",
-      desc: 'Proportion of data points that must be outliers for a column to be categorized as "having outliers."',
+      default: <code className="text-[#807F8C]">'0.01'</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          The proportion of data points that must be outliers for a column to be
+          categorized as "having outliers".
+        </div>
+      ),
     },
     {
       name: "normality_alpha",
       type: "float",
-      default: "0.05",
-      desc: "The significance level (alpha) used in the statistical test for normality.",
+      default: <code className="text-[#807F8C]">'0.05'</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          The significance level (alpha) used in the statistical test for
+          normality.
+        </div>
+      ),
     },
     {
       name: "verbose",
       type: "bool",
-      default: "True",
-      desc: "If True, a summary of the scaling process will be printed after fitting.",
+      default: <code className="text-[#807F8C]">false</code>,
+      desc: (
+        <div className="text-[#807F8C] leading-relaxed">
+          If True, a summary of the scaling process will be printed after
+          fitting.
+        </div>
+      ),
     },
   ];
 
   return (
     <>
-      <div className="hidden md:block">
+      <div className="hidden md:block mt-4">
         <DocsTable>
           <colgroup>
-            <col className="w-52" />
-            <col className="w-52" />
-            <col className="w-52" />
+            <col className="w-56" />
+            <col className="w-56" />
+            <col className="w-auto" />
             <col className="w-auto" />
           </colgroup>
 
@@ -237,25 +442,18 @@ function DocsParameter() {
           <tbody>
             {params.map((p) => (
               <DocsTableRow key={p.name}>
-                <DocsTableCell className={cn("font-bold", "text-[#FF6849]")}>
+                <DocsTableCell
+                  className={`font-semibold text-sm text-[#FF6849]`}
+                >
                   {p.name}
                 </DocsTableCell>
-
-                <DocsTableCell
-                  className={cn("whitespace-pre-wrap break-words")}
-                >
+                <DocsTableCell className="whitespace-pre-wrap break-words">
                   {p.type}
                 </DocsTableCell>
-
-                <DocsTableCell
-                  className={cn(p.name === "Method", "align-middle")}
-                >
+                <DocsTableCell className="align-middle">
                   {p.default}
                 </DocsTableCell>
-
-                <DocsTableCell className="align-top text-[#807F8C]">
-                  {p.desc}
-                </DocsTableCell>
+                <DocsTableCell className="align-top">{p.desc}</DocsTableCell>
               </DocsTableRow>
             ))}
           </tbody>
@@ -269,83 +467,26 @@ function DocsParameter() {
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
             <div
-              className={cn(
-                "text-sm font-semibold",
+              className={`text-sm font-semibold ${
                 p.accent ? "text-[#FF6849]" : "text-white"
-              )}
+              }`}
             >
               {p.name}
             </div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
-              <div className="text-center">{p.type}</div>
+              <div className="text-right break-words">{p.type}</div>
               <div className="opacity-70">Default</div>
-              <div className="mx-auto">{p.default}</div>
+              <div className="text-right">{p.default}</div>
             </div>
 
-            <div className="mt-3 text-sm text-gray-300">{p.desc}</div>
+            <div className="mt-3 text-xs md:text-sm text-gray-300">
+              {p.desc}
+            </div>
           </div>
         ))}
       </div>
     </>
-  );
-}
-
-function StepCard({
-  number,
-  title,
-  className,
-}: {
-  number: string;
-  title?: string;
-  description: string;
-  className?: string;
-}) {
-  return (
-    <div className={cn("flex items-center justify-start gap-4", className)}>
-      <div className="relative w-20 h-24 rounded-2xl overflow-hidden">
-        <div className="absolute inset-0 grid place-items-center">
-          <div className="p-[2px] rounded-md bg-[linear-gradient(270deg,#0F2CAB_0%,#FF6849_100%)]">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md bg-[#050329] flex items-center justify-center">
-              <span className="font-orbitron text-sm sm:text-base md:text-lg leading-none text-white">
-                {number}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="-ml-1 text-left">
-        <h4 className="font-orbitron text-sm sm:text-base md:text-lg text-center leading-tight text-white">
-          {title}
-        </h4>
-      </div>
-    </div>
-  );
-}
-
-export function StepNumber({
-  number,
-  className,
-}: {
-  number: string;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "w-44 sm:w-48 h-28 sm:h-32 rounded-2xl grid place-items-center",
-        className
-      )}
-    >
-      <div className="p-[2px] rounded-md bg-[linear-gradient(270deg,#0F2CAB_0%,#FF6849_100%)]">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-md bg-[#050329] flex items-center justify-center">
-          <span className="font-orbitron text-xl sm:text-2xl leading-none text-white">
-            {number}
-          </span>
-        </div>
-      </div>
-    </div>
   );
 }

@@ -1,9 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
+import { Menu } from "lucide-react";
 import Logo from "../../../public/Logo.svg";
 import { DocsSidebarAutoscroll } from "@/components/docs-sidebar-autoscroll";
 import { DocsSidebar } from "@/components/docs-sidebar";
+import { MobileDocsSidebar } from "@/components/mobile-docs-sidebar";
+import { useLock } from "@/hooks/use-lock";
 
 export const navItems = [
   { label: "Home", href: "/" },
@@ -11,6 +18,13 @@ export const navItems = [
 ];
 
 export default function DocsLayout({ children }: React.PropsWithChildren) {
+  const [open, setOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  useLock(open);
+
   return (
     <main className="min-h-screen w-full bg-[#050329] [--header-h:72px]">
       <header className="sticky top-0 z-50 bg-[#050329] backdrop-blur gradient-border-b-nav">
@@ -41,9 +55,20 @@ export default function DocsLayout({ children }: React.PropsWithChildren) {
                 <FaGithub size={28} />
               </Link>
             </div>
+
+            <button
+              aria-label="Open menu"
+              onClick={() => setOpen(true)}
+              className="lg:hidden rounded-md p-2 text-white/90 hover:text-[#FF6849]"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
           </div>
         </nav>
       </header>
+
+      <MobileDocsSidebar open={open} onClose={() => setOpen(false)} />
+
       <div className="flex flex-1 lg:gap-2">
         <aside className="hidden lg:block sticky top-[var(--header-h)] max-h-[calc(100dvh-var(--header-h))] w-2xs overflow-y-auto blue-scrollbar p-4">
           <DocsSidebarAutoscroll>

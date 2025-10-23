@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${openSans.variable} antialiased`}
+        className={`${geistSans.variable} ${firaCode.variable} ${geistMono.variable} ${orbitron.variable} ${openSans.variable} antialiased`}
       >
         {children}
         <Toaster richColors />
