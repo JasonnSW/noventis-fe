@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     template: "%s | Noventis Docs",
     default: "Noventis Documentation",
   },
+  icons: {
+    icon: [{ url: "/Logo.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/Logo.png", sizes: "180x180" }],
+    shortcut: "/favicon.ico",
+  },
   description:
     "Learn how to install, configure, and use Noventis. Step-by-step tutorials, guides, and best practices for data cleaning, EDA, and visualization.",
   openGraph: {

@@ -133,8 +133,9 @@ export const modelExamples = [
     title: <>Example 1: The Full Experience (Default)</>,
     subtitle: (
       <>
-        Train a list of models with their default parameters and compare their
-        performance.
+        Demonstrates how to train and compare a specified list of models using
+        their default parameters, leveraging the integrated data cleaner for
+        preprocessing.
       </>
     ),
     sections: [
@@ -196,8 +197,9 @@ results = manualml.fit(
     title: <>Example 2: ManualML With Hyperparameter tunning</>,
     subtitle: (
       <>
-        Focus on optimizing a single LightGBM model using 100 Optuna trials and
-        then generate a full report with explanations.
+        Showcases how to enable Optuna-based hyperparameter tuning for a single
+        model to find its optimal configuration, along with displaying tuning
+        plots.
       </>
     ),
     sections: [
@@ -275,13 +277,9 @@ results = manualml.fit(
     title: <>Example 3: Save and use your model</>,
     subtitle: (
       <>
-        Integrate a pre-configured{" "}
-        <code className="font-firaCode text-[#FF6849]">
-          {" "}
-          NoventisDataCleaner{" "}
-        </code>
-        and, after the run, generate SHAP plots to explain the best model's
-        behavior.
+        This demonstrates the practical workflow of saving the best model found
+        during the pipeline run and then loading it back for future use,
+        simulating deployment.
       </>
     ),
     sections: [
