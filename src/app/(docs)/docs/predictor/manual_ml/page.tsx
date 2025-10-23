@@ -59,16 +59,18 @@ export default function Page() {
         <Divider />
 
         <Section titleClass="my-2" title="Model Usage Examples">
-          <h5 className="font-orbitron text-xl text-[#807F8C] my-4">
+          <h5 className="font-orbitron text-base md:text-lg lg:text-xl text-[#807F8C] my-4">
             Prepare Dataset
           </h5>
 
-          <p className="font-openSans text-[#807F8C] mt-4 mb-2">
+          <p className="font-openSans text-sm md:text-base text-[#807F8C] mt-4 mb-2">
             Classification
           </p>
           <CodeBlock title="BASH" code={classificationCode} />
 
-          <p className="font-openSans text-[#807F8C] mt-4 mb-2">Regression</p>
+          <p className="font-openSans text-sm md:text-base text-[#807F8C] mt-4 mb-2">
+            Regression
+          </p>
           <CodeBlock title="BASH" code={regressionCode} />
 
           <div className="mt-12 md:mt-14 lg:mt-16 space-y-12">
@@ -304,15 +306,15 @@ print(f"Model {type(loaded_model)} successfully loaded.")
 function ManualMLHeader() {
   return (
     <>
-      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+      <div className="text-[#FF6849] font-orbitron text-sm md:text-base leading-normal uppercase">
         DATA_CLEANER
       </div>
 
-      <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
         NoventisManualML
       </h3>
 
-      <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         While AutoML provides a powerful, hands-off approach, expert users often
         require granular control over model selection, hyperparameter tuning,
         and in-depth analysis. The{" "}
@@ -322,7 +324,7 @@ function ManualMLHeader() {
         set of machine learning models.
       </p>
 
-      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         Leveraging advanced libraries like{" "}
         <code className="font-firaCode text-[#FF6849]">Optuna</code> for
         hyperparameter optimization and{" "}
@@ -509,24 +511,20 @@ function DocsParameter() {
         </DocsTable>
       </div>
 
-      <div className="md:hidden space-y-3">
+      <div className="md:hidden space-y-5">
         {params.map((p, i) => (
           <div
             key={`${p.name}-${i}`}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={`text-sm font-semibold ${
-                p.accent ? "text-[#FF6849]" : "text-white"
-              }`}
-            >
+            <div className={`text-sm font-semibold ${"text-[#FF6849]"}`}>
               {p.name}
             </div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
               <div className="text-right break-words">{p.type}</div>
-              <div className="opacity-70 text-center">Default</div>
+              <div className="opacity-70">Default</div>
               <div className="text-right">{p.default}</div>
             </div>
 
@@ -600,7 +598,7 @@ function KeyFeatures() {
   ];
 
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       {features.map((f, idx) => (
         <li key={idx} className="marker:text-[#FF6849]">
           <p className="font-bold text-[#FF6849]">{f.title}</p>
@@ -665,7 +663,7 @@ function MainWorkflowMethod() {
 
 function ReportingAnalysisMethods() {
   return (
-    <ul className="list-disc text-base md:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">
           .generate_html_report(filepath=None) → str
@@ -730,7 +728,7 @@ function ReportingAnalysisMethods() {
 
 function UtilityMethods() {
   return (
-    <ul className="list-disc text-base md:text-lg list-outside pl-5 space-y-6 text-[#A9AABC] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#A9AABC] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">.save_model(filepath=None)</p>
         <p className="text-[#A9AABC] mt-1">

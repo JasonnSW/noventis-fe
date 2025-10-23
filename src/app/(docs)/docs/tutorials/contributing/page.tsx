@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CodeBlock } from "@/components/code-block";
 import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
@@ -10,19 +8,7 @@ export default function Page() {
   return (
     <section className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-3">
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          Contributing Guide for Noventis
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg leading-normal">
-          First off, thank you so much for your interest in contributing to
-          Noventis! We're thrilled you're here. Every contribution, no matter
-          how small, is greatly appreciated and helps us make this tool better
-          for everyone.
-        </p>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg leading-normal">
-          This guide provides a set of guidelines and steps to make your
-          contribution process as easy and effective as possible.
-        </p>
+        <Header />
 
         <Divider />
 
@@ -30,7 +16,7 @@ export default function Page() {
           title="Code of Conduct"
           titleClass="mb-4"
           description={
-            <p className="text-[#807F8C] font-openSans text-lg leading-normal">
+            <p className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal">
               To maintain a friendly and inclusive community, this project and
               all its participants are governed by the{" "}
               <span className="text-[#FF6840] font-bold underline">
@@ -41,9 +27,7 @@ export default function Page() {
             </p>
           }
         >
-          <div className="mt-4">
-            <CodeBlock title="BASH" code={codeOfConduct} />
-          </div>
+          <CodeOfConductContent />
         </Section>
 
         <Divider />
@@ -53,35 +37,7 @@ export default function Page() {
           titleClass="mb-2"
           description="There are many ways to contribute, and not all of them involve writing code."
         >
-          <ul className="list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base md:text-lg leading-normal mt-2 marker:text-[#FF6849]">
-            <li className="text-[#807F8C]">
-              <span className="font-bold text-[#FF6849]">Reporting Bugs: </span>
-              If you find something that isn't working as expected, please open
-              a new issue on our GitHub Issues page. Include steps to reproduce
-              the bug.
-            </li>
-            <li className="text-[#807F8C]">
-              <span className="font-bold text-[#FF6849]">
-                Suggesting New Features:{" "}
-              </span>
-              Have a brilliant idea for a new functionality? We'd love to hear
-              it! Open a new issue and describe your idea in detail.
-            </li>
-            <li className="text-[#807F8C]">
-              <span className="font-bold text-[#FF6849]">
-                Improving Documentation:{" "}
-              </span>
-              Found a typo or a confusing sentence in our docs? Fixes to
-              documentation are just as important as fixes to code.
-            </li>
-            <li className="text-[#807F8C]">
-              <span className="font-bold text-[#FF6849]">
-                Submitting Pull Requests:{" "}
-              </span>
-              If you want to add a feature, fix a bug, or improve documentation,
-              this is the best way to do it.
-            </li>
-          </ul>
+          <HowContributeContent />
         </Section>
 
         <Divider />
@@ -91,36 +47,7 @@ export default function Page() {
           titleClass="mb-4"
           description="Ready to start contributing? Follow these steps to set up your development environment and submit your first change."
         >
-          <div className="mt-10 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-14">
-            {contributionSteps.map((s) => {
-              const hasCode = Boolean(s.code);
-              return (
-                <div
-                  key={s.letter}
-                  className={`grid grid-cols-1 ${
-                    hasCode ? "lg:grid-cols-2" : "lg:grid-cols-1"
-                  } gap-6 items-start`}
-                >
-                  <StepOptionCard
-                    letter={s.letter}
-                    title={s.title}
-                    subtitle={s.subtitle}
-                    details={s.details}
-                  />
-
-                  {hasCode && (
-                    <div className="self-start">
-                      <CodeBlock
-                        title={s.language}
-                        code={s.code!}
-                        language={s.language}
-                      />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <ContributionWorkflowContent />
         </Section>
 
         <Divider />
@@ -128,39 +55,7 @@ export default function Page() {
         <Section
           title="Coding Standards"
           titleClass="my-2"
-          description={
-            <>
-              <p className="text-[#807F8C] font-openSans text-lg leading-normal mb-3">
-                To maintain code quality and consistency, please follow these
-                standards:
-              </p>
-
-              <ul className="list-disc list-outside pl-5 space-y-2 text-[#807F8C] marker:text-[#FF6840]">
-                <li>
-                  <span className="text-[#FF6840] font-semibold">
-                    Code Style:
-                  </span>{" "}
-                  We Use <code className="text-[#FF6840] font-bold">Black</code>{" "}
-                  for automated code formatting. Please run black. before
-                  committing to automatically format your code.
-                </li>
-                <li>
-                  <span className="text-[#FF6840] font-semibold">
-                    Docstrings:
-                  </span>{" "}
-                  All new public functions, classes, and methods must have a
-                  clear docstring explaining their purpose, parameters, and what
-                  they return.
-                </li>
-                <li>
-                  <span className="text-[#FF6840] font-semibold">Testing:</span>{" "}
-                  If you add new functionality, it's highly encouraged to add
-                  corresponding unit tests. Contributions that include tests are
-                  prioritized.
-                </li>
-              </ul>
-            </>
-          }
+          description={<CodingStandardsIntro />}
         />
 
         <Divider />
@@ -168,47 +63,7 @@ export default function Page() {
         <Section
           title="Pull Request Review Process"
           titleClass="my-2"
-          description={
-            <>
-              <div className="text-[#807F8C] font-openSans text-lg leading-normal mb-1">
-                Once you submit a PR, one of the project maintainers will review
-                it. The process is as follows:
-              </div>
-
-              <ol className="list-decimal list-outside pl-5 space-y-2 text-[#807F8C] marker:text-[#FF6840]">
-                <li>
-                  <span className="text-[#FF6840] font-semibold">
-                    Initial Review:
-                  </span>{" "}
-                  We will check if your PR is clear and aligns with the
-                  project’s goals.
-                </li>
-                <li>
-                  <span className="text-[#FF6840] font-semibold">
-                    Feedback:
-                  </span>{" "}
-                  We may provide comments or request some changes to improve the
-                  code quality.
-                </li>
-                <li>
-                  <span className="text-[#FF6840] font-semibold">
-                    Approval &amp; Merge:
-                  </span>{" "}
-                  Once all feedback is addressed and all automated checks (CI)
-                  have passed, your PR will be merged into the main branch.
-                </li>
-              </ol>
-
-              <div className="text-[#807F8C] font-openSans text-lg mt-2 leading-normal">
-                Congratulations! Your contribution is now a part of Noventis
-              </div>
-
-              <div className="font-openSans text-lg font-bold mt-4 text-[#807F8C]">
-                Once again, thank you for being a part of the Noventis
-                community!
-              </div>
-            </>
-          }
+          description={<PRReviewProcessContent />}
         />
       </div>
     </section>
@@ -325,15 +180,15 @@ source venv/bin/activate  # macOS/Linux
       <>
         <ul className="list-disc list-outside pl-5 text-[#807F8C] marker:text-[#FF6849]">
           <li>
-            <code className="text-[#FF6840] font-firaCode">feat :</code> for a
+            <code className="text-[#FF6840] font-firaCode">feat:</code> for a
             new feature.
           </li>
           <li>
-            <code className="text-[#FF6840] font-firaCode">fix :</code> for a
-            bug fix.
+            <code className="text-[#FF6840] font-firaCode">fix:</code> for a bug
+            fix.
           </li>
           <li>
-            <code className="text-[#FF6840] font-firaCode">docs :</code> for
+            <code className="text-[#FF6840] font-firaCode">docs:</code> for
             documentation changes.
           </li>
         </ul>
@@ -382,3 +237,168 @@ df = pd.DataFrame(data)
 
 print("Initial Data:")
 display(df)`);
+
+function Header() {
+  return (
+    <>
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        Contributing Guide for Noventis
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        First off, thank you so much for your interest in contributing to{" "}
+        <span className="text-[#FF6849] font-firaCode">Noventis</span>! We're
+        thrilled you're here. Every contribution, no matter how small, is
+        greatly appreciated and helps us make this tool better for everyone.
+      </p>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        This guide provides a set of guidelines and steps to make your
+        contribution process as easy and effective as possible.
+      </p>
+    </>
+  );
+}
+
+function CodeOfConductContent() {
+  return (
+    <div className="mt-4 text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock title="BASH" code={codeOfConduct} />
+    </div>
+  );
+}
+
+function HowContributeContent() {
+  return (
+    <ul className="list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base lg:text-lg leading-normal mt-2 marker:text-[#FF6849]">
+      <li className="text-[#807F8C]">
+        <span className="font-bold text-[#FF6849]">Reporting Bugs: </span>
+        If you find something that isn't working as expected, please open a new
+        issue on our GitHub Issues page. Include steps to reproduce the bug.
+      </li>
+      <li className="text-[#807F8C]">
+        <span className="font-bold text-[#FF6849]">
+          Suggesting New Features:{" "}
+        </span>
+        Have a brilliant idea for a new functionality? We'd love to hear it!
+        Open a new issue and describe your idea in detail.
+      </li>
+      <li className="text-[#807F8C]">
+        <span className="font-bold text-[#FF6849]">
+          Improving Documentation:{" "}
+        </span>
+        Found a typo or a confusing sentence in our docs? Fixes to documentation
+        are just as important as fixes to code.
+      </li>
+      <li className="text-[#807F8C]">
+        <span className="font-bold text-[#FF6849]">
+          Submitting Pull Requests:{" "}
+        </span>
+        If you want to add a feature, fix a bug, or improve documentation, this
+        is the best way to do it.
+      </li>
+    </ul>
+  );
+}
+
+function ContributionWorkflowContent() {
+  return (
+    <div className="mt-10 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-14">
+      {contributionSteps.map((s) => {
+        const hasCode = Boolean(s.code);
+        return (
+          <div
+            key={s.letter}
+            className={`grid grid-cols-1 ${
+              hasCode ? "lg:grid-cols-2" : "lg:grid-cols-1"
+            } gap-6 items-start`}
+          >
+            <StepOptionCard
+              letter={s.letter}
+              title={s.title}
+              subtitle={s.subtitle}
+              details={s.details}
+            />
+
+            {hasCode && (
+              <div className="self-start text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+                <CodeBlock
+                  title={s.language || "BASH"}
+                  code={s.code!}
+                  language={s.language}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function CodingStandardsIntro() {
+  return (
+    <>
+      <p className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal mb-3">
+        To maintain code quality and consistency, please follow these standards:
+      </p>
+
+      <ul className="list-disc list-outside pl-5 space-y-2 text-[#807F8C] marker:text-[#FF6840]">
+        <li>
+          <span className="text-[#FF6840] font-semibold">Code Style:</span> We
+          use <code className="text-[#FF6840] font-bold">Black</code> for
+          automated code formatting. Please run{" "}
+          <code className="text-[#FF6840] font-bold">black .</code> before
+          committing to automatically format your code.
+        </li>
+        <li>
+          <span className="text-[#FF6840] font-semibold">Docstrings:</span> All
+          new public functions, classes, and methods must have a clear docstring
+          explaining their purpose, parameters, and what they return.
+        </li>
+        <li>
+          <span className="text-[#FF6840] font-semibold">Testing:</span> If you
+          add new functionality, it's highly encouraged to add corresponding
+          unit tests. Contributions that include tests are prioritized.
+        </li>
+      </ul>
+    </>
+  );
+}
+
+function PRReviewProcessContent() {
+  return (
+    <>
+      <div className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal mb-1">
+        Once you submit a PR, one of the project maintainers will review it. The
+        process is as follows:
+      </div>
+
+      <ol className="list-decimal list-outside pl-5 space-y-2 text-[#807F8C] marker:text-[#FF6840]">
+        <li>
+          <span className="text-[#FF6840] font-semibold">Initial Review:</span>{" "}
+          We will check if your PR is clear and aligns with the project’s goals.
+        </li>
+        <li>
+          <span className="text-[#FF6840] font-semibold">Feedback:</span> We may
+          provide comments or request some changes to improve the code quality.
+        </li>
+        <li>
+          <span className="text-[#FF6840] font-semibold">
+            Approval &amp; Merge:
+          </span>{" "}
+          Once all feedback is addressed and all automated checks (CI) have
+          passed, your PR will be merged into the main branch.
+        </li>
+      </ol>
+
+      <div className="text-[#807F8C] font-openSans text-base lg:text-lg mt-2 leading-normal">
+        Congratulations! Your contribution is now a part of Noventis
+      </div>
+
+      <div className="font-openSans text-base lg:text-lg font-bold mt-4 text-[#807F8C]">
+        Once again, thank you for being a part of the Noventis community!
+      </div>
+    </>
+  );
+}

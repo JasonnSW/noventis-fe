@@ -57,24 +57,25 @@ export function CodeBlock({
 
       <div className="mt-3 rounded-lg overflow-hidden bg-[#120D6A]">
         {code ? (
-          <SyntaxHighlighter
-            language={language?.toLowerCase()}
-            style={nightOwl}
-            PreTag="div"
-            customStyle={{
-              background: "transparent",
-              paddingInline: 20,
-              fontSize: "clamp(0.75rem, 2vw + 0.5rem, 1rem)",
-              fontFamily: "var(--font-fira-code), monospace",
-              margin: 0,
-              border: "1.2px solid #0f2cab",
-              borderRadius: "11px",
-              overflow: "hidden",
-            }}
-            wrapLongLines
-          >
-            {code}
-          </SyntaxHighlighter>
+          <div className="text-[0.75rem] md:text-[0.8rem] lg:text-[1rem]">
+            <SyntaxHighlighter
+              language={language?.toLowerCase()}
+              style={nightOwl}
+              PreTag="div"
+              customStyle={{
+                background: "transparent",
+                padding: 16,
+                fontFamily: "var(--font-fira-code), monospace",
+                margin: 0,
+                border: "1px solid #0f2cab",
+                borderRadius: "11px",
+                overflow: "hidden",
+              }}
+              wrapLongLines
+            >
+              {code}
+            </SyntaxHighlighter>
+          </div>
         ) : null}
 
         {imageSrc ? (

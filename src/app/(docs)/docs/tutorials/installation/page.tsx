@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CodeBlock } from "@/components/code-block";
 import Link from "next/link";
 import { Divider } from "@/components/divider";
@@ -9,13 +7,8 @@ export default function Page() {
   return (
     <section className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-3">
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          Noventis Installation Guide
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg leading-normal">
-          Welcome! Follow the steps below to install the Noventis library and
-          start automatically cleaning and modeling your data.
-        </p>
+        <Header />
+
         <div className="py-2 self-stretch">
           <CodeBlock title="BASH" code="!pip install noventis" />
         </div>
@@ -26,25 +19,7 @@ export default function Page() {
           title="1. Prerequisites"
           description="Before installing, make sure your environment is ready:"
         >
-          <ul className={cls.ul}>
-            <li className="text-[#807F8C] marker:text-[#807F8C]">
-              <span className="font-bold">Python:</span>{" "}
-              <span className="text-[#FF6849]">3.8+</span>
-            </li>
-            <li className="text-[#807F8C] marker:text-[#807F8C]">
-              <span className="font-bold">Package Manager:</span>{" "}
-              <span className="text-[#FF6849]">pip</span>
-            </li>
-            <li className="text-[#807F8C] marker:text-[#807F8C]">
-              <span className="font-bold">
-                (Highly Recommended) Virtual Environment:
-              </span>{" "}
-              use a venv to avoid conflicts.
-            </li>
-          </ul>
-          <div className="mt-4">
-            <CodeBlock title="BASH" code={PREREQ_SNIPPET} />
-          </div>
+          <Prerequisites />
         </Section>
 
         <Divider />
@@ -54,28 +29,7 @@ export default function Page() {
           description="Choose one of the methods below that best suits your needs."
           className="mt-2"
         >
-          <div className="mt-8 space-y-14">
-            {installSteps.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                  details={s.details}
-                />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <InstallationMethod />
         </Section>
 
         <Divider />
@@ -84,20 +38,7 @@ export default function Page() {
           title="3. Verify Installation"
           description="After the installation completes, verify that everything works:"
         >
-          <div className="py-3 self-stretch">
-            <CodeBlock title="BASH" code={VERIFY_PIP} />
-          </div>
-          <p className={cls.p}>
-            The command above shows package details including version.
-          </p>
-          <p className={cls.p}>
-            <span className="font-bold">Check via Python: </span>
-            Open a Python interpreter and run this short script to ensure the
-            library can be imported.
-          </p>
-          <div className="py-3 self-stretch">
-            <CodeBlock title="PYTHON" code={VERIFY_PY} />
-          </div>
+          <VerifyInstallation />
         </Section>
 
         <Divider />
@@ -106,19 +47,7 @@ export default function Page() {
           title="4. Next Steps"
           description="Congratulations, Noventis is installed! Start here:"
         >
-          <ul className="list-disc list-outside pl-6 mt-2 space-y-2 text-[#807F8C] font-openSans text-base md:text-lg leading-normal marker:text-[#FF6849]">
-            {NEXT_LINKS.map((l, i) => (
-              <li key={i}>
-                <Link
-                  href={l.href}
-                  className="text-[#FF6849] hover:text-[#ff896b] underline underline-offset-2"
-                >
-                  {l.label}
-                </Link>
-                : {l.desc}
-              </li>
-            ))}
-          </ul>
+          <NextSteps />
         </Section>
       </div>
     </section>
@@ -154,14 +83,14 @@ function StepOptionCard({
     <div className="flex items-start gap-4 lg:gap-5">
       <LetterBadge letter={letter} />
       <div className="text-left pt-0.5">
-        <h5 className="font-orbitron text-white text-lg md:text-xl leading-normal">
+        <h5 className="font-orbitron text-white text-base md:text-lg lg:text-xl leading-normal">
           {title}
         </h5>
-        <p className="mt-2 font-openSans text-justify text-[#807F8C] text-md md:text-lg leading-normal">
+        <p className="mt-2 font-openSans text-justify text-[#807F8C] text-sm md:text-base lg:text-lg leading-normal">
           {subtitle}
         </p>
         {details && (
-          <div className="mt-2 font-openSans text-md text-[#807F8C] text-justify md:text-lg leading-relaxed">
+          <div className="mt-2 font-openSans text-base text-[#807F8C] text-justify md:text-lg leading-relaxed">
             {details}
           </div>
         )}
@@ -276,3 +205,113 @@ pip install -e .`,
     language: "BASH",
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        Noventis Installation Guide
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        Welcome! Follow the steps below to install the{" "}
+        <span className="text-[#FF6849] font-firaCode">Noventis</span> library
+        and start automatically cleaning and modeling your data.
+      </p>
+    </>
+  );
+}
+
+function Prerequisites() {
+  return (
+    <>
+      <ul className={cls.ul}>
+        <li className="text-[#807F8C] marker:text-[#807F8C]">
+          <span className="font-bold">Python:</span>{" "}
+          <span className="text-[#FF6849]">3.8+</span>
+        </li>
+        <li className="text-[#807F8C] marker:text-[#807F8C]">
+          <span className="font-bold">Package Manager:</span>{" "}
+          <span className="text-[#FF6849]">pip</span>
+        </li>
+        <li className="text-[#807F8C] marker:text-[#807F8C]">
+          <span className="font-bold">
+            (Highly Recommended) Virtual Environment:
+          </span>{" "}
+          use a venv to avoid conflicts.
+        </li>
+      </ul>
+      <div className="mt-4">
+        <CodeBlock title="BASH" code={PREREQ_SNIPPET} />
+      </div>
+    </>
+  );
+}
+
+function InstallationMethod() {
+  return (
+    <div className="mt-8 space-y-14">
+      {installSteps.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+            details={s.details}
+          />
+
+          <div className="self-start text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+            <CodeBlock title={s.language} code={s.code} language={s.language} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function VerifyInstallation() {
+  return (
+    <>
+      <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+        <CodeBlock title="BASH" code={VERIFY_PIP} />
+      </div>
+
+      <p className={cls.p}>
+        The command above shows package details including version.
+      </p>
+
+      <p className={cls.p}>
+        <span className="font-bold">Check via Python: </span>
+        Open a Python interpreter and run this short script to ensure the
+        library can be imported.
+      </p>
+
+      <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+        <CodeBlock title="PYTHON" code={VERIFY_PY} />
+      </div>
+    </>
+  );
+}
+
+function NextSteps() {
+  return (
+    <>
+      <ul className="list-disc list-outside text-sm md:text-base lg:text-lg pl-6 mt-2 space-y-2 text-[#807F8C] font-openSans leading-normal marker:text-[#FF6849]">
+        {NEXT_LINKS.map((l, i) => (
+          <li key={i}>
+            <Link
+              href={l.href}
+              className="text-[#FF6849] hover:text-[#ff896b] underline underline-offset-2"
+            >
+              {l.label}
+            </Link>
+            : {l.desc}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}

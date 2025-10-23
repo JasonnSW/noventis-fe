@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CodeBlock } from "@/components/code-block";
 import {
   DocsTable,
@@ -8,7 +6,6 @@ import {
   DocsTableHeader,
   DocsTableRow,
 } from "@/components/docs-table";
-import { cn } from "@/lib/utils";
 import { Section } from "@/components/section";
 import { Divider } from "@/components/divider";
 import { dedent } from "@/lib/dedent";
@@ -18,28 +15,8 @@ export default function Page() {
   return (
     <section className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-3">
-        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
-          DATA_CLEANER
-        </div>
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisScaler
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
-          Feature scaling is a crucial preprocessing step that ensures all
-          numerical features have a comparable scale. This can dramatically
-          improve the performance of many machine learning models. However,
-          choosing the right scaler—
-          <code className="text-[#FF6849] font-firaCode">
-            StandardScaler{" "}
-          </code>{" "}
-          for normal data, RobustScaler for data with outliers, or
-          PowerTransformer for skewed data—is often a tedious manual process.
-        </p>
-        <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
-          NoventisScaler is here to automate this process. It intelligently
-          analyzes each numerical column in your dataset and applies the most
-          suitable scaling strategy, ensuring each feature is treated optimally.
-        </p>
+        <Header />
+
         <div className="py-3 self-stretch">
           <CodeBlock
             title="BASH"
@@ -56,106 +33,12 @@ export default function Page() {
         <Divider />
 
         <Section titleClass="my-2" title="Methods">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                fit(X, is_for_knn=False) → returns self
-              </p>
-              <p>Analyze data and fit scalers for each column.</p>
-
-              <div className="mt-1">
-                <p className="font-bold">Parameters:</p>
-
-                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
-                  <li>
-                    <code>X</code> (<code>pd.DataFrame</code>): Input dataframe.
-                  </li>
-                  <li>
-                    <code>is_for_knn</code> (<code>bool</code>): Force MinMax
-                    scaling for KNN algorithms.
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                transform(X) → Returns: pd.DataFrame (scaled data)
-              </p>
-              <p>Apply fitted scalers to transform data.</p>
-              <div className="mt-1">
-                <p className="font-bold">Parameters:</p>
-                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
-                  <li>
-                    <code className="">X</code> (<code>pd.DataFrame</code>):
-                    Input dataframe.
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                fit_transform(X, is_for_knn=False) → Returns: pd.DataFrame
-              </p>
-              <p>Fit and transform in one step.</p>
-              <div className="mt-1">
-                <p className="font-bold">Parameters:</p>
-                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
-                  <li>
-                    <code className="">X</code> (<code>pd.DataFrame</code>):
-                    Input dataframe.
-                  </li>
-                  <li>
-                    <code className="">is_for_knn</code> (<code>bool</code>):
-                    Force MinMax scaling for KNN algorithms.
-                  </li>
-                </ul>
-              </div>
-            </li>
-
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                inverse_transform(X) → Returns: pd.DataFrame
-              </p>
-              <p>Reverse transformation to the original scale.</p>
-              <div className="mt-1">
-                <p className="font-bold">Parameters:</p>
-                <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
-                  <li>
-                    <code className="">X</code> (<code>pd.DataFrame</code>):
-                    Scaled dataframe.
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+          <MethodsContent />
         </Section>
-
         <Divider />
 
         <Section title="Model Usage Examples">
-          <div className="mt-12 space-y-10">
-            {modelExamples.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ModelUsageExamples />
         </Section>
       </div>
     </section>
@@ -255,6 +138,40 @@ print(df_custom_scaled.describe())
 `),
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+        DATA_CLEANER
+      </div>
+
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        NoventisScaler
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
+        Feature scaling is a crucial preprocessing step that ensures all
+        numerical features have a comparable scale. This can dramatically
+        improve the performance of many machine learning models. However,
+        choosing the right scaler—{" "}
+        <code className="text-[#FF6849] font-firaCode">StandardScaler</code> for
+        normal data,{" "}
+        <code className="text-[#FF6849] font-firaCode">RobustScaler</code> for
+        data with outliers, or{" "}
+        <code className="text-[#FF6849] font-firaCode">PowerTransformer</code>{" "}
+        for skewed data—is often a tedious manual process.
+      </p>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
+        <span className="text-[#FF6849] font-firaCode">NoventisScaler</span> is
+        here to automate this process. It intelligently analyzes each numerical
+        column in your dataset and applies the most suitable scaling strategy,
+        ensuring each feature is treated optimally.
+      </p>
+    </>
+  );
+}
 
 function DocsParameter() {
   const params = [
@@ -466,11 +383,7 @@ function DocsParameter() {
             key={p.name}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={`text-sm font-semibold ${
-                p.accent ? "text-[#FF6849]" : "text-white"
-              }`}
-            >
+            <div className={`text-sm font-semibold text-[#FF6849]`}>
               {p.name}
             </div>
 
@@ -488,5 +401,103 @@ function DocsParameter() {
         ))}
       </div>
     </>
+  );
+}
+
+function MethodsContent() {
+  return (
+    <ul className="list-disc list-outside text-base lg:text-lg pl-5 space-y-6 text-[#807F8C] font-openSans">
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849] ">
+          fit(X, is_for_knn=False) → returns self
+        </p>
+        <p>Analyze data and fit scalers for each column.</p>
+
+        <div className="mt-1">
+          <p className="font-bold">Parameters:</p>
+          <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+            <li>
+              <code>X</code> (<code>pd.DataFrame</code>): Input dataframe.
+            </li>
+            <li>
+              <code>is_for_knn</code> (<code>bool</code>): Force MinMax scaling
+              for KNN algorithms.
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">
+          transform(X) → Returns: pd.DataFrame (scaled data)
+        </p>
+        <p>Apply fitted scalers to transform data.</p>
+        <div className="mt-1">
+          <p className="font-bold">Parameters:</p>
+          <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+            <li>
+              <code>X</code> (<code>pd.DataFrame</code>): Input dataframe.
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">
+          fit_transform(X, is_for_knn=False) → Returns: pd.DataFrame
+        </p>
+        <p>Fit and transform in one step.</p>
+        <div className="mt-1">
+          <p className="font-bold">Parameters:</p>
+          <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+            <li>
+              <code>X</code> (<code>pd.DataFrame</code>): Input dataframe.
+            </li>
+            <li>
+              <code>is_for_knn</code> (<code>bool</code>): Force MinMax scaling
+              for KNN algorithms.
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">
+          inverse_transform(X) → Returns: pd.DataFrame
+        </p>
+        <p>Reverse transformation to the original scale.</p>
+        <div className="mt-1">
+          <p className="font-bold">Parameters:</p>
+          <ul className="list-disc pl-6 text-[#807F8C] space-y-1 [&>li]:marker:text-[#807F8C]">
+            <li>
+              <code>X</code> (<code>pd.DataFrame</code>): Scaled dataframe.
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  );
+}
+
+function ModelUsageExamples() {
+  return (
+    <div className="mt-8 md:mt-12 space-y-10">
+      {modelExamples.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+          />
+
+          <div className="self-start w-full max-w-full overflow-x-auto text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+            <CodeBlock title={s.language} code={s.code} language={s.language} />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

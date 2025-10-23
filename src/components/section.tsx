@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 
 export const cls = {
-  h3: "text-white text-4xl font-orbitron font-medium leading-normal",
+  h3: "text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal",
   h5: "text-xl font-orbitron leading-normal text-white",
-  p: "text-[#807F8C] font-openSans text-lg leading-normal py-1",
-  ul: "list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base md:text-lg leading-relaxed",
+  p: "text-[#807F8C] font-openSans text-sm md:text-base lg:text-lg leading-normal py-1",
+  ul: "list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-sm mdtext-base lg:text-lg leading-relaxed",
 };
 
 export function Section({

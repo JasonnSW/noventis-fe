@@ -18,34 +18,10 @@ export default function Page() {
   return (
     <main className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-1">
-        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
-          DATA_CLEANER
-        </div>
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisImputer
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
-          Handling missing data (NaNs) is a critical preprocessing step that can
-          significantly impact model performance. Manually filling these values
-          for each column can be tedious and error-prone. The NoventisImputer
-          provides an intelligent and flexible solution to automate this
-          process.
-        </p>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-norma text-justify my-2">
-          It automatically detects column types (numeric, categorical) and
-          applies appropriate imputation strategies. Whether you need a simple
-          automatic fix, a powerful global method like KNN, or a specific
-          strategy for each column, NoventisImputer streamlines the entire
-          workflow in a scikit-learn compatible interface.
-        </p>
+        <Header />
 
         <Section title="Import">
-          <div className="py-3 self-stretch">
-            <CodeBlock
-              title="BASH"
-              code="from noventis.data_cleaner import NoventisImputer"
-            />
-          </div>
+          <ImportBlock />
         </Section>
 
         <Divider />
@@ -57,29 +33,7 @@ export default function Page() {
         <Divider />
 
         <Section title="Methods" titleClass="my-3">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
-            <li>
-              <p className="font-bold text-[#FF6849]">fit(X)</p>
-              <p>
-                Analyzes the data and learns the imputation strategy from the
-                input DataFrame X.
-              </p>
-            </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">transform(X)</p>
-              <p>
-                pd.DataFrame Applies the learned imputation to the DataFrame X
-                and returns the transformed data.
-              </p>
-            </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
-              <p>
-                pd.DataFrame A convenient method that performs the fit and
-                transform operations in a single step.
-              </p>
-            </li>
-          </ul>
+          <MethodsBlock />
         </Section>
 
         <Divider />
@@ -88,35 +42,13 @@ export default function Page() {
           title="Model Usage Examples"
           titleClass="my-4"
           description={
-            <div className="text-[#807F8C] font-openSans text-lg leading-normal">
-              First, let's create some sample data with missing values.
+            <div className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal">
+              First, let&apos;s create some sample data with missing values.
             </div>
           }
         >
-          <div className="my-4">
-            <CodeBlock title="BASH" code={py} />
-          </div>
-          <div className="mt-12 space-y-12">
-            {modelExamples.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExamplesIntro />
+          <ModelUsageExamples />
         </Section>
       </div>
     </main>
@@ -200,6 +132,40 @@ df_custom_imputed = imputer_custom.fit_transform(df)
 print(df_custom_imputed)`,
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+        DATA_CLEANER
+      </div>
+
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        NoventisImputer
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        Handling missing data (NaNs) is a critical preprocessing step that can
+        significantly impact model performance. Manually filling these values
+        for each column can be tedious and error-prone. The{" "}
+        <span className="text-[#FF6849] font-firaCode">NoventisImputer</span>{" "}
+        provides an intelligent and flexible solution to automate this process.
+      </p>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        It automatically detects column types (numeric, categorical) and applies
+        appropriate imputation strategies. Whether you need a simple automatic
+        fix, a powerful global method like{" "}
+        <span className="text-[#FF6849] font-firaCode">KNN</span>, or a specific
+        strategy for each column,{" "}
+        <span className="text-[#FF6849] font-firaCode">NoventisImputer</span>{" "}
+        streamlines the entire workflow in a{" "}
+        <span className="text-[#FF6849] font-firaCode">scikit-learn</span>{" "}
+        compatible interface.
+      </p>
+    </>
+  );
+}
 
 function DocsParameter() {
   const params = [
@@ -371,12 +337,7 @@ function DocsParameter() {
             key={p.name}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={cn(
-                "text-sm font-semibold",
-                p.accent ? "text-[#FF6849]" : "text-white"
-              )}
-            >
+            <div className={`text-sm font-semibold text-[#FF6849]`}>
               {p.name}
             </div>
 
@@ -394,5 +355,75 @@ function DocsParameter() {
         ))}
       </div>
     </>
+  );
+}
+
+function ImportBlock() {
+  return (
+    <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock
+        title="BASH"
+        code="from noventis.data_cleaner import NoventisImputer"
+      />
+    </div>
+  );
+}
+
+function MethodsBlock() {
+  return (
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
+      <li>
+        <p className="font-bold text-[#FF6849]">fit(X)</p>
+        <p>
+          Analyzes the data and learns the imputation strategy from the input
+          DataFrame <code>X</code>.
+        </p>
+      </li>
+      <li>
+        <p className="font-bold text-[#FF6849]">transform(X)</p>
+        <p>
+          Applies the learned imputation to the DataFrame <code>X</code> and
+          returns the transformed <code>pd.DataFrame</code>.
+        </p>
+      </li>
+      <li>
+        <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
+        <p>
+          Convenience method that performs the <code>fit</code> and{" "}
+          <code>transform</code> operations in a single step.
+        </p>
+      </li>
+    </ul>
+  );
+}
+
+function ExamplesIntro() {
+  return (
+    <div className="my-4 text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock title="BASH" code={py} />
+    </div>
+  );
+}
+
+function ModelUsageExamples() {
+  return (
+    <div className="mt-12 space-y-12">
+      {modelExamples.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+          />
+
+          <div className="self-start w-full max-w-full overflow-x-auto text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+            <CodeBlock title={s.language} code={s.code} language={s.language} />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

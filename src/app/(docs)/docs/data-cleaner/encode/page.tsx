@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CodeBlock } from "@/components/code-block";
 import {
   DocsTable,
@@ -17,40 +15,10 @@ export default function Page() {
   return (
     <main className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-1">
-        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
-          DATA_CLEANER
-        </div>
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisEncoder
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
-          Encoding categorical features is a critical and often complex step in
-          preparing data for machine learning. The choice of encoding strategy
-          (One-Hot, Target, or Label encoding) can dramatically affect model
-          performance. A poor choice can lead to bloated datasets
-          (dimensionality curse) or mislead the model by creating false ordinal
-          relationships.
-        </p>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-norma text-justify my-2">
-          The{" "}
-          <span className="text-[#FF6849] font-firaCode">NoventisEncoder</span>{" "}
-          is an advanced tool designed to solve this problem. It not only
-          provides a comprehensive suite of encoding methods but also features
-          an intelligent{" "}
-          <span className="text-[#FF6849] font-firaCode">'auto'</span> mode.
-          This mode analyzes each categorical column's characteristics (such as
-          its number of unique values , its relationship with the target
-          variable, and its potential memory impact) to recommend and apply the
-          most effective encoding strategy automatically.
-        </p>
+        <Header />
 
         <Section title="Import">
-          <div className="py-3 self-stretch">
-            <CodeBlock
-              title="BASH"
-              code="from noventis.data_cleaner import NoventisEncoder"
-            />
-          </div>
+          <ImportEncoder />
         </Section>
 
         <Divider />
@@ -62,40 +30,7 @@ export default function Page() {
         <Divider />
 
         <Section titleClass="my-2" title="Methods">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
-            <li>
-              <p className="font-bold text-[#FF6849]">fit(X, y)</p>
-              <p>
-                Analyzes the dataset and fits the appropriate encoder for each
-                categorical column. The target series <code>y</code> is required
-                for <b className="text-[#FF6849] font-firaCode">'auto'</b> and{" "}
-                <b className="text-[#FF6849] font-firaCode">'target'</b>{" "}
-                methods.
-              </p>
-            </li>
-
-            <li>
-              <p className="font-bold text-[#FF6849]">
-                transform(X) → pd.DataFrame
-              </p>
-              <p>
-                Applies the learned encoding to the input DataFrame{" "}
-                <code>X</code> and returns the transformed data as a new{" "}
-                <code>pd.DataFrame</code>.
-              </p>
-            </li>
-
-            <li>
-              <p className="font-bold text-[#FF6849]">
-                fit_transform(X, y) → pd.DataFrame
-              </p>
-              <p>
-                A convenient shortcut that performs both <code>fit</code> and{" "}
-                <code>transform</code> operations in a single step, returning
-                the encoded DataFrame.
-              </p>
-            </li>
-          </ul>
+          <EncoderMethods />
         </Section>
 
         <Divider />
@@ -104,35 +39,13 @@ export default function Page() {
           title="Model Usage Examples"
           titleClass="my-3"
           description={
-            <div className="text-[#807F8C] font-openSans text-lg leading-normal">
-              First, let's create sample data with some obvious outliers.
+            <div className="text-[#807F8C] font-openSans text-base md:text-lg leading-normal">
+              First, let&apos;s create sample data with some obvious outliers.
             </div>
           }
         >
-          <div className="my-4">
-            <CodeBlock title="BASH" code={py} />
-          </div>
-          <div className="mt-12 space-y-12">
-            {modelExamples.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExamplesIntro />
+          <ModelUsageExamples />
         </Section>
       </div>
     </main>
@@ -227,6 +140,40 @@ print(df_encoded_target[['Country_target_encoded']].head())
 `),
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+        DATA_CLEANER
+      </div>
+
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        NoventisEncoder
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        Encoding categorical features is a critical and often complex step in
+        preparing data for machine learning. The choice of encoding strategy
+        (One-Hot, Target, or Label encoding) can dramatically affect model
+        performance. A poor choice can lead to bloated datasets (dimensionality
+        curse) or mislead the model by creating false ordinal relationships.
+      </p>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        The{" "}
+        <span className="text-[#FF6849] font-firaCode">NoventisEncoder</span> is
+        an advanced tool designed to solve this problem. It not only provides a
+        comprehensive suite of encoding methods but also features an intelligent{" "}
+        <span className="text-[#FF6849] font-firaCode">'auto'</span> mode. This
+        mode analyzes each categorical column&apos;s characteristics (such as
+        its number of unique values, its relationship with the target variable,
+        and its potential memory impact) to recommend and apply the most
+        effective encoding strategy automatically.
+      </p>
+    </>
+  );
+}
 
 function DocsParameter() {
   const params = [
@@ -451,11 +398,7 @@ function DocsParameter() {
             key={p.name}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={`text-sm font-semibold ${
-                p.accent ? "text-[#FF6849]" : "text-white"
-              }`}
-            >
+            <div className={`text-sm font-semibold text-[#FF6849]`}>
               {p.name}
             </div>
 
@@ -471,5 +414,83 @@ function DocsParameter() {
         ))}
       </div>
     </>
+  );
+}
+
+function ImportEncoder() {
+  return (
+    <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock
+        title="BASH"
+        code="from noventis.data_cleaner import NoventisEncoder"
+      />
+    </div>
+  );
+}
+
+function EncoderMethods() {
+  return (
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
+      <li>
+        <p className="font-bold text-[#FF6849]">fit(X, y)</p>
+        <p>
+          Analyzes the dataset and fits the appropriate encoder for each
+          categorical column. The target series <code>y</code> is required for{" "}
+          <b className="text-[#FF6849] font-firaCode">&apos;auto&apos;</b> and{" "}
+          <b className="text-[#FF6849] font-firaCode">&apos;target&apos;</b>{" "}
+          methods.
+        </p>
+      </li>
+
+      <li>
+        <p className="font-bold text-[#FF6849]">transform(X) → pd.DataFrame</p>
+        <p>
+          Applies the learned encoding to the input DataFrame <code>X</code> and
+          returns the transformed data as a new <code>pd.DataFrame</code>.
+        </p>
+      </li>
+
+      <li>
+        <p className="font-bold text-[#FF6849]">
+          fit_transform(X, y) → pd.DataFrame
+        </p>
+        <p>
+          A convenient shortcut that performs both <code>fit</code> and{" "}
+          <code>transform</code> in a single step, returning the encoded
+          DataFrame.
+        </p>
+      </li>
+    </ul>
+  );
+}
+
+function ExamplesIntro() {
+  return (
+    <div className="my-4 text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock title="BASH" code={py} />
+    </div>
+  );
+}
+
+function ModelUsageExamples() {
+  return (
+    <div className="mt-12 space-y-12">
+      {modelExamples.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+          />
+
+          <div className="self-start w-full max-w-full overflow-x-auto text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+            <CodeBlock title={s.language} code={s.code} language={s.language} />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

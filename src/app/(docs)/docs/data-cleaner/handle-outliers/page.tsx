@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CodeBlock } from "@/components/code-block";
 import {
   DocsTable,
@@ -17,40 +15,10 @@ export default function Page() {
   return (
     <main className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-1">
-        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
-          DATA_CLEANER
-        </div>
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisOutlierHandler
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
-          Outliers, or extreme values, can significantly skew statistical
-          analyses and degrade the performance of machine learning models.
-          Handling them correctly is a crucial step in data preprocessing. The
-          <span className="text-[#FF6849] font-firaCode">
-            {" "}
-            NoventisOutlierHandler
-          </span>{" "}
-          provides a systematic and flexible framework for identifying and
-          managing outliers in your dataset.
-        </p>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-norma text-justify my-2">
-          This tool allows you to choose between two primary strategies:
-          removing outlier rows entirely (trimming) or capping their values to a
-          reasonable range (winsorizing). It features an intelligent{" "}
-          <span className="text-[#FF6849]">'auto' </span>
-          mode to select an appropriate strategy based on your data's
-          characteristics, but also offers fine-grained control to apply
-          specific methods to different columns.
-        </p>
+        <Header />
 
         <Section title="Import">
-          <div className="py-3 self-stretch">
-            <CodeBlock
-              title="BASH"
-              code="from noventis.data_cleaner import NoventisOutlierHandler"
-            />
-          </div>
+          <ImportBlock />
         </Section>
 
         <Divider />
@@ -62,29 +30,7 @@ export default function Page() {
         <Divider />
 
         <Section title="Methods">
-          <ul className="list-disc text-lg mt-4 list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
-            <li>
-              <p className="font-bold text-[#FF6849]">fit(X)</p>
-              <p>
-                Analyzes the data and learns the imputation strategy from the
-                input DataFrame X.
-              </p>
-            </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">transform(X)</p>
-              <p>
-                pd.DataFrame Applies the learned imputation to the DataFrame X
-                and returns the transformed data.
-              </p>
-            </li>
-            <li>
-              <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
-              <p>
-                pd.DataFrame A convenient method that performs the fit and
-                transform operations in a single step.
-              </p>
-            </li>
-          </ul>
+          <MethodsBlock />
         </Section>
 
         <Divider />
@@ -92,35 +38,13 @@ export default function Page() {
         <Section
           title="Model Usage Examples"
           description={
-            <div className="text-[#807F8C] font-openSans text-lg leading-normal">
-              First, let's create sample data with some obvious outliers.
+            <div className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal">
+              First, let&apos;s create sample data with some obvious outliers.
             </div>
           }
         >
-          <div className="my-4">
-            <CodeBlock title="BASH" code={py} />
-          </div>
-          <div className="mt-12 space-y-12">
-            {modelExamples.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                />
-                <div className="self-start">
-                  <CodeBlock
-                    title={s.language}
-                    code={s.code}
-                    language={s.language}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ExamplesIntro />
+          <ModelUsageExamples />
         </Section>
       </div>
     </main>
@@ -224,6 +148,41 @@ print(f"Custom handled shape: {df_custom.shape}")
 `),
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+        DATA_CLEANER
+      </div>
+
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        NoventisOutlierHandler
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        Outliers, or extreme values, can significantly skew statistical analyses
+        and degrade the performance of machine learning models. Handling them
+        correctly is a crucial step in data preprocessing. The{" "}
+        <span className="text-[#FF6849] font-firaCode">
+          NoventisOutlierHandler
+        </span>{" "}
+        provides a systematic and flexible framework for identifying and
+        managing outliers in your dataset.
+      </p>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        This tool allows you to choose between two primary strategies: removing
+        outlier rows entirely (trimming) or capping their values to a reasonable
+        range (winsorizing). It features an intelligent{" "}
+        <span className="text-[#FF6849] font-firaCode">'auto'</span> mode to
+        select an appropriate strategy based on your data&apos;s
+        characteristics, but also offers fine-grained control to apply specific
+        methods to different columns.
+      </p>
+    </>
+  );
+}
 
 function DocsParameter() {
   const params = [
@@ -425,11 +384,7 @@ function DocsParameter() {
             key={p.name}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={`text-sm font-semibold ${
-                p.accent ? "text-[#FF6849]" : "text-white"
-              }`}
-            >
+            <div className={`text-sm font-semibold text-[#FF6849]`}>
               {p.name}
             </div>
 
@@ -445,5 +400,75 @@ function DocsParameter() {
         ))}
       </div>
     </>
+  );
+}
+
+function ImportBlock() {
+  return (
+    <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock
+        title="BASH"
+        code="from noventis.data_cleaner import NoventisOutlierHandler"
+      />
+    </div>
+  );
+}
+
+function MethodsBlock() {
+  return (
+    <ul className="list-disc text-base lg:text-lg mt-4 list-outside pl-5 space-y-5 text-[#807F8C] marker:text-[#FF6849] font-openSans">
+      <li>
+        <p className="font-bold text-[#FF6849]">fit(X)</p>
+        <p>
+          Analyzes the data and learns the outlier handling configuration from
+          the input DataFrame <code>X</code>.
+        </p>
+      </li>
+      <li>
+        <p className="font-bold text-[#FF6849]">transform(X)</p>
+        <p>
+          Applies the learned strategy to <code>X</code> and returns the
+          transformed <code>pd.DataFrame</code>.
+        </p>
+      </li>
+      <li>
+        <p className="font-bold text-[#FF6849]">fit_transform(X)</p>
+        <p>
+          Convenience method that performs <code>fit</code> and{" "}
+          <code>transform</code> in one step.
+        </p>
+      </li>
+    </ul>
+  );
+}
+
+function ExamplesIntro() {
+  return (
+    <div className="my-4 text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock title="BASH" code={py} />
+    </div>
+  );
+}
+
+function ModelUsageExamples() {
+  return (
+    <div className="mt-12 space-y-12">
+      {modelExamples.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+          />
+
+          <div className="self-start w-full max-w-full overflow-x-auto text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+            <CodeBlock title={s.language} code={s.code} language={s.language} />
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

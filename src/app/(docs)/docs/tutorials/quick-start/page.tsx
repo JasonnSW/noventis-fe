@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import { CodeBlock } from "@/components/code-block";
 import { Divider } from "@/components/divider";
@@ -8,17 +7,7 @@ export default function Page() {
   return (
     <section className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-3">
-        <h3 className={cls.h3}>
-          Quickstart Guide: From Raw Data to a Model in 5 Minutes
-        </h3>
-
-        <p className={cls.p}>
-          Welcome to Noventis! In this guide, we'll walk through a complete
-          machine learning workflow using just a few lines of code. We'll take a
-          "dirty" dataset, automatically analyze it, clean it, and then train
-          and compare multiple models to find the best one.
-        </p>
-        <p className={cls.p}>Let's get started!</p>
+        <Header />
 
         <Divider />
 
@@ -26,14 +15,7 @@ export default function Page() {
           title="Step 1: Setup & Load Sample Data"
           description={`First, let's import all the tools we'll need from the Noventis library. We'll also create a sample DataFrame that has several common issues: missing data (NaN), categorical features, a potential outlier, and a binary target to predict.`}
         >
-          <div className="mt-4 space-y-6">
-            <CodeBlock title="PYTHON" code={QS_SETUP_CODE} />
-            <CodeBlock
-              title="RESULT"
-              imageSrc="/quickstart-01.svg"
-              imageAlt="Quickstart 01"
-            />
-          </div>
+          <Step1Setup />
         </Section>
 
         <Divider />
@@ -50,26 +32,13 @@ export default function Page() {
             </>
           }
         >
-          <div className="space-y-4">
-            <CodeBlock title="PYTHON" code={AUTOEDA_CODE} />
-            <CodeBlock
-              title="RESULT"
-              imageSrc="/quickstart-02.svg"
-              imageAlt="Quickstart 02"
-            />
-          </div>
-          <p className={cls.p}>
-            This single command will generate a complete HTML dashboard showing
-            data distributions, missing values, correlations, and more. From
-            this, we can confirm that we have missing data in the
-            <span className="text-[#FF6849]"> Age, City, </span> and
-            <span className="text-[#FF6849]"> Salary </span>columns.
-          </p>
+          <Step2AutoEDA />
         </Section>
 
         <Divider />
 
         <Section
+          titleClass="font-medium font-orbitron text-2xl md:text-3xl lg:text-4xl mt-4"
           title="Step 3: Automated Data Cleaning (Just One Line!)"
           className="space-y-2"
           description={
@@ -83,21 +52,7 @@ export default function Page() {
             </>
           }
         >
-          <div className="space-y-4">
-            <CodeBlock title="PYTHON" code={DATACLEANER_CODE} />
-            <CodeBlock
-              title="RESULT"
-              imageSrc="/quickstart-03.svg"
-              imageAlt="Quickstart 03"
-            />
-          </div>
-          <p className={cls.p}>
-            Notice how the <span className="text-[#FF6849]">City </span> column
-            has been transformed into several numeric columns (via encoding),
-            and all <span className="text-[#FF6849]">NaN </span> values have
-            been filled. Our data is now clean, fully numeric, and ready for
-            machine learning!
-          </p>
+          <Step3DataCleaner />
         </Section>
 
         <Divider />
@@ -115,14 +70,7 @@ export default function Page() {
             </>
           }
         >
-          <div className="self-stretch">
-            <CodeBlock title="PYTHON" code={AUTOML_CODE} />
-          </div>
-          <p className={cls.p}>
-            This process will display a log as various models are tested. Once
-            finished, the best model will be saved, and the results are ready to
-            be displayed.
-          </p>
+          <Step4AutoML />
         </Section>
 
         <Divider />
@@ -139,61 +87,13 @@ export default function Page() {
             </>
           }
         >
-          <p className={cls.p + " mt-3"}>
-            This report contains everything you need:
-          </p>
-          <ul className="list-disc list-outside pl-6 space-y-1 text-[#807F8C] font-openSans text-base md:text-lg leading-normal">
-            <li>Model comparison rankings.</li>
-            <li>
-              Detailed performance metrics of the best model (Accuracy,
-              F1-Score, etc.).
-            </li>
-            <li>
-              Visualizations like a Confusion Matrix and Feature Importance.
-            </li>
-          </ul>
-          <div className="mt-6">
-            <CodeBlock
-              title="RESULT"
-              imageSrc="/quickstart-04.svg"
-              imageAlt="Quickstart 04"
-            />
-          </div>
+          <Step5Results />
         </Section>
 
         <Divider />
 
         <Section title="Conclusion">
-          <p className={cls.p}>
-            Congratulations! In just a few minutes and with only a handful of
-            code lines, you have successfully:
-          </p>
-
-          <ol className="list-decimal list-outside pl-6 space-y-1 text-[#807F8C] font-openSans text-base md:text-lg leading-relaxed">
-            {CONCLUSION_POINTS.map((item, idx) => (
-              <li key={idx}>
-                <span className="font-bold">{item.title}</span> {item.text}
-              </li>
-            ))}
-          </ol>
-
-          <p className={cls.p + " mt-4"}>
-            You are now ready to explore the more in-depth features of each
-            Noventis component!
-          </p>
-
-          <ul className="list-disc list-outside pl-6 space-y-2 text-[#B2B1BD] font-openSans text-base md:text-lg leading-relaxed marker:text-[#FF6849]">
-            {CONCLUSION_LINKS.map((link, idx) => (
-              <li key={idx}>
-                <Link
-                  href={link.href}
-                  className="text-[#FF6849] hover:text-[#ff896b] underline underline-offset-2"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Conclusion />
         </Section>
       </div>
     </section>
@@ -253,3 +153,157 @@ const CONCLUSION_LINKS = [
   { href: "/docs/data-cleaner", label: "Learn more about Data Cleaner" },
   { href: "/docs/predictor/auto_ml", label: "Learn more about AutoML" },
 ];
+
+function Header() {
+  return (
+    <>
+      <h3 className={cls.h3}>
+        Quickstart Guide: From Raw Data to a Model in 5 Minutes
+      </h3>
+
+      <p className={cls.p}>
+        Welcome to{" "}
+        <span className="text-[#FF6849] font-firaCode">Noventis</span>! In this
+        guide, we'll walk through a complete machine learning workflow using
+        just a few lines of code. We'll take a "dirty" dataset, automatically
+        analyze it, clean it, and then train and compare multiple models to find
+        the best one.
+      </p>
+
+      <p className={cls.p}>Let's get started!</p>
+    </>
+  );
+}
+
+function Step1Setup() {
+  return (
+    <div className="mt-4 space-y-6">
+      <CodeBlock title="PYTHON" code={QS_SETUP_CODE} />
+      <CodeBlock
+        title="RESULT"
+        imageSrc="/quickstart-01.svg"
+        imageAlt="Quickstart 01"
+      />
+    </div>
+  );
+}
+
+function Step2AutoEDA() {
+  return (
+    <>
+      <div className="space-y-4">
+        <CodeBlock title="PYTHON" code={AUTOEDA_CODE} />
+        <CodeBlock
+          title="RESULT"
+          imageSrc="/quickstart-02.svg"
+          imageAlt="Quickstart 02"
+        />
+      </div>
+      <p className={cls.p}>
+        This single command will generate a complete HTML dashboard showing data
+        distributions, missing values, correlations, and more. From this, we can
+        confirm that we have missing data in the
+        <span className="text-[#FF6849]"> Age, City, </span> and
+        <span className="text-[#FF6849]"> Salary </span>columns.
+      </p>
+    </>
+  );
+}
+
+function Step3DataCleaner() {
+  return (
+    <>
+      <div className="space-y-4">
+        <CodeBlock title="PYTHON" code={DATACLEANER_CODE} />
+        <CodeBlock
+          title="RESULT"
+          imageSrc="/quickstart-03.svg"
+          imageAlt="Quickstart 03"
+        />
+      </div>
+      <p className={cls.p}>
+        Notice how the <span className="text-[#FF6849]">City </span> column has
+        been transformed into several numeric columns (via encoding), and all{" "}
+        <span className="text-[#FF6849]">NaN </span> values have been filled.
+        Our data is now clean, fully numeric, and ready for machine learning!
+      </p>
+    </>
+  );
+}
+
+function Step4AutoML() {
+  return (
+    <>
+      <div className="self-stretch">
+        <CodeBlock title="PYTHON" code={AUTOML_CODE} />
+      </div>
+      <p className={cls.p}>
+        This process will display a log as various models are tested. Once
+        finished, the best model will be saved, and the results are ready to be
+        displayed.
+      </p>
+    </>
+  );
+}
+
+function Step5Results() {
+  return (
+    <>
+      <p className={cls.p + " mt-3"}>
+        This report contains everything you need:
+      </p>
+      <ul className="list-disc list-outside pl-6 space-y-1 text-[#807F8C] font-openSans text-base md:text-lg leading-normal">
+        <li>Model comparison rankings.</li>
+        <li>
+          Detailed performance metrics of the best model (Accuracy, F1-Score,
+          etc.).
+        </li>
+        <li>Visualizations like a Confusion Matrix and Feature Importance.</li>
+      </ul>
+      <div className="mt-6">
+        <CodeBlock
+          title="RESULT"
+          imageSrc="/quickstart-04.svg"
+          imageAlt="Quickstart 04"
+        />
+      </div>
+    </>
+  );
+}
+
+function Conclusion() {
+  return (
+    <>
+      <p className={cls.p}>
+        Congratulations! In just a few minutes and with only a handful of code
+        lines, you have successfully:
+      </p>
+
+      <ol className="list-decimal list-outside pl-6 space-y-1 text-[#807F8C] font-openSans text-sm md:text-base lg:text-lg leading-relaxed">
+        {CONCLUSION_POINTS.map((item, idx) => (
+          <li key={idx}>
+            <span className="font-bold">{item.title}</span> {item.text}
+          </li>
+        ))}
+      </ol>
+
+      <p className={cls.p + " mt-4"}>
+        You are now ready to explore the more in-depth features of each Noventis
+        component!
+      </p>
+
+      <ul className="list-disc list-outside text-sm md:text-base lg:text-lg pl-6 space-y-2 text-[#B2B1BD] font-openSans leading-relaxed marker:text-[#FF6849]">
+        {CONCLUSION_LINKS.map((link, idx) => (
+          <li key={idx}>
+            <Link
+              href={link.href}
+              className="text-[#FF6849] hover:text-[#ff896b] underline underline-offset-2"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}

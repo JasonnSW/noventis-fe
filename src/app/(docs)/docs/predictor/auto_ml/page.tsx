@@ -58,16 +58,18 @@ export default function Page() {
         <Divider />
 
         <Section titleClass="my-2" title="Model Usage Examples">
-          <h5 className="font-orbitron text-xl text-[#807F8C] my-4">
+          <h5 className="font-orbitron text-base md:text-lg lg:text-xl text-[#807F8C] my-4">
             Prepare Dataset
           </h5>
 
-          <p className="font-openSans text-[#807F8C] mt-4 mb-2">
+          <p className="font-openSans text-sm md:text-base text-[#807F8C] mt-4 mb-2">
             Classification
           </p>
           <CodeBlock title="BASH" code={classificationCode} />
 
-          <p className="font-openSans text-[#807F8C] mt-4 mb-2">Regression</p>
+          <p className="font-openSans text-sm md:text-base  text-[#807F8C] mt-4 mb-2">
+            Regression
+          </p>
           <CodeBlock title="BASH" code={regressionCode} />
 
           <div className="mt-12 md:mt-14 lg:mt-16 space-y-12">
@@ -390,7 +392,7 @@ function AutoMLHeader() {
       <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
         NoventisAutoML
       </h3>
-      <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         The journey from a prepared dataset to a high-performing, deployable
         machine learning model involves numerous steps: model selection,
         hyperparameter tuning, rigorous evaluation, and comparison.{" "}
@@ -402,7 +404,7 @@ function AutoMLHeader() {
         data, RobustScaler for data with outliers, or PowerTransformer for
         skewed data—is often a tedious manual process.
       </p>
-      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         Powered by the robust FLAML library, it can find the best model through
         an efficient AutoML search, train a specific list of models you define,
         or do both and compare them head-to-head to find the undisputed champion
@@ -414,7 +416,7 @@ function AutoMLHeader() {
 
 function AutoMLKeyFeatures() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">Hybrid Modeling Approach</p>
         <p>
@@ -474,7 +476,7 @@ function AutoMLKeyFeatures() {
 
 function AutoMLMainWorkflow() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">
           .fit(time_budget=60, metric=None) → dict
@@ -496,7 +498,7 @@ function AutoMLMainWorkflow() {
 
 function AutoMLReportingAnalysis() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">
           .generate_html_report() → HTML
@@ -530,7 +532,7 @@ function AutoMLReportingAnalysis() {
 
 function AutoMLUtilityMethods() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">
           .predict(X_new, model_path=None)
@@ -807,18 +809,14 @@ function DocsParameter() {
             key={`${p.name}-${i}`}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div
-              className={`text-sm font-semibold ${
-                p.accent ? "text-[#FF6849]" : "text-white"
-              }`}
-            >
+            <div className={`text-sm font-semibold ${"text-[#FF6849]"}`}>
               {p.name}
             </div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
               <div className="text-right break-words">{p.type}</div>
-              <div className="opacity-70 text-center">Default</div>
+              <div className="opacity-70">Default</div>
               <div className="text-right">{p.default}</div>
             </div>
 

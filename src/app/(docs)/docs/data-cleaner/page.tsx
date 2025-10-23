@@ -8,7 +8,6 @@ import {
   DocsTableHeader,
   DocsTableRow,
 } from "@/components/docs-table";
-import { cn } from "@/lib/utils";
 import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
 import { dedent } from "@/lib/dedent";
@@ -18,28 +17,10 @@ export default function Page() {
   return (
     <main className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-1">
-        <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
-          DATA_CLEANER
-        </div>
-        <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
-          NoventisDataCleaner (The Pipeline Orchestrator)
-        </h3>
-        <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify my-2">
-          The NoventisDataCleaner class acts as the central conductor for the
-          entire Noventis preprocessing suite. It allows you to design,
-          configure, and execute a sequential data cleaning pipeline, chaining
-          together the modules for imputation, outlier handling, encoding, and
-          scaling. Its primary purpose is to provide a unified interface to
-          manage the complete workflow, from initial data to a model-ready
-          dataset, and to generate comprehensive reports on the entire process.
-        </p>
+        <Header />
+
         <Section title="Import">
-          <div className="py-3 self-stretch">
-            <CodeBlock
-              title="BASH"
-              code="from noventis.data_cleaner import NoventisDataCleaner"
-            />
-          </div>
+          <ImportNoventisDataCleaner />
         </Section>
 
         <Divider />
@@ -51,73 +32,16 @@ export default function Page() {
         <Divider />
 
         <Section titleClass="my-2" title="Methods">
-          <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                fit_transform(X, y=None) → pd.DataFrame
-              </p>
-              <p>
-                The main method that executes the entire cleaning pipeline. It
-                takes a DataFrame X (and an optional target Series y for
-                target-dependent steps) and runs it through the sequence of
-                operations defined in pipeline_steps. It returns the fully
-                cleaned and processed DataFrame.
-              </p>
-            </li>
-
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                display_summary_report()
-              </p>
-
-              <p>
-                Prints a concise, text-based summary of the entire pipeline run
-                to the console, including a final data quality score and key
-                metrics from each step.
-              </p>
-            </li>
-
-            <li className="marker:text-[#FF6849]">
-              <p className="font-bold text-[#FF6849]">
-                generate_html_report() → HTML
-              </p>
-              <p>
-                Generates a rich, interactive, and visually appealing HTML
-                report of the entire cleaning process. The report includes an
-                overview with a final quality score, as well as dedicated tabs
-                for each step with detailed summaries and before-and-after
-                visualizations
-              </p>
-            </li>
-          </ul>
+          <MethodsNoventisDataCleaner />
         </Section>
 
         <Divider />
 
         <Section
-          titleClass="font-medium font-orbitron text-4xl mt-4"
+          titleClass="font-medium font-orbitron text-2xl md:text-3xl lg:text-4xl mt-4"
           title="data_cleaner (The Simplified Helper Function)"
         >
-          <p className="text-[#807F8C] font-normal font-openSans text-base md:text-lg leading-normal text-justify mt-4">
-            For rapid and straightforward data cleaning tasks, the{" "}
-            <code className="font-firaCode text-[#FF6849]">data_cleaner</code>{" "}
-            function provides a high-level, simplified interface to the{" "}
-            <code className="font-firaCode text-[#FF6849]">
-              NoventisDataCleaner
-            </code>{" "}
-            pipeline. With a single function call, you can execute a standard
-            cleaning sequence using the most common settings, making it ideal
-            for initial data exploration and preparing baseline models.
-          </p>
-
-          <Section title="Import">
-            <div className="py-1 self-stretch">
-              <CodeBlock
-                title="BASH"
-                code="from noventis.data_cleaner import data_cleaner"
-              />
-            </div>
-          </Section>
+          <DataCleanerIntro />
         </Section>
 
         <Divider />
@@ -129,40 +53,7 @@ export default function Page() {
         <Divider />
 
         <Section title="Model Usage Examples" titleClass="my-4">
-          <div className="mt-10 space-y-12">
-            {modelExamples.map((s, idx) => (
-              <div
-                key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
-              >
-                <StepOptionCard
-                  letter={s.letter}
-                  title={s.title}
-                  subtitle={s.subtitle}
-                />
-                <div className="self-start space-y-8">
-                  {s.sections.map((section, sIdx) => (
-                    <div key={sIdx} className="space-y-3">
-                      <p className="font-openSans text-[#807F8C]">
-                        {section.label}
-                      </p>
-
-                      {section.items.map((item, iIdx) => (
-                        <CodeBlock
-                          key={iIdx}
-                          title={item.title}
-                          code={item.code}
-                          language={item.language}
-                          imageSrc={item.imageSrc}
-                          imageAlt={item.imageAlt}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <ModelUsageExamples />
         </Section>
       </div>
     </main>
@@ -266,6 +157,34 @@ cleaner_instance.generate_html_report()
     ],
   },
 ];
+
+function Header() {
+  return (
+    <>
+      <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
+        DATA_CLEANER
+      </div>
+
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
+        NoventisDataCleaner (The Pipeline Orchestrator)
+      </h3>
+
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify my-2">
+        The{" "}
+        <span className="text-[#FF6849] font-firaCode">
+          NoventisDataCleaner
+        </span>{" "}
+        class acts as the central conductor for the entire Noventis
+        preprocessing suite. It allows you to design, configure, and execute a
+        sequential data cleaning pipeline, chaining together the modules for
+        imputation, outlier handling, encoding, and scaling. Its primary purpose
+        is to provide a unified interface to manage the complete workflow—from
+        initial data to a model-ready dataset—and to generate comprehensive
+        reports on the entire process.
+      </p>
+    </>
+  );
+}
 
 function DocsParameter() {
   const params = [
@@ -455,7 +374,7 @@ function DocsParameter() {
             key={`${p.name}-${i}`}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div className="text-sm font-semibold text-white">{p.name}</div>
+            <div className="text-sm font-semibold text-[#FF6849]">{p.name}</div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
@@ -643,7 +562,7 @@ function DocsParameterDataCleaner() {
             key={`${p.name}-${i}`}
             className="rounded-lg border border-[#0F2CAB] bg-[#050329] p-4"
           >
-            <div className="text-sm font-semibold text-white">{p.name}</div>
+            <div className="text-sm font-semibold text-[#FF6849]">{p.name}</div>
 
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
@@ -657,5 +576,120 @@ function DocsParameterDataCleaner() {
         ))}
       </div>
     </>
+  );
+}
+
+function ImportNoventisDataCleaner() {
+  return (
+    <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+      <CodeBlock
+        title="BASH"
+        code="from noventis.data_cleaner import NoventisDataCleaner"
+      />
+    </div>
+  );
+}
+
+function MethodsNoventisDataCleaner() {
+  return (
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">
+          fit_transform(X, y=None) → pd.DataFrame
+        </p>
+        <p>
+          The main method that executes the entire cleaning pipeline. It takes a
+          DataFrame X (and an optional target Series y for target-dependent
+          steps) and runs it through the sequence of operations defined in
+          pipeline_steps. It returns the fully cleaned and processed DataFrame.
+        </p>
+      </li>
+
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">display_summary_report()</p>
+        <p>
+          Prints a concise, text-based summary of the entire pipeline run to the
+          console, including a final data quality score and key metrics from
+          each step.
+        </p>
+      </li>
+
+      <li className="marker:text-[#FF6849]">
+        <p className="font-bold text-[#FF6849]">
+          generate_html_report() → HTML
+        </p>
+        <p>
+          Generates a rich, interactive, and visually appealing HTML report of
+          the entire cleaning process. The report includes an overview with a
+          final quality score, as well as dedicated tabs for each step with
+          detailed summaries and before-and-after visualizations
+        </p>
+      </li>
+    </ul>
+  );
+}
+
+function DataCleanerIntro() {
+  return (
+    <>
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg leading-normal text-justify mt-4">
+        For rapid and straightforward data cleaning tasks, the{" "}
+        <code className="font-firaCode text-[#FF6849]">data_cleaner</code>{" "}
+        function provides a high-level, simplified interface to the{" "}
+        <code className="font-firaCode text-[#FF6849]">
+          NoventisDataCleaner
+        </code>{" "}
+        pipeline. With a single function call, you can execute a standard
+        cleaning sequence using the most common settings, making it ideal for
+        initial data exploration and preparing baseline models.
+      </p>
+
+      <Section title="Import">
+        <div className="py-1 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
+          <CodeBlock
+            title="BASH"
+            code="from noventis.data_cleaner import data_cleaner"
+          />
+        </div>
+      </Section>
+    </>
+  );
+}
+
+function ModelUsageExamples() {
+  return (
+    <div className="mt-8 md:mt-12 space-y-12">
+      {modelExamples.map((s, idx) => (
+        <div
+          key={idx}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
+        >
+          <StepOptionCard
+            letter={s.letter}
+            title={s.title}
+            subtitle={s.subtitle}
+          />
+
+          <div className="flex flex-col space-y-8 self-start">
+            {s.sections.map((section, sIdx) => (
+              <div key={sIdx} className="space-y-4">
+                <p className="font-openSans text-[#807F8C]">{section.label}</p>
+
+                {section.items.map((item, iIdx) => (
+                  <CodeBlock
+                    key={iIdx}
+                    title={item.title}
+                    code={item.code}
+                    language={item.language}
+                    imageSrc={item.imageSrc}
+                    imageAlt={item.imageAlt}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

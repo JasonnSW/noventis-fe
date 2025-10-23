@@ -29,7 +29,7 @@ export default function DocsLayout({ children }: React.PropsWithChildren) {
     <main className="min-h-screen w-full bg-[#050329] [--header-h:72px]">
       <header className="sticky top-0 z-50 bg-[#050329] backdrop-blur gradient-border-b-nav">
         <nav className="mx-auto w-full max-w-8xl h-[var(--header-h)]">
-          <div className="flex h-full items-center justify-between sm:px-10 md:px-14">
+          <div className="flex h-full items-center justify-between p-10">
             <div className="flex items-center gap-2">
               <Image src={Logo} alt="Noventis Logo" width={60} height={60} />
               <h1 className="font-orbitron text-xl font-semibold leading-normal tracking-tight text-white">
@@ -70,13 +70,15 @@ export default function DocsLayout({ children }: React.PropsWithChildren) {
       <MobileDocsSidebar open={open} onClose={() => setOpen(false)} />
 
       <div className="flex flex-1 lg:gap-2">
-        <aside className="hidden lg:block sticky top-[var(--header-h)] max-h-[calc(100dvh-var(--header-h))] w-2xs overflow-y-auto blue-scrollbar p-4">
+        <aside className="hidden lg:block sticky top-[var(--header-h)] max-h-[calc(100dvh-var(--header-h))] w-2xs overflow-y-auto blue-scrollbar p-4 min-w-0">
           <DocsSidebarAutoscroll>
             <DocsSidebar />
           </DocsSidebarAutoscroll>
         </aside>
 
-        <section className="flex-1 p-4 bg-[#04021F]">{children}</section>
+        <section className="flex-1 p-4 bg-[#04021F] min-w-0 break-words hyphens-auto">
+          {children}
+        </section>
       </div>
     </main>
   );
