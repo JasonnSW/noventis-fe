@@ -1,13 +1,6 @@
 import clsx from "clsx";
 import Link, { LinkProps } from "next/link";
-import { X } from "lucide-react";
-import { Slot } from "@radix-ui/react-slot";
-import { cn } from "@/lib/utils";
 import * as React from "react";
-
-type CloseButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  asChild?: boolean;
-};
 
 export function NavList({ children, ...rest }: React.PropsWithChildren) {
   return (
@@ -48,13 +41,22 @@ export function NavListItems({
   );
 }
 
-export function NavListItem({ children }: React.PropsWithChildren) {
-  return (
-    <li className="-ml-[2px] flex flex-col items-start gap-3 w-full">
-      {children}
-    </li>
-  );
-}
+type NavListItemProps = React.PropsWithChildren<{ className?: string }>;
+export const NavListItem = React.forwardRef<HTMLLIElement, NavListItemProps>(
+  function NavListItem({ children, className }, ref) {
+    return (
+      <li
+        ref={ref}
+        className={clsx(
+          "-ml-[2px] flex flex-col items-start gap-3 w-full",
+          className
+        )}
+      >
+        {children}
+      </li>
+    );
+  }
+);
 
 type NavListLinkProps = LinkProps &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {

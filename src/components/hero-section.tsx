@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { SlArrowRight } from "react-icons/sl";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -22,19 +23,23 @@ export default function HeroSection() {
           Free Data Scientists from Repetitive Tasks, Focus on Valuable
           Insights.
         </h5>
-        <Button
-          variant="default"
-          className="border-3 border-[#FF6860] hover:border-[#FF6849] group relative mt-6 inline-flex h-12 items-center justify-center
+
+        <Link href="/docs/tutorials/installation">
+          <Button
+            variant="default"
+            className="border-3 border-[#FF6860] hover:border-[#FF6849] group relative mt-6 inline-flex h-12 items-center justify-center
              rounded-full bg-[#FF6849] hover:bg-[#FF6844] px-8 text-white cursor-pointer font-semibold font-open-sans text-lg
              transition-all duration-300 gap-4"
-        >
-          <span className="flex items-center">Install Noventis</span>
+          >
+            <span className="flex items-center">Install Noventis</span>
 
-          <span className="flex items-center">
-            <span className="block rounded-full h-[1px] w-0 bg-[#d9d9d9] transition-all duration-300 group-hover:w-3 -mr-1 group-hover:text-white" />
-            <SlArrowRight className="text-[#d9d9d9] -ml-[5px] group-hover:text-white" />
-          </span>
-        </Button>
+            <span className="flex items-center">
+              <span className="block rounded-full h-[1px] w-0 bg-[#d9d9d9] transition-all duration-300 group-hover:w-3 -mr-1 group-hover:text-white" />
+              <SlArrowRight className="text-[#d9d9d9] -ml-[5px] group-hover:text-white" />
+            </span>
+          </Button>
+        </Link>
+
         <div
           className="absolute -right-[150px] -bottom-[10px] w-[240px] h-[240px] aspect-square
              rounded-full opacity-50 bg-[#0F2CAB] blur-[150px] z-0"

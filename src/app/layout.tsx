@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Orbitron,
-  Open_Sans,
-  Fira_Code,
-} from "next/font/google";
+import { Orbitron, Open_Sans, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
@@ -25,7 +19,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://noventis-fe.vercel.app"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  ),
   alternates: { canonical: "/" },
   title: {
     template: "%s | Noventis",
@@ -37,11 +33,11 @@ export const metadata: Metadata = {
     title: "Noventis — Intelligent Automation for Your Data Analysis",
     description:
       "Noventis helps data scientists automate tedious jobs like data cleaning and exploratory analysis, enabling more time for high-value tasks such as deep analysis, complex modeling, and decision-making.",
-    url: "https://noventis-fe.vercel.app",
+    url: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: "Noventis",
     images: [
       {
-        url: "/Logo.png",
+        url: "/logoo.png",
         width: 1200,
         height: 630,
         alt: "Noventis — Intelligent Automation for Your Data Analysis",
@@ -55,12 +51,11 @@ export const metadata: Metadata = {
     title: "Noventis — Intelligent Automation for Your Data Analysis",
     description:
       "Automate your data analysis workflow with Noventis — a Python-based toolkit designed to free you from repetitive tasks and accelerate valuable insights.",
-    images: ["/Logo.png"],
+    images: ["/logoo.png"],
   },
   icons: {
     icon: [{ url: "/Logo.svg", type: "image/svg+xml" }],
     apple: [{ url: "/Logo.png", sizes: "180x180" }],
-    shortcut: "/favicon.ico",
   },
 };
 
@@ -78,7 +73,17 @@ export default function RootLayout({
         className={`${firaCode.variable} ${orbitron.variable} ${openSans.variable} antialiased`}
       >
         {children}
-        <Toaster richColors />
+        <Toaster
+          toastOptions={{
+            style: {
+              background: "rgba(5,3,41,0.6)",
+              backdropFilter: "blur(5px)",
+              color: "#4ade80",
+              border: "2px solid rgba(23,16,137,0.4)",
+              boxShadow: "10px 10px 30px rgba(0,0,0,0.3)",
+            },
+          }}
+        />
       </body>
     </html>
   );

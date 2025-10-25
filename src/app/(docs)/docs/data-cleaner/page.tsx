@@ -80,23 +80,26 @@ const modelExamples = [
             code: dedent(`import pandas as pd
 from noventis.datacleaner import NoventisDataCleaner
 
-# Assume X and y are pre-loaded DataFrames/Series
-# X, y = load_your_data()
+# Assume ‘dummy_classification_churn’ is in your folder
+df = pd.read_csv('dummy_classification_churn.csv')
+
+X = df.drop(columns=['churn'])
+y = df['churn']
 
 # 1. Define custom configurations for each step
 imputer_config = {'method': 'median'}
 outlier_config = {'default_method': 'winsorize', 'quantile_range': (0.01, 0.99)}
-encoder_config = {'method': 'auto', 'target_column': 'YourTargetColumnName'}
+encoder_config = {'method': 'auto', 'target_column': ‘churn'}
 scaler_config = {'method': 'robust'}
 
 # 2. Initialize the cleaner with the custom configurations
 cleaner = NoventisDataCleaner(
-    pipeline_steps=['impute', 'outlier', 'encode', 'scale'],
-    imputer_params=imputer_config,
-    outlier_params=outlier_config,
-    encoder_params=encoder_config,
-    scaler_params=scaler_config,
-    verbose=True
+    pipeline_steps=['impute', 'outlier', 'encode', 'scale'],
+    imputer_params=imputer_config,
+    outlier_params=outlier_config,
+    encoder_params=encoder_config,
+    scaler_params=scaler_config,
+    verbose=False
 )
 
 # 3. Run the entire pipeline
@@ -104,6 +107,7 @@ cleaned_df = cleaner.fit_transform(X, y)
 
 # 4. Generate the interactive HTML report
 cleaner.generate_html_report()
+
 `),
           },
           {

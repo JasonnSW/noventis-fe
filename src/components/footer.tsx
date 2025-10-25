@@ -36,7 +36,7 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li>
                   <Link
-                    href="/docs"
+                    href="/docs/tutorials/installation"
                     className="group inline-flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors"
                   >
                     <IoDocumentTextOutline className="h-5 w-5 text-white/70 group-hover:text-white" />
@@ -45,7 +45,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="https://github.com/your-org/noventis"
+                    href="https://github.com/bccfilkom/noventis"
                     target="_blank"
                     className="group inline-flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors"
                   >
@@ -67,7 +67,7 @@ export default function Footer() {
 
               <div className="mt-4">
                 <Link
-                  href="https://github.com/your-org/noventis"
+                  href="https://github.com/bccfilkom/noventis"
                   target="_blank"
                   className="btn-gradient-github"
                 >

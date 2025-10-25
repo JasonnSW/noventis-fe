@@ -111,14 +111,8 @@ export const modelExamples = [
             title: "BASH",
             language: "bash",
             code: dedent(`
-import pandas as pd
-from noventis.auto_eda import NoventisAutoEDA
-
-# Assume 'df' is your pre-loaded DataFrame
-# df = pd.read_csv('your_data.csv')
-
-eda_default = NoventisAutoEDA(data=df, target='YourTargetColumn')
-eda_default.run()
+analyzer_default = NoventisAutoEDA(data=df, target=’SalePrice')
+analyzer_default.run()
 `),
           },
           {
@@ -148,13 +142,8 @@ eda_default.run()
             title: "BASH",
             language: "bash",
             code: dedent(`
-# Use personality='business' and show_base_viz=False
-eda_business = NoventisAutoEDA(data=df,
-                               target='Revenue', # A numeric target is best for this
-                               personality='business')
-
-# This will generate a report with only the Business Impact tab
-eda_business.run(show_base_viz=False)
+analyzer_business = NoventisAutoEDA(data=df, target='SalePrice', personality='business')
+analyzer_business.run(show_base_viz=False)
 `),
           },
           {
@@ -181,28 +170,8 @@ eda_business.run(show_base_viz=False)
             title: "BASH",
             language: "bash",
             code: dedent(`
-from noventis_datacleaner import NoventisDataCleaner
-
-# First, configure the data cleaner (optional)
-data_cleaner_instance = NoventisDataCleaner(
-    imputer_params={'method': 'median'},
-    outlier_params={'default_method': 'winsorize'}
-)
-
-# Initialize the predictor, passing the cleaner instance
-predictor_advanced = ManualPredictor(
-    model_name='catboost',
-    task='classification',
-    data_cleaner=data_cleaner_instance, # Pass the configured cleaner
-    tune_hyperparameters=True,
-    n_trials=75
-)
-
-# Run the full pipeline
-results_adv = predictor_advanced.run_pipeline(df, target_column='YourTarget')
-
-# After the run, explain the best model using SHAP
-predictor_advanced.explain_model(plot_type='summary')
+analyzer_academic = NoventisAutoEDA(df, target='SalePrice', personality='academic')
+analyzer_academic.run()
 `),
           },
           {
@@ -231,12 +200,8 @@ predictor_advanced.explain_model(plot_type='summary')
             title: "BASH",
             language: "bash",
             code: dedent(`
-# Use personality='all' and the default show_base_viz=True
-eda_full = NoventisAutoEDA(data=df,
-                           target='YourTargetColumn',
-                           personality='all')
-
-eda_full.run()
+analyzer_full = NoventisAutoEDA(data=df, target='SalePrice', personality='all')
+analyzer_full.run()
 `),
           },
           {
@@ -587,7 +552,7 @@ function DocsParameter() {
             <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-gray-300">
               <div className="opacity-70">Type</div>
               <div className="text-right break-words">{p.type}</div>
-              <div className="opacity-70 text-center">Default</div>
+              <div className="opacity-70">Default</div>
               <div className="text-right">{p.default}</div>
             </div>
 

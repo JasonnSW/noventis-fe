@@ -114,14 +114,25 @@ export default function Page() {
   );
 }
 
-const classificationCode = dedent(`df_titanic = sns.load_dataset('titanic')
+const classificationCode = dedent(`import pandas as pd
+import seaborn as sns
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+from noventis.predictor import NoventisAutoML
+
+df_titanic = sns.load_dataset('titanic')
 
 df_titanic_clean = df_titanic.drop(columns=['deck', 'embark_town', 'alive'])
 df_titanic_clean = df_titanic_clean.dropna()
-
 `);
 
-const regressionCode = dedent(`housing = fetch_california_housing()
+const regressionCode = dedent(`import pandas as pd
+import seaborn as sns
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+from noventis.predictor import NoventisAutoML
+
+housing = fetch_california_housing()
 
 df_housing = pd.DataFrame(housing.data, columns=housing.feature_names)
 df_housing['MedHouseVal'] = housing.target 

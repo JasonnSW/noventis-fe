@@ -18,11 +18,18 @@ export function StepOptionCard({
         <h5 className="font-orbitron text-white text-base sm:text-lg md:text-xl lg:text-2xl leading-normal">
           {title}
         </h5>
-        <p className="mt-2 font-openSans text-justify text-[#807F8C] text-md md:text-lg lg:text-xl leading-normal">
+        <p
+          className="mt-2 font-openSans text-justify text-[#807F8C] text-md md:text-lg lg:text-xl leading-normal
+             hyphens-none [overflow-wrap:anywhere]"
+        >
           {subtitle}
         </p>
+
         {details && (
-          <div className="mt-2 font-openSans sm:text-md md:text-lg lg:text-xl  text-[#807F8C] text-justify leading-relaxed">
+          <div
+            className="mt-2 font-openSans sm:text-md md:text-lg lg:text-xl text-[#807F8C] text-justify leading-relaxed
+               hyphens-none [overflow-wrap:anywhere]"
+          >
             {details}
           </div>
         )}

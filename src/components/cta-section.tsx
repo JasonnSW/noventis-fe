@@ -4,12 +4,9 @@ import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { Image as ImageIcon } from "lucide-react";
 import { MdTerminal } from "react-icons/md";
 import { IoPlayCircleOutline } from "react-icons/io5";
-
-const quickExample = `python -m venv noventis_env
-source noventis_env/bin/activate   # Linux/macOS
-# noventis_env\\Scripts\\activate   # Windows
-source noventis_env/bin/activate   # Linux/macOS
-pip install noventis`;
+import { dedent } from "@/lib/dedent";
+import Link from "next/link";
+import { CodeBlock } from "./code-block";
 
 export default function CtaSection() {
   return (
@@ -50,59 +47,36 @@ export default function CtaSection() {
           </h3>
         </div>
 
-        <div className="my-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-8xl mx-auto">
-          <div className="relative rounded-2xl bg-[#0B0848] border border-[#120D6A] p-4">
-            <div className="flex items-center justify-center px-2 gap-x-2">
-              <MdTerminal className="w-6 h-6 text-[#FF6849]" />
-              <span className="tracking-[0.2em] text-[#a9acbf] text-xs sm:text-sm font-openSans">
-                QUICK EXAMPLE
-              </span>
-            </div>
+        <div className="my-12 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          <CodeBlock
+            title="QUICK EXAMPLE"
+            titleIcon={<MdTerminal />}
+            language="python"
+            code={quickExample}
+          />
+          <div className="flex flex-col space-y-4">
+            <CodeBlock
+              title="BEFORE"
+              titleIcon={<IoPlayCircleOutline />}
+              imageSrc="/before.svg"
+            />
 
-            <div className="mt-3 rounded-xl overflow-hidden border border-[#0f2cab] bg-[#120D6A]">
-              <SyntaxHighlighter
-                language="bash"
-                style={atomOneDark}
-                PreTag="div"
-                customStyle={{
-                  background: "transparent",
-                  paddingInline: 20,
-                  fontSize: "1.125rem",
-                  fontFamily: "var(--font-fira-code), monospace",
-                  margin: 0,
-                }}
-                wrapLongLines
-              >
-                {quickExample}
-              </SyntaxHighlighter>
-            </div>
-          </div>
-
-          <div className="relative rounded-2xl bg-[#0b0848] border border-[#120D6A] p-4">
-            <div className="flex items-center justify-center px-2 gap-x-2">
-              <IoPlayCircleOutline className="w-6 h-6 text-[#FF6849]" />
-              <span className="tracking-[0.2em] text-[#a9acbf] text-xs sm:text-sm font-openSans">
-                RESULTS
-              </span>
-            </div>
-            <div className="mt-3 rounded-xl border border-[#0f2cab] bg-[#120D6A] p-8 flex items-center justify-center">
-              <div className="flex flex-col items-center gap-4 text-[#807f8c]">
-                <ImageIcon className="w-10 h-10" />
-                <p className="text-center text-sm sm:text-lg max-w-xl">
-                  insert of the visual output from the code (e.g., a summary
-                  table or a simple plot).
-                </p>
-              </div>
-            </div>
+            <CodeBlock
+              title="AFTER"
+              titleIcon={<IoPlayCircleOutline />}
+              imageSrc="/after.svg"
+            />
           </div>
         </div>
 
         <div className="mt-8 flex justify-center">
           <button className="btn-gradient-border font-openSans">
             <span className="btn-inner px-8 py-3 text-white font-openSans cursor-pointer">
-              <span className="btn-label font-openSans font-semibold">
-                See More Examples
-              </span>
+              <Link href="/docs/tutorials/quick-start">
+                <span className="btn-label font-openSans font-semibold">
+                  See More Examples
+                </span>
+              </Link>
             </span>
           </button>
         </div>
@@ -110,3 +84,25 @@ export default function CtaSection() {
     </section>
   );
 }
+
+const quickExample = dedent(`# 1. Start with messy data (with NaNs and text)
+import pandas as pd
+import numpy as np
+df = pd.DataFrame({
+    'City': ['London', np.nan, 'Paris', 'Tokyo'],
+    'Salary': [72000, np.nan, 250000, 89000],
+    'Purchased': [0, 1, 0, 1]
+})
+
+# 2. Clean it in ONE LINE with Noventis!
+from noventis_datacleaner import data_cleaner
+cleaned_df = data_cleaner(df, target_column='Purchased')
+
+# 3. Your data is now model-ready
+print(cleaned_df.head())
+
+
+
+
+
+`);
