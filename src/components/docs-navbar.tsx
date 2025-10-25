@@ -44,7 +44,7 @@ export default function DocsNavbar() {
               </Link>
             ))}
             <Link
-              href="https://github.com/noventis"
+              href="https://github.com/bccfilkom/noventis"
               aria-label="GitHub"
               target="_blank"
               rel="noopener noreferrer"

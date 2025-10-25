@@ -67,10 +67,15 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <FaGithub
-                size={32}
-                className="text-[#FF6849] transition-all duration-300 hover:text-[#0f2cab] -ml-2"
-              />
+              <Link
+                href="https://github.com/bccfilkom/noventis"
+                aria-label="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FF6849] transition-colors hover:text-[#0F2CAB]"
+              >
+                <FaGithub size={32} />
+              </Link>
             </div>
 
             <div className="flex lg:hidden">
