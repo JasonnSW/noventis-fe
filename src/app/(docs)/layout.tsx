@@ -4,24 +4,44 @@ import { DocsSidebar } from "@/components/docs-sidebar";
 import { DocsSidebarAutoscroll } from "@/components/docs-sidebar-autoscroll";
 import "../globals.css";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export const metadata: Metadata = {
-  title: { template: "%s | Noventis Docs", default: "Noventis Documentation" },
+  metadataBase: new URL(baseUrl),
+  title: {
+    template: "%s | Noventis Docs",
+    default: "Noventis Documentation — Learn, Build, and Automate",
+  },
   description:
-    "Learn how to install, configure, and use Noventis. Step-by-step tutorials, guides, and best practices for data cleaning, EDA, and visualization.",
+    "Explore the official Noventis documentation. Learn how to install, configure, and use Noventis for intelligent data cleaning, automated EDA, and smart machine learning workflows.",
   alternates: { canonical: "/docs" },
   openGraph: {
-    title: "Noventis Docs",
+    title: "Noventis Documentation",
     description:
-      "Official documentation for Noventis — installation, quick start, tutorials, and best practices.",
+      "Official Noventis Docs — step-by-step installation guides, tutorials, and best practices for data cleaning, EDA, and visualization.",
     url: `${baseUrl}/docs`,
     siteName: "Noventis",
     images: [
-      { url: "/logoo.png", width: 1200, height: 630, alt: "Noventis Docs" },
+      {
+        url: "/logoo.png",
+        width: 1200,
+        height: 630,
+        alt: "Noventis Documentation",
+      },
     ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Noventis Documentation",
+    description:
+      "Comprehensive guides for Noventis — from installation to advanced data automation workflows.",
+    images: ["/logoo.png"],
+  },
+  icons: {
+    icon: [{ url: "/Logo.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/Logo.png", sizes: "180x180" }],
   },
 };
 

@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     default: "Noventis — Intelligent Automation for Your Data Analysis",
   },
   description:
-    "Noventis is an intelligent Python toolkit built to free data practitioners from repetitive work. It automates data cleaning, exploratory analysis, and visualization so you can focus on deep analysis, complex modeling, and strategic decision-making.",
+    "A powerful Python library designed to revolutionize your data analysis workflow through intelligent automation. Provides cutting-edge tools for automated exploratory data analysis, predictive modeling, and data cleaning with minimal code.",
   openGraph: {
-    title: "Noventis — Intelligent Automation for Your Data Analysis",
+    title: "Noventis - Intelligent Automation for Your Data Analysis",
     description:
-      "Noventis helps data scientists automate tedious jobs like data cleaning and exploratory analysis, enabling more time for high-value tasks such as deep analysis, complex modeling, and decision-making.",
+      "Revolutionize your data analysis workflow with Noventis. Automated EDA, intelligent ML model selection with hyperparameter tuning, and smart data preprocessing with minimal code.",
     url: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: "Noventis",
     images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         url: "/logoo.png",
         width: 1200,
         height: 630,
-        alt: "Noventis — Intelligent Automation for Your Data Analysis",
+        alt: "Noventis - Intelligent Automation for Your Data Analysis",
       },
     ],
     locale: "en_US",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Noventis — Intelligent Automation for Your Data Analysis",
     description:
-      "Automate your data analysis workflow with Noventis — a Python-based toolkit designed to free you from repetitive tasks and accelerate valuable insights.",
+      "Revolutionize your data analysis workflow through intelligent automation. Automated EDA, predictive modeling, and data cleaning with minimal code.",
     images: ["/logoo.png"],
   },
   icons: {
