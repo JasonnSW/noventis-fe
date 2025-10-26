@@ -61,7 +61,7 @@ export default function HeroSection() {
         />
         <motion.img
           src="/hero-laptop-beam.svg"
-          alt=""
+          alt="hero-laptop-beam"
           className="absolute inset-0 w-full h-full  hidden md:block"
           variants={{ off: { opacity: 0 }, on: { opacity: 1 } }}
           transition={{ duration: 0.4, ease: [0.5, 1, 0.36, 1] }}
