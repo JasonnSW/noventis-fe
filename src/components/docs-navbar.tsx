@@ -16,7 +16,7 @@ export const navItems = [
 ];
 
 export default function DocsNavbar() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const pathname = usePathname();
 
   useEffect(() => setOpen(false), [pathname]);

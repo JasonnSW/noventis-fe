@@ -3,32 +3,13 @@ import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
 import { StepOptionCard } from "@/components/step-card";
 import { dedent } from "@/lib/dedent";
+import Link from "next/link";
 
 export default function Page() {
   return (
     <section className="max-w-6xl mx-auto my-4">
       <div className="flex flex-col space-y-3">
         <Header />
-
-        <Divider />
-
-        <Section
-          title="Code of Conduct"
-          titleClass="mb-4"
-          description={
-            <p className="text-[#807F8C] font-openSans text-base lg:text-lg leading-normal">
-              To maintain a friendly and inclusive community, this project and
-              all its participants are governed by the{" "}
-              <span className="text-[#FF6840] font-bold underline">
-                Noventis Code of Conduct.
-              </span>{" "}
-              Please adhere to this code in all your interactions with the
-              project.
-            </p>
-          }
-        >
-          <CodeOfConductContent />
-        </Section>
 
         <Divider />
 
@@ -44,7 +25,7 @@ export default function Page() {
 
         <Section
           title="Your Contribution Workflow"
-          titleClass="mb-4"
+          titleClass="mb-4 text-xl"
           description="Ready to start contributing? Follow these steps to set up your development environment and submit your first change."
         >
           <ContributionWorkflowContent />
@@ -86,9 +67,14 @@ const contributionSteps: ContributionStep[] = [
     subtitle: (
       <>
         Click the "Fork" button at the top-right corner of the{" "}
-        <span className="text-[#FF6840] font-firaCode font-bold underline">
+        <Link
+          href="https://github.com/bccfilkom/noventis"
+          aria-label="GitHub"
+          target="_blank"
+          className="text-[#FF6840] font-firaCode underline"
+        >
           Noventis GitHub page
-        </span>{" "}
+        </Link>{" "}
         to create a copy of the repository in your own GitHub account.
       </>
     ),
@@ -219,25 +205,6 @@ git commit -m "feat: Add support for SVM model in ManualPredictor"`,
   },
 ];
 
-const codeOfConduct = dedent(`import pandas as pd
-import numpy as np
-from noventis_eda import NoventisAutoEDA
-from noventis_datacleaner import data_cleaner
-from noventis_automl import NoventisAutoML
-
-# Create a "dirty" sample DataFrame
-data = {
-    'Age': [22, 38, 26, 35, np.nan, 28, 50, 45],
-    'City': ['London', 'Paris', 'New York', 'Tokyo', 'London', 'Paris', np.nan, 'New York'],
-    'Experience': [1, 10, 3, 8, 5, 4, 20, 15],
-    'Salary': [72000, 48000, 54000, 250000, 75000, np.nan, 83000, 45000], # 250000 is an outlier
-    'Purchased': [0, 1, 0, 1, 1, 0, 1, 0] # Our target
-}
-df = pd.DataFrame(data)
-
-print("Initial Data:")
-display(df)`);
-
 function Header() {
   return (
     <>
@@ -260,21 +227,21 @@ function Header() {
   );
 }
 
-function CodeOfConductContent() {
-  return (
-    <div className="mt-4 text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
-      <CodeBlock title="BASH" code={codeOfConduct} />
-    </div>
-  );
-}
-
 function HowContributeContent() {
   return (
     <ul className="list-disc list-outside pl-6 space-y-1 text-[#B2B1BD] font-openSans text-base lg:text-lg leading-normal mt-2 marker:text-[#FF6849]">
       <li className="text-[#807F8C]">
         <span className="font-bold text-[#FF6849]">Reporting Bugs: </span>
         If you find something that isn't working as expected, please open a new
-        issue on our GitHub Issues page. Include steps to reproduce the bug.
+        issue on our{" "}
+        <Link
+          className="font-firaCode text-[#FF6849] underline"
+          target="_blank"
+          href="https://github.com/bccfilkom/noventis/issues"
+        >
+          GitHub Issues page.
+        </Link>{" "}
+        Include steps to reproduce the bug.
       </li>
       <li className="text-[#807F8C]">
         <span className="font-bold text-[#FF6849]">

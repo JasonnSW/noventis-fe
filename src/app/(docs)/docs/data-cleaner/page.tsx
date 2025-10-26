@@ -138,17 +138,20 @@ cleaner.generate_html_report()
           {
             title: "BASH",
             language: "BASH",
-            code: dedent(`from noventis_datacleaner import data_cleaner
+            code: dedent(`from noventis import data_cleaner
+
+# Assume ‘dummy_classification_churn’ is in your folder
+df_2 = pd.read_csv('../dataset_for_examples/AmesHousing.csv')
+
 # Run the cleaner and ask for the instance to be returned
-cleaned_df, cleaner_instance = data_cleaner(
-    data='path/to/your/data.csv',
-    target_column='YourTargetColumnName',
-    null_handling='median',
-    outlier_handling='iqr_trim',
-    return_instance=True,
-    verbose=False
+df_cleaned, dfisinstance = data_cleaner(
+    data=df_2,
+    return_instance=True,
+    target_column='SalePrice'
 )
-cleaner_instance.generate_html_report()
+
+# Now, generate the rich HTML report from the returned instance
+dfisinstance.generate_html_report()
 `),
           },
           {
@@ -586,10 +589,7 @@ function DocsParameterDataCleaner() {
 function ImportNoventisDataCleaner() {
   return (
     <div className="py-3 self-stretch text-[0.5rem] sm:text-[0.75rem] lg:text-[1rem]">
-      <CodeBlock
-        title="BASH"
-        code="from noventis.data_cleaner import NoventisDataCleaner"
-      />
+      <CodeBlock title="BASH" code="from noventis import data_cleaner" />
     </div>
   );
 }

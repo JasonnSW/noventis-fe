@@ -51,8 +51,12 @@ export default function Page() {
 
         <Divider />
 
-        <Section titleClass="my-2" title="Model Usage Examples">
-          <div className="mt-12 md:mt-14 lg:mt-16 space-y-12">
+        <Section titleClass="my-2" title="Usage Examples">
+          <p className="font-orbitron text-sm md:text-base lg:text-xl text-[#807F8C] mt-10 mb-5">
+            Prepare Dataset
+          </p>
+          <CodeBlock title="BASH" code={prepareDataset} />
+          <div className="mt-10 space-y-12">
             {modelExamples.map((ex, idx) => (
               <div
                 key={idx}
@@ -92,6 +96,13 @@ export default function Page() {
     </section>
   );
 }
+
+const prepareDataset = dedent(`
+import pandas as pd
+from noventis.eda_auto import NoventisAutoEDA
+
+#Assume ‘AmesHousing.csv’ is in your folder
+df = pd.read_csv('AmesHousing.csv')`);
 
 export const modelExamples = [
   {
@@ -221,16 +232,16 @@ function EdaAutoHeader() {
       <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
         EDA_AUTO
       </div>
-      <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
         NoventisAutoEDA
       </h3>
-      <p className="text-[#807F8C] font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         Exploratory Data Analysis (EDA) is the crucial first step in any data
         science project, essential for understanding the structure, patterns,
         and quality of a dataset. However, performing a thorough EDA manually
         can be a time-consuming and repetitive task.
       </p>
-      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-lg text-justify leading-normal">
+      <p className="text-[#807F8C] mt-2 font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
         <code className="font-firaCode text-[#FF6849]">NoventisAutoEDA </code>{" "}
         is a powerful tool designed to automate this entire process. With just a
         few lines of code, it generates a comprehensive, interactive HTML
@@ -246,7 +257,7 @@ function EdaAutoHeader() {
 
 function EdaAutoKeyFeatures() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">One-Click EDA</p>
         <p>
@@ -297,7 +308,7 @@ function EdaAutoKeyFeatures() {
 
 function EdaAutoMainWorkflow() {
   return (
-    <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+    <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
       <li className="marker:text-[#FF6849]">
         <p className="font-bold text-[#FF6849]">
           .run(show_base_viz=True) → HTML
@@ -332,7 +343,7 @@ function EdaAutoReportingAnalysis() {
         The output is a detailed HTML dashboard with several interactive tabs.
       </p>
 
-      <ul className="list-disc text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
+      <ul className="list-disc text-base lg:text-lg list-outside pl-5 space-y-6 text-[#807F8C] font-openSans">
         <li className="marker:text-white">
           <p className="font-bold text-white">
             Standard Analysis Tabs (when{" "}
