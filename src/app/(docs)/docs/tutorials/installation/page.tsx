@@ -120,21 +120,25 @@ except ImportError:
 const NEXT_LINKS = [
   {
     href: "/docs/tutorials/quick-start",
+    title: "Quickstart Guide",
     label: "Quickstart Guide",
     desc: "Run your first pipeline.",
   },
   {
     href: "/docs/eda_auto",
+    title: "AutoEDA",
     label: "AutoEDA",
     desc: "Generate automated EDA reports.",
   },
   {
     href: "/docs/data-cleaner",
+    title: "Data Cleaner",
     label: "Data Cleaner",
     desc: "Configure the cleaning pipeline.",
   },
   {
     href: "/docs/predictor/auto_ml",
+    title: "AutoML",
     label: "AutoML",
     desc: "Train & compare models automatically.",
   },
@@ -304,6 +308,7 @@ function NextSteps() {
           <li key={i}>
             <Link
               href={l.href}
+              title={l.title}
               className="text-[#FF6849] hover:text-[#ff896b] underline underline-offset-2"
             >
               {l.label}

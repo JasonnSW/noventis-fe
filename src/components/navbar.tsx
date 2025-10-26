@@ -38,9 +38,9 @@ export default function Navbar() {
           <div className="mx-auto flex items-center justify-between">
             <div className="flex items-center font-obitron">
               {isScrolled ? (
-                <Image src={logo} alt="noventis-logo" />
+                <Image src={logo} alt="noventis-logo" priority />
               ) : (
-                <Image src={logo} alt="noventis-logo" />
+                <Image src={logo} alt="noventis-logo" priority />
               )}
               <span
                 className={`text-2xl font-bold font-orbitron transition-colors ${
@@ -69,6 +69,7 @@ export default function Navbar() {
 
               <Link
                 href="https://github.com/bccfilkom/noventis"
+                title="Open Noventis GitHub repository"
                 aria-label="GitHub"
                 target="_blank"
                 rel="noopener noreferrer"

@@ -69,6 +69,7 @@ const contributionSteps: ContributionStep[] = [
         Click the "Fork" button at the top-right corner of the{" "}
         <Link
           href="https://github.com/bccfilkom/noventis"
+          title="Open Noventis GitHub repository"
           aria-label="GitHub"
           target="_blank"
           className="text-[#FF6840] font-firaCode underline"

@@ -1,7 +1,4 @@
 import React from "react";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
-import { Image as ImageIcon } from "lucide-react";
 import { MdTerminal } from "react-icons/md";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { dedent } from "@/lib/dedent";

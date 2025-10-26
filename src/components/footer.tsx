@@ -46,6 +46,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="https://github.com/bccfilkom/noventis"
+                    title="Open Noventis GitHub repository"
                     target="_blank"
                     className="group inline-flex items-center gap-3 text-sm text-white/80 hover:text-white transition-colors"
                   >
@@ -68,6 +69,7 @@ export default function Footer() {
               <div className="mt-4">
                 <Link
                   href="https://github.com/bccfilkom/noventis"
+                  title="Open Noventis GitHub repository"
                   target="_blank"
                   className="btn-gradient-github"
                 >

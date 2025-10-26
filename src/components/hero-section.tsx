@@ -19,10 +19,10 @@ export default function HeroSection() {
           <span className="text-[#FF6849]">Noventis: </span>
           Intelligent Automation for Your Data Analysis.
         </h1>
-        <h5 className="mt-4 font-orbitron text-lg sm:text-xl text-[#807f8c] max-w-md text-center mx-auto">
+        <h2 className="mt-4 font-orbitron text-lg sm:text-xl text-[#807f8c] max-w-md text-center mx-auto">
           Free Data Scientists from Repetitive Tasks, Focus on Valuable
           Insights.
-        </h5>
+        </h2>
 
         <Link href="/docs/tutorials/installation">
           <Button
@@ -57,6 +57,7 @@ export default function HeroSection() {
           alt="hero-laptop"
           fill
           className=" hidden md:block"
+          priority
         />
         <motion.img
           src="/hero-laptop-beam.svg"
@@ -78,6 +79,7 @@ export default function HeroSection() {
           alt="hero-shape"
           fill
           className="object-contain hidden md:block"
+          priority
         />
         <div
           className="

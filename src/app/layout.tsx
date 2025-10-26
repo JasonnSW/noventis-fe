@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "Noventis — Intelligent Automation for Your Data Analysis",
   },
   description:
-    "A powerful Python library designed to revolutionize your data analysis workflow through intelligent automation. Provides cutting-edge tools for automated exploratory data analysis, predictive modeling, and data cleaning with minimal code.",
+    "Automate your data analysis with Noventis — intelligent EDA, model selection, and data cleaning in Python.",
   openGraph: {
     title: "Noventis - Intelligent Automation for Your Data Analysis",
     description:
