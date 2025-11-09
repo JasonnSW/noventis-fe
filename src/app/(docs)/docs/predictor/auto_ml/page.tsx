@@ -39,25 +39,25 @@ export default function Page() {
 
         <Divider />
 
-        <Section titleClass="my-4" title="Main Workflow Method">
+        <Section titleClass="mb-4" title="Main Workflow Method">
           <AutoMLMainWorkflow />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-4" title="Reporting & Analysis Methods">
+        <Section titleClass="mb-4" title="Reporting & Analysis Methods">
           <AutoMLReportingAnalysis />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-2" title="Utility Methods">
+        <Section titleClass="mb-2" title="Utility Methods">
           <AutoMLUtilityMethods />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-2" title="Model Usage Examples">
+        <Section titleClass="mb-2" title="Model Usage Examples">
           <h5 className="font-orbitron text-base md:text-lg lg:text-xl text-[#807F8C] my-4">
             Prepare Dataset
           </h5>
@@ -72,11 +72,11 @@ export default function Page() {
           </p>
           <CodeBlock title="BASH" code={regressionCode} />
 
-          <div className="mt-12 md:mt-14 lg:mt-16 space-y-12">
+          <div className="mt-6 md:mt-8 lg:mt-10 space-y-6">
             {modelExamples.map((ex, idx) => (
               <div
                 key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
+                className="grid grid-cols-1 gap-6 lg:gap-8 items-start"
               >
                 <StepOptionCard
                   letter={ex.letter}
@@ -84,25 +84,65 @@ export default function Page() {
                   subtitle={ex.subtitle}
                 />
 
-                <div className="self-start space-y-8">
-                  {ex.sections.map((section, sIdx) => (
-                    <div key={sIdx} className="space-y-3">
-                      <p className="font-openSans text-[#807F8C]">
-                        {section.label}
-                      </p>
+                <div className="self-start space-y-10">
+                  {ex.sections.map((section, sIdx) => {
+                    const codeItems = section.items.filter((item) => item.code);
+                    const imageItems = section.items.filter(
+                      (item) => item.imageSrc
+                    );
 
-                      {section.items.map((item, iIdx) => (
-                        <CodeBlock
-                          key={iIdx}
-                          title={item.title}
-                          code={item.code}
-                          language={item.language}
-                          imageSrc={item.imageSrc}
-                          imageAlt={item.imageAlt}
-                        />
-                      ))}
-                    </div>
-                  ))}
+                    const isTwoColumn =
+                      codeItems.length === 1 && imageItems.length === 1;
+
+                    return (
+                      <div key={sIdx} className="space-y-3">
+                        <p className="font-openSans text-[#807F8C]">
+                          {section.label}
+                        </p>
+
+                        {isTwoColumn ? (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                            <CodeBlock
+                              title={codeItems[0].title}
+                              code={codeItems[0].code}
+                              language={codeItems[0].language}
+                            />
+
+                            <CodeBlock
+                              title={imageItems[0].title}
+                              imageSrc={imageItems[0].imageSrc}
+                              imageAlt={imageItems[0].imageAlt}
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {codeItems.map((item, iIdx) => (
+                              <CodeBlock
+                                key={`code-${iIdx}`}
+                                title={item.title}
+                                code={item.code}
+                                language={item.language}
+                                imageAlt={item.imageAlt}
+                              />
+                            ))}
+
+                            {imageItems.length > 0 && (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                                {imageItems.map((item, iIdx) => (
+                                  <CodeBlock
+                                    key={`img-${iIdx}`}
+                                    title={item.title}
+                                    imageSrc={item.imageSrc}
+                                    imageAlt={item.imageAlt}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -155,12 +195,7 @@ export const modelExamples = [
             title: "BASH",
             language: "bash",
             code: dedent(`
-automl = NoventisAutoML(
-    data=df_titanic_clean,
-    target='survived',
-    task='classification',
-    time_budget=30
-)
+automl = NoventisAutoML(data=df_titanic_clean, target='survived', task='classification', time_budget=30)
 results = automl.fit()
 automl.generate_html_report()
 `),
@@ -184,14 +219,10 @@ automl.generate_html_report()
             title: "BASH",
             language: "bash",
             code: dedent(`
-automl = NoventisAutoML(
-    data=df_housing,
-    target='MedHouseVal',
-    task='regression',
-    time_budget=30
-)
+automl = NoventisAutoML(data=df_housing, target='MedHouseVal', task='regression', time_budget=30)
 results = automl.fit()
 automl.generate_html_report()
+
 `),
           },
           {

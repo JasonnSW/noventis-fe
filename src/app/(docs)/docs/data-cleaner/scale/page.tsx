@@ -26,13 +26,13 @@ export default function Page() {
 
         <Divider />
 
-        <Section titleClass="my-2" title="Parameters">
+        <Section titleClass="mb-2" title="Parameters">
           <DocsParameter />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-2" title="Methods">
+        <Section titleClass="mb-2" title="Methods">
           <MethodsContent />
         </Section>
         <Divider />
@@ -481,7 +481,7 @@ function MethodsContent() {
 
 function ModelUsageExamples() {
   return (
-    <div className="mt-8 md:mt-12 space-y-10">
+    <div className="mt-8 space-y-10">
       {modelExamples.map((s, idx) => (
         <div
           key={idx}

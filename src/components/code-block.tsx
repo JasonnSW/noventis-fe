@@ -29,7 +29,7 @@ export function CodeBlock({
   caption,
   titleAlign = "center",
 }: CodeBlockProps) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<boolean>(false);
   const isCopyable = Boolean(code && code.length > 0);
 
   const onCopy = async () => {
@@ -45,7 +45,9 @@ export function CodeBlock({
   };
 
   return (
-    <div className="relative rounded-2xl bg-[#0d0f4a] border border-[#120D6A] p-4">
+    <div
+      className={`relative h-full rounded-2xl bg-[#0d0f4a] border border-[#120D6A] p-4`}
+    >
       {(title || titleIcon || isCopyable) && (
         <div
           className={[
@@ -120,10 +122,9 @@ export function CodeBlock({
           <Image
             src={imageSrc}
             alt={imageAlt}
-            width={1200}
-            height={700}
-            sizes="100vw"
-            className={["w-full h-auto rounded-md bg-[#0F2CAB]"]
+            width={1500}
+            height={800}
+            className={["w-full h-auto rounded-md bg-[#0F2CAB] mt-4"]
               .filter(Boolean)
               .join(" ")}
             priority={false}

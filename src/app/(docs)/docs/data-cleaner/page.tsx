@@ -31,7 +31,7 @@ export default function Page() {
 
         <Divider />
 
-        <Section titleClass="my-2" title="Methods">
+        <Section titleClass="mb-2" title="Methods">
           <MethodsNoventisDataCleaner />
         </Section>
 
@@ -46,13 +46,13 @@ export default function Page() {
 
         <Divider />
 
-        <Section title="Parameters" titleClass="my-4">
+        <Section title="Parameters" titleClass="mb-4">
           <DocsParameterDataCleaner />
         </Section>
 
         <Divider />
 
-        <Section title="Model Usage Examples" titleClass="my-4">
+        <Section title="Model Usage Examples" titleClass="mb-4">
           <ModelUsageExamples />
         </Section>
       </div>
@@ -663,34 +663,71 @@ function DataCleanerIntro() {
 function ModelUsageExamples() {
   return (
     <div className="mt-8 md:mt-12 space-y-12">
-      {modelExamples.map((s, idx) => (
-        <div
-          key={idx}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-start min-w-0"
-        >
+      {modelExamples.map((ex, idx) => (
+        <div key={idx} className="grid grid-cols-1 gap-6 lg:gap-8 items-start">
           <StepOptionCard
-            letter={s.letter}
-            title={s.title}
-            subtitle={s.subtitle}
+            letter={ex.letter}
+            title={ex.title}
+            subtitle={ex.subtitle}
           />
 
-          <div className="flex flex-col space-y-8 self-start">
-            {s.sections.map((section, sIdx) => (
-              <div key={sIdx} className="space-y-4">
-                <p className="font-openSans text-[#807F8C]">{section.label}</p>
+          <div className="self-start space-y-10">
+            {ex.sections.map((section, sIdx) => {
+              const codeItems = section.items.filter((item) => item.code);
+              const imageItems = section.items.filter((item) => item.imageSrc);
 
-                {section.items.map((item, iIdx) => (
-                  <CodeBlock
-                    key={iIdx}
-                    title={item.title}
-                    code={item.code}
-                    language={item.language}
-                    imageSrc={item.imageSrc}
-                    imageAlt={item.imageAlt}
-                  />
-                ))}
-              </div>
-            ))}
+              const isTwoColumn =
+                codeItems.length === 1 && imageItems.length === 1;
+
+              return (
+                <div key={sIdx} className="space-y-3">
+                  <p className="font-openSans text-[#807F8C]">
+                    {section.label}
+                  </p>
+
+                  {isTwoColumn ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                      <CodeBlock
+                        title={codeItems[0].title}
+                        code={codeItems[0].code}
+                        language={codeItems[0].language}
+                      />
+
+                      <CodeBlock
+                        title={imageItems[0].title}
+                        imageSrc={imageItems[0].imageSrc}
+                        imageAlt={imageItems[0].imageAlt}
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      {codeItems.map((item, iIdx) => (
+                        <CodeBlock
+                          key={`code-${iIdx}`}
+                          title={item.title}
+                          code={item.code}
+                          language={item.language}
+                          imageAlt={item.imageAlt}
+                        />
+                      ))}
+
+                      {imageItems.length > 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                          {imageItems.map((item, iIdx) => (
+                            <CodeBlock
+                              key={`img-${iIdx}`}
+                              title={item.title}
+                              imageSrc={item.imageSrc}
+                              imageAlt={item.imageAlt}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

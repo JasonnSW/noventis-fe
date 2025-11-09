@@ -60,7 +60,7 @@ export default function Page() {
             {modelExamples.map((ex, idx) => (
               <div
                 key={idx}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start"
+                className="grid grid-cols-1 gap-6 lg:gap-8 items-start"
               >
                 <StepOptionCard
                   letter={ex.letter}
@@ -68,25 +68,65 @@ export default function Page() {
                   subtitle={ex.subtitle}
                 />
 
-                <div className="self-start space-y-8">
-                  {ex.sections.map((section, sIdx) => (
-                    <div key={sIdx} className="space-y-3">
-                      <p className="font-openSans text-[#807F8C]">
-                        {section.label}
-                      </p>
+                <div className="self-start space-y-10">
+                  {ex.sections.map((section, sIdx) => {
+                    const codeItems = section.items.filter((item) => item.code);
+                    const imageItems = section.items.filter(
+                      (item) => item.imageSrc
+                    );
 
-                      {section.items.map((item, iIdx) => (
-                        <CodeBlock
-                          key={iIdx}
-                          title={item.title}
-                          code={item.code}
-                          language={item.language}
-                          imageSrc={item.imageSrc}
-                          imageAlt={item.imageAlt}
-                        />
-                      ))}
-                    </div>
-                  ))}
+                    const isTwoColumn =
+                      codeItems.length === 1 && imageItems.length === 1;
+
+                    return (
+                      <div key={sIdx} className="space-y-3">
+                        <p className="font-openSans text-[#807F8C]">
+                          {section.label}
+                        </p>
+
+                        {isTwoColumn ? (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                            <CodeBlock
+                              title={codeItems[0].title}
+                              code={codeItems[0].code}
+                              language={codeItems[0].language}
+                            />
+
+                            <CodeBlock
+                              title={imageItems[0].title}
+                              imageSrc={imageItems[0].imageSrc}
+                              imageAlt={imageItems[0].imageAlt}
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {codeItems.map((item, iIdx) => (
+                              <CodeBlock
+                                key={`code-${iIdx}`}
+                                title={item.title}
+                                code={item.code}
+                                language={item.language}
+                                imageAlt={item.imageAlt}
+                              />
+                            ))}
+
+                            {imageItems.length > 0 && (
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                                {imageItems.map((item, iIdx) => (
+                                  <CodeBlock
+                                    key={`img-${iIdx}`}
+                                    title={item.title}
+                                    imageSrc={item.imageSrc}
+                                    imageAlt={item.imageAlt}
+                                  />
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
