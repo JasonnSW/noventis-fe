@@ -84,7 +84,7 @@ export default function Page() {
                   subtitle={ex.subtitle}
                 />
 
-                <div className="self-start space-y-10">
+                <div className="space-y-10">
                   {ex.sections.map((section, sIdx) => {
                     const codeItems = section.items.filter((item) => item.code);
                     const imageItems = section.items.filter(
@@ -95,46 +95,53 @@ export default function Page() {
                       codeItems.length === 1 && imageItems.length === 1;
 
                     return (
-                      <div key={sIdx} className="space-y-3">
+                      <div key={sIdx} className="space-y-5">
                         <p className="font-openSans text-[#807F8C]">
                           {section.label}
                         </p>
 
                         {isTwoColumn ? (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                            <CodeBlock
-                              title={codeItems[0].title}
-                              code={codeItems[0].code}
-                              language={codeItems[0].language}
-                            />
-
-                            <CodeBlock
-                              title={imageItems[0].title}
-                              imageSrc={imageItems[0].imageSrc}
-                              imageAlt={imageItems[0].imageAlt}
-                            />
+                            <div className="self-start">
+                              <CodeBlock
+                                title={codeItems[0].title}
+                                code={codeItems[0].code}
+                                language={codeItems[0].language}
+                              />
+                            </div>
+                            <div className="self-start">
+                              <CodeBlock
+                                title={imageItems[0].title}
+                                imageSrc={imageItems[0].imageSrc}
+                                imageAlt={imageItems[0].imageAlt}
+                              />
+                            </div>
                           </div>
                         ) : (
                           <>
                             {codeItems.map((item, iIdx) => (
-                              <CodeBlock
-                                key={`code-${iIdx}`}
-                                title={item.title}
-                                code={item.code}
-                                language={item.language}
-                                imageAlt={item.imageAlt}
-                              />
+                              <div className="self-start">
+                                <CodeBlock
+                                  key={`code-${iIdx}`}
+                                  title={item.title}
+                                  code={item.code}
+                                  language={item.language}
+                                  imageAlt={item.imageAlt}
+                                />
+                              </div>
                             ))}
 
                             {imageItems.length > 0 && (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                                 {imageItems.map((item, iIdx) => (
-                                  <CodeBlock
-                                    key={`img-${iIdx}`}
-                                    title={item.title}
-                                    imageSrc={item.imageSrc}
-                                    imageAlt={item.imageAlt}
-                                  />
+                                  <div className="self-start">
+                                    <CodeBlock
+                                      key={`img-${iIdx}`}
+                                      title={item.title}
+                                      imageSrc={item.imageSrc}
+                                      imageAlt={item.imageAlt}
+                                    />
+                                  </div>
                                 ))}
                               </div>
                             )}

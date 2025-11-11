@@ -39,20 +39,20 @@ export default function Page() {
 
         <Divider />
 
-        <Section titleClass="my-4" title="Main Workflow Method">
+        <Section titleClass="mb-4" title="Main Workflow Method">
           <EdaAutoMainWorkflow />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-4" title="The HTML Report">
+        <Section titleClass="mb-4" title="The HTML Report">
           <EdaAutoReportingAnalysis />
         </Section>
 
         <Divider />
 
-        <Section titleClass="my-2" title="Usage Examples">
-          <p className="font-orbitron text-sm md:text-base lg:text-xl text-[#807F8C] mt-10 mb-5">
+        <Section titleClass="mb-2" title="Usage Examples">
+          <p className="font-orbitron text-sm md:text-base lg:text-xl text-[#807F8C] mt-10 mb-4">
             Prepare Dataset
           </p>
           <CodeBlock title="BASH" code={prepareDataset} />
@@ -68,7 +68,7 @@ export default function Page() {
                   subtitle={ex.subtitle}
                 />
 
-                <div className="self-start space-y-10">
+                <div className="space-y-10">
                   {ex.sections.map((section, sIdx) => {
                     const codeItems = section.items.filter((item) => item.code);
                     const imageItems = section.items.filter(
@@ -86,39 +86,46 @@ export default function Page() {
 
                         {isTwoColumn ? (
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                            <CodeBlock
-                              title={codeItems[0].title}
-                              code={codeItems[0].code}
-                              language={codeItems[0].language}
-                            />
-
-                            <CodeBlock
-                              title={imageItems[0].title}
-                              imageSrc={imageItems[0].imageSrc}
-                              imageAlt={imageItems[0].imageAlt}
-                            />
+                            <div className="self-start">
+                              <CodeBlock
+                                title={codeItems[0].title}
+                                code={codeItems[0].code}
+                                language={codeItems[0].language}
+                              />
+                            </div>
+                            <div className="self-start">
+                              <CodeBlock
+                                title={imageItems[0].title}
+                                imageSrc={imageItems[0].imageSrc}
+                                imageAlt={imageItems[0].imageAlt}
+                              />
+                            </div>
                           </div>
                         ) : (
                           <>
                             {codeItems.map((item, iIdx) => (
-                              <CodeBlock
-                                key={`code-${iIdx}`}
-                                title={item.title}
-                                code={item.code}
-                                language={item.language}
-                                imageAlt={item.imageAlt}
-                              />
+                              <div className="self-start">
+                                <CodeBlock
+                                  key={`code-${iIdx}`}
+                                  title={item.title}
+                                  code={item.code}
+                                  language={item.language}
+                                  imageAlt={item.imageAlt}
+                                />
+                              </div>
                             ))}
 
                             {imageItems.length > 0 && (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                                 {imageItems.map((item, iIdx) => (
-                                  <CodeBlock
-                                    key={`img-${iIdx}`}
-                                    title={item.title}
-                                    imageSrc={item.imageSrc}
-                                    imageAlt={item.imageAlt}
-                                  />
+                                  <div className="self-start">
+                                    <CodeBlock
+                                      key={`img-${iIdx}`}
+                                      title={item.title}
+                                      imageSrc={item.imageSrc}
+                                      imageAlt={item.imageAlt}
+                                    />
+                                  </div>
                                 ))}
                               </div>
                             )}

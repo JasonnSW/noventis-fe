@@ -45,9 +45,7 @@ export function CodeBlock({
   };
 
   return (
-    <div
-      className={`relative h-full rounded-2xl bg-[#0d0f4a] border border-[#120D6A] p-4`}
-    >
+    <div className="rounded-2xl bg-[#0d0f4a] border border-[#120D6A] p-4 h-auto">
       {(title || titleIcon || isCopyable) && (
         <div
           className={[

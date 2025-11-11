@@ -662,7 +662,7 @@ function DataCleanerIntro() {
 
 function ModelUsageExamples() {
   return (
-    <div className="mt-8 md:mt-12 space-y-12">
+    <div className="mt-8 md:mt-10 space-y-6">
       {modelExamples.map((ex, idx) => (
         <div key={idx} className="grid grid-cols-1 gap-6 lg:gap-8 items-start">
           <StepOptionCard
@@ -687,39 +687,46 @@ function ModelUsageExamples() {
 
                   {isTwoColumn ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                      <CodeBlock
-                        title={codeItems[0].title}
-                        code={codeItems[0].code}
-                        language={codeItems[0].language}
-                      />
-
-                      <CodeBlock
-                        title={imageItems[0].title}
-                        imageSrc={imageItems[0].imageSrc}
-                        imageAlt={imageItems[0].imageAlt}
-                      />
+                      <div className="self-start">
+                        <CodeBlock
+                          title={codeItems[0].title}
+                          code={codeItems[0].code}
+                          language={codeItems[0].language}
+                        />
+                      </div>
+                      <div className="self-start">
+                        <CodeBlock
+                          title={imageItems[0].title}
+                          imageSrc={imageItems[0].imageSrc}
+                          imageAlt={imageItems[0].imageAlt}
+                        />
+                      </div>
                     </div>
                   ) : (
                     <>
                       {codeItems.map((item, iIdx) => (
-                        <CodeBlock
-                          key={`code-${iIdx}`}
-                          title={item.title}
-                          code={item.code}
-                          language={item.language}
-                          imageAlt={item.imageAlt}
-                        />
+                        <div className="self-start">
+                          <CodeBlock
+                            key={`code-${iIdx}`}
+                            title={item.title}
+                            code={item.code}
+                            language={item.language}
+                            imageAlt={item.imageAlt}
+                          />
+                        </div>
                       ))}
 
                       {imageItems.length > 0 && (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                           {imageItems.map((item, iIdx) => (
-                            <CodeBlock
-                              key={`img-${iIdx}`}
-                              title={item.title}
-                              imageSrc={item.imageSrc}
-                              imageAlt={item.imageAlt}
-                            />
+                            <div className="self-start">
+                              <CodeBlock
+                                key={`img-${iIdx}`}
+                                title={item.title}
+                                imageSrc={item.imageSrc}
+                                imageAlt={item.imageAlt}
+                              />
+                            </div>
                           ))}
                         </div>
                       )}
