@@ -109,9 +109,11 @@ size_mapping = {
 }
 
 # Initialize in 'ordinal' mode with the mapping
-encoder_ordinal = NoventisEncoder(method='ordinal', 
-                                  columns_to_encode=['Size'], 
-                                  category_mapping=size_mapping)
+encoder_ordinal = NoventisEncoder(
+      method='ordinal',
+      columns_to_encode=['Size'],
+      category_mapping=size_mapping
+)
 
 df_encoded_ordinal = encoder_ordinal.fit_transform(X)
 print(df_encoded_ordinal[['Size_ordinal_encoded']].head())
@@ -129,10 +131,12 @@ print(df_encoded_ordinal[['Size_ordinal_encoded']].head())
     language: "BASH",
     code: dedent(`
 # Initialize in 'target' mode for a specific column
-encoder_target = NoventisEncoder(method='target',
-                                 columns_to_encode=['Country'],
-                                 target_column='Target',
-                                 cv=3) # Use 3 folds for this small dataset
+encoder_target = NoventisEncoder(
+    method='target',
+    columns_to_encode=['Country'],
+    target_column='Target',
+    cv=3  # Use 3 folds for this small dataset
+)
 
 df_encoded_target = encoder_target.fit_transform(X, y)
 print(df_encoded_target[['Country_target_encoded']].head())

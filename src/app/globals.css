@@ -112,6 +112,11 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+code,
+pre {
+  hyphens: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

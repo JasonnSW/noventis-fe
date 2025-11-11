@@ -109,8 +109,9 @@ export function CodeBlock({
               margin: 0,
               border: "1px solid #0f2cab",
               borderRadius: 10,
+              whiteSpace: "pre",
             }}
-            wrapLongLines
+            wrapLongLines={false}
           >
             {code}
           </SyntaxHighlighter>

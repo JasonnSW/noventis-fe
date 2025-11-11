@@ -169,7 +169,7 @@ export const modelExamples = [
             title: "BASH",
             language: "bash",
             code: dedent(`
-analyzer_default = NoventisAutoEDA(data=df, target=’SalePrice')
+analyzer_default = NoventisAutoEDA(data=df, target='SalePrice')
 analyzer_default.run()
 `),
           },

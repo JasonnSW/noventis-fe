@@ -120,9 +120,8 @@ export default function Page() {
                         ) : (
                           <>
                             {codeItems.map((item, iIdx) => (
-                              <div className="self-start">
+                              <div key={`code-${iIdx}`} className="self-start">
                                 <CodeBlock
-                                  key={`code-${iIdx}`}
                                   title={item.title}
                                   code={item.code}
                                   language={item.language}
@@ -134,9 +133,11 @@ export default function Page() {
                             {imageItems.length > 0 && (
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                                 {imageItems.map((item, iIdx) => (
-                                  <div className="self-start">
+                                  <div
+                                    key={`img-${iIdx}`}
+                                    className="self-start"
+                                  >
                                     <CodeBlock
-                                      key={`img-${iIdx}`}
                                       title={item.title}
                                       imageSrc={item.imageSrc}
                                       imageAlt={item.imageAlt}

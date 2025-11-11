@@ -121,9 +121,8 @@ export default function Page() {
                         ) : (
                           <>
                             {codeItems.map((item, iIdx) => (
-                              <div className="self-start">
+                              <div key={`code-${iIdx}`} className="self-start">
                                 <CodeBlock
-                                  key={`code-${iIdx}`}
                                   title={item.title}
                                   code={item.code}
                                   language={item.language}

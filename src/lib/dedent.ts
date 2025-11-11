@@ -1,11 +1,21 @@
-export function dedent(str: string) {
-  const lines = str.replace(/^\n/, "").split("\n");
-  const indents = lines
-    .filter((l) => l.trim())
-    .map((l) => l.match(/^(\s*)/)![1].length);
-  const min = indents.length ? Math.min(...indents) : 0;
-  return lines
-    .map((l) => l.slice(min))
+export function dedent(raw: string): string {
+  if (!raw) return "";
+
+  const lines = raw.replace(/\r\n?/g, "\n").split("\n");
+
+  while (lines.length && !lines[0].trim()) lines.shift();
+  while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
+
+  const indentLengths = lines
+    .filter((line) => line.trim().length > 0)
+    .map((line) => line.match(/^(\s*)/)?.[1].length ?? 0);
+
+  const minIndent = indentLengths.length ? Math.min(...indentLengths) : 0;
+
+  const result = lines
+    .map((line) => line.slice(minIndent))
     .join("\n")
-    .replace(/\s+$/, "");
+    .replace(/\s+$/g, "");
+
+  return result;
 }
