@@ -169,7 +169,9 @@ export const modelExamples = [
             title: "BASH",
             language: "bash",
             code: dedent(`
-analyzer_default = NoventisAutoEDA(data=df, target='SalePrice')
+analyzer_default = NoventisAutoEDA(data=df, 
+target='SalePrice')
+
 analyzer_default.run()
 `),
           },
@@ -200,7 +202,9 @@ analyzer_default.run()
             title: "BASH",
             language: "bash",
             code: dedent(`
-analyzer_business = NoventisAutoEDA(data=df, target='SalePrice', personality='business')
+analyzer_business = NoventisAutoEDA(data=df, 
+target='SalePrice', personality='business')
+
 analyzer_business.run(show_base_viz=False)
 `),
           },
@@ -228,7 +232,9 @@ analyzer_business.run(show_base_viz=False)
             title: "BASH",
             language: "bash",
             code: dedent(`
-analyzer_academic = NoventisAutoEDA(df, target='SalePrice', personality='academic')
+analyzer_academic = NoventisAutoEDA(df, 
+target='SalePrice', personality='academic')
+
 analyzer_academic.run()
 `),
           },
@@ -258,7 +264,9 @@ analyzer_academic.run()
             title: "BASH",
             language: "bash",
             code: dedent(`
-analyzer_full = NoventisAutoEDA(data=df, target='SalePrice', personality='all')
+analyzer_full = NoventisAutoEDA(data=df, 
+target='SalePrice', personality='all')
+
 analyzer_full.run()
 `),
           },

@@ -83,7 +83,11 @@ const modelExamples = [
     language: "BASH",
     code: dedent(`
 # Initialize in 'auto' mode, providing the target column name
-encoder_auto = NoventisEncoder(method='auto', target_column='Target', verbose=True)
+encoder_auto = NoventisEncoder(
+      method='auto',
+      target_column='Target',
+      verbose=True
+)
 
 # Fit and transform the data
 df_encoded_auto = encoder_auto.fit_transform(X, y)
@@ -105,7 +109,11 @@ print(df_encoded_auto.head())
     code: dedent(`
 # Define the explicit order for the 'Size' column
 size_mapping = {
-    'Size': {'Small': 1, 'Medium': 2, 'Large': 3}
+    'Size': {
+        'Small': 1, 
+        'Medium': 2, 
+        'Large': 3
+    }
 }
 
 # Initialize in 'ordinal' mode with the mapping

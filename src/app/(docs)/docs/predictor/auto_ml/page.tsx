@@ -336,7 +336,8 @@ automl_pure = NoventisAutoML(
     data=df_titanic_clean,
     target='survived',
     compare=False,
-    models=['random_forest', 'lightgbm', 'logistic_regression'],
+    models=['random_forest', 'lightgbm', 
+            'logistic_regression'],
     task='classification'
 )
 results = automl_pure.fit()
@@ -361,7 +362,8 @@ automl = NoventisAutoML(
     data=df_housing,
     target='MedHouseVal',
     compare=False,
-    models=['linear_regression', 'random_forest', 'xgboost'],
+    models=['linear_regression', 'random_forest', 
+            'xgboost'],
     task='regression'
 )
 results = automl.fit()
@@ -398,20 +400,14 @@ from noventis.predictor import NoventisAutoML
 import pandas as pd
 
 # First, run the training process
-automl = NoventisAutoML(
-    data='path/to/train_data.csv',
-    target='YourTargetColumn'
-)
+automl = NoventisAutoML(data='path/to/train_data.csv', target='YourTargetColumn')
 automl.fit()
 
 # Now, load new data for prediction
 new_data = pd.read_csv('path/to/new_unseen_data.csv')
 
 # Use the predict method (it automatically finds the best saved model)
-predictions = automl.predict(
-    X_new=new_data,
-    model_path='Noventis_Results/best_model.pkl'
-)
+predictions = automl.predict(X_new=new_data, model_path='Noventis_Results/best_model.pkl')
 
 print(predictions)
 `),

@@ -2,7 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import rawIndex from "@/app/(docs)/docs/index";
-import { HardDriveDownload, CirclePlay, HandHelping } from "lucide-react";
+import {
+  HardDriveDownload,
+  CirclePlay,
+  HandHelping,
+  Gavel,
+} from "lucide-react";
 import { DocsSidebarMainLink } from "./docs-sidebar-main-link";
 import { SidebarSearchInput } from "./sidebar-search.input";
 import { IndexMap, useSidebarSearch } from "@/hooks/use-sidebar-search";
@@ -42,7 +47,11 @@ export function DocsSidebar() {
         title="Contributing Guide"
         icon={<HandHelping className="h-5 w-5" />}
       />
-
+      <DocsSidebarMainLink
+        href="/docs/tutorials/code-of-conduct"
+        title="Code of Conduct"
+        icon={<Gavel className="h-5 w-5" />}
+      />
       <SidebarResults
         query={query}
         filtered={filtered}

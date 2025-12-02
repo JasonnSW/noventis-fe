@@ -67,12 +67,16 @@ from noventis_scaler import NoventisScaler
 
 # Create a diverse sample dataset
 df = pd.DataFrame({
-    'normal_data': np.random.normal(loc=100, scale=15, size=500),
-    'skewed_data': np.random.gamma(shape=1, scale=50, size=500)**2,
-    'data_with_outliers': np.concatenate([np.random.normal(loc=0, scale=5, size=496), 
-                                          np.array([-50, 50, -60, 60])]),
-    'bimodal_data': np.concatenate([np.random.normal(loc=20, scale=5, size=250), 
-                                    np.random.normal(loc=80, scale=7, size=250)])
+    'normal_data': np.random.normal(loc=100,
+scale=15, size=500),
+    'skewed_data': np.random.gamma(shape=1, 
+scale=50, size=500)**2,
+    'data_with_outliers': 
+np.concatenate([np.random.normal(loc=0, scale=5, size=496), 
+              np.array([-50, 50, -60, 60])]),
+    'bimodal_data': 
+np.concatenate([np.random.normal(loc=20, scale=5, size=250), 
+              np.random.normal(loc=80, scale=7, size=250)])
 })
 
 # Initialize in 'auto' mode to let the scaler decide
@@ -128,7 +132,8 @@ print(df_robust_scaled.describe())
 custom_config = {'power': {'standardize': False}}
 
 # Initialize with the 'power' method and our custom parameters
-scaler_custom = NoventisScaler(method='power', custom_params=custom_config)
+scaler_custom = NoventisScaler(method='power',
+custom_params=custom_config)
 
 # Fit and transform
 df_custom_scaled = scaler_custom.fit_transform(df)

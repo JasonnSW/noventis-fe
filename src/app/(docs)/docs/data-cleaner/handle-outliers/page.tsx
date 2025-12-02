@@ -138,7 +138,10 @@ method_map = {
 }
 
 # Initialize the handler with the custom map
-handler_custom = NoventisOutlierHandler(feature_method_map=method_map, verbose=True)
+handler_custom = NoventisOutlierHandler(
+      feature_method_map=method_map,
+      verbose=True
+)
 
 # Fit and transform
 df_custom = handler_custom.fit_transform(df)

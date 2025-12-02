@@ -133,9 +133,11 @@ display(cleaned_df.head())`;
 
 const AUTOML_CODE = `# Initialize AutoML with the cleaned data
 # We'll give it a 60-second time budget to find the best model
-automl = NoventisAutoML(data=cleaned_df, 
-                        target='Purchased', 
-                        time_budget=60)
+automl = NoventisAutoML(
+    data=cleaned_df, 
+    target='Purchased', 
+    time_budget=60
+)
 
 # Start the training and evaluation process
 results = automl.fit()`;
@@ -260,6 +262,9 @@ function Step5Results() {
         </li>
         <li>Visualizations like a Confusion Matrix and Feature Importance.</li>
       </ul>
+      <div className="mt-4">
+        <CodeBlock title="PYTHON" code="automl.generate_html_report()" />
+      </div>
       <div className="mt-6">
         <CodeBlock
           title="RESULT"

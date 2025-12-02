@@ -204,7 +204,8 @@ export const modelExamples = [
             language: "bash",
             code: dedent(`
 manualml = NoventisManualML(
-    model_name=['logistic_regression', 'random_forest', 'lightgbm'],
+    model_name=['logistic_regression',
+                'random_forest', 'lightgbm'],
     task='classification',
 )
 results = manualml.fit(
@@ -229,7 +230,8 @@ results = manualml.fit(
             language: "bash",
             code: dedent(`
 manualml = NoventisManualML(
-    model_name=['linear_regression', 'random_forest', 'lightgbm'],
+    model_name=['linear_regression', 
+                'random_forest', 'lightgbm'],
     task='regression',           
 )
 results = manualml.fit(

@@ -88,13 +88,16 @@ y = df['churn']
 
 # 1. Define custom configurations for each step
 imputer_config = {'method': 'median'}
-outlier_config = {'default_method': 'winsorize', 'quantile_range': (0.01, 0.99)}
-encoder_config = {'method': 'auto', 'target_column': ‘churn'}
+outlier_config = {'default_method':
+'winsorize', 'quantile_range': (0.01, 0.99)}
+encoder_config = {'method': 'auto',
+'target_column': ‘churn'}
 scaler_config = {'method': 'robust'}
 
 # 2. Initialize the cleaner with the custom configurations
 cleaner = NoventisDataCleaner(
-    pipeline_steps=['impute', 'outlier', 'encode', 'scale'],
+    pipeline_steps=['impute', 'outlier', 
+'encode', 'scale'],
     imputer_params=imputer_config,
     outlier_params=outlier_config,
     encoder_params=encoder_config,

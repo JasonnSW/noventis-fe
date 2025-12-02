@@ -20,6 +20,7 @@ export default function DocsNavbar() {
   const pathname = usePathname();
 
   useEffect(() => setOpen(false), [pathname]);
+
   useLock(open);
 
   return (

@@ -2,7 +2,6 @@ import { CodeBlock } from "@/components/code-block";
 import { Divider } from "@/components/divider";
 import { Section } from "@/components/section";
 import { StepOptionCard } from "@/components/step-card";
-import { dedent } from "@/lib/dedent";
 import Link from "next/link";
 
 export default function Page() {

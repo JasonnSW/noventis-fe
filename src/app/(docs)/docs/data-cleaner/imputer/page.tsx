@@ -100,7 +100,11 @@ print(df_imputed)`,
     ),
     language: "BASH",
     code: `# Initialize with method='knn'
-imputer_knn = NoventisImputer(method='knn', n_neighbors=3, verbose=True)
+imputer_knn = NoventisImputer(
+      method='knn',
+      n_neighbors=3,
+      verbose=True
+)
 
 # Fit and transform
 df_knn_imputed = imputer_knn.fit_transform(df)
