@@ -26,7 +26,7 @@ export default function DocsNavbar() {
   return (
     <header className="sticky top-0 z-50 bg-[#050329] backdrop-blur gradient-border-b-nav">
       <nav className="mx-auto w-full max-w-8xl h-[var(--header-h)]">
-        <div className="flex h-full items-center justify-between p-10">
+        <div className="flex h-full items-center justify-between p-4 md:p-6 lg:p-10">
           <div className="flex items-center gap-2">
             <Image src={Logo} alt="Noventis Logo" width={60} height={60} />
             <h1 className="font-orbitron text-xl font-semibold leading-normal tracking-tight text-white">

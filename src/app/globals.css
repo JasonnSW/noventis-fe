@@ -112,8 +112,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-code,
-pre {
+* {
   hyphens: none;
 }
 

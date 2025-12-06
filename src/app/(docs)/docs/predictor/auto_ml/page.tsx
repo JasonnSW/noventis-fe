@@ -424,7 +424,7 @@ function AutoMLHeader() {
       <div className="text-[#FF6849] font-orbitron text-base leading-normal uppercase">
         DATA_CLEANER
       </div>
-      <h3 className="text-white text-4xl font-orbitron font-medium leading-normal">
+      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-orbitron font-medium leading-normal">
         NoventisAutoML
       </h3>
       <p className="text-[#807F8C] font-normal font-openSans text-base lg:text-lg text-justify leading-normal">
